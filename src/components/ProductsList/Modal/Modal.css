@@ -17,8 +17,10 @@
     border-radius: 8px;
     box-shadow: 0 0 10px var(--modal-shadow);
     margin: auto;
-    max-width: 700px;
+    max-width: 900px;
     position: relative;
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
   }
 
   .modal-content button {

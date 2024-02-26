@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
 import Product from './Product/Product';
 import Modal from './Modal/Modal';
@@ -6,7 +6,7 @@ import useWhitelabelContext from '../../context/useWhitelabelContext';
 
 function ProductsList() {
   const whitelabel = useWhitelabelContext();
-  const itemsPerPage = 15;
+  const itemsPerPage = 9;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -33,19 +33,31 @@ function ProductsList() {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop
-        !== document.documentElement.offsetHeight
-        || isLoading) {
-        return;
-      }
-      loadMore();
-    };
+  const observerTarget = useRef(null);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isLoading]);
+  useEffect(() => {
+    let observerRefValue = null;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      },
+      { threshold: 1 },
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+      observerRefValue = observerTarget.current;
+    }
+
+    return () => {
+      if (observerRefValue) {
+        observer.unobserve(observerRefValue);
+      }
+    };
+  }, [observerTarget]);
 
   const openModal = (productId) => {
     const selected = products.find((p) => p.id === productId);
@@ -61,6 +73,7 @@ function ProductsList() {
       {products.slice(0, visibleProducts).map((p) => (
         <Product key={p.id} productId={p.id} productName={p.name} onClick={() => openModal(p.id)} />
       ))}
+      <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
       {selectedProduct && (
         <Modal product={selectedProduct} onClose={closeModal} />

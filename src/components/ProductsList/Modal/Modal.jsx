@@ -27,7 +27,7 @@ function Modal({ product, onClose }) {
         <img className="modal-img" src={`${whitelabel.blobStorageUrl}l-${product.id}.png`} alt={product.name} />
         <h2>{product.name}</h2>
         <h2>
-          {product.price}
+          {`${product.price} `}
           ₴
         </h2>
         <p>{product.description}</p>
