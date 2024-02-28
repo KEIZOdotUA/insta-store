@@ -1,18 +1,18 @@
 #logo-and-link-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #logo-and-link {
-    display: block;
-    margin: 0px 25px;
-    text-align: center;
-    justify-content: center;
+  display: block;
+  margin: 0px 25px;
+  text-align: center;
+  justify-content: center;
 }
 
 #logo {
-    height: 150px;
-    width: 150px;
-    margin-bottom: 10px;
-    cursor: pointer;
+  height: 150px;
+  width: 150px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }

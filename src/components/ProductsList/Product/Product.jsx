@@ -6,7 +6,11 @@ function Product({ productId, productName, onClick }) {
   const whitelabel = useWhitelabelContext();
   return (
     <div className="product" onClick={onClick} onKeyDown={onClick} role="button" tabIndex="0">
-      <img className="product-img" src={`${whitelabel.blobStorageUrl}m-${productId}.png`} alt={productName} />
+      <img
+        className="product-img"
+        src={`${whitelabel.blobStorageUrl}m-${productId}.png`}
+        alt={productName}
+      />
     </div>
   );
 }

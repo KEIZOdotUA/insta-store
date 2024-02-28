@@ -23,11 +23,7 @@ function WhitelabelContextProvider({ children }) {
     return <div>Loading...</div>;
   }
 
-  return (
-    <WhitelabelContext.Provider value={whitelabelData}>
-      {children}
-    </WhitelabelContext.Provider>
-  );
+  return <WhitelabelContext.Provider value={whitelabelData}>{children}</WhitelabelContext.Provider>;
 }
 
 WhitelabelContextProvider.propTypes = {

@@ -24,12 +24,13 @@ function Modal({ product, onClose }) {
         <button className="modal-close" onClick={onClose} type="button">
           <img src="./close.svg" alt="" />
         </button>
-        <img className="modal-img" src={`${whitelabel.blobStorageUrl}l-${product.id}.png`} alt={product.name} />
+        <img
+          className="modal-img"
+          src={`${whitelabel.blobStorageUrl}l-${product.id}.png`}
+          alt={product.name}
+        />
         <h2>{product.name}</h2>
-        <h2>
-          {`${product.price} `}
-          ₴
-        </h2>
+        <h2>{`${product.price} ₴`}</h2>
         <p>{product.description}</p>
         <button className="buy" onClick={handleClick} type="button">
           Придбати

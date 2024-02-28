@@ -75,9 +75,7 @@ function ProductsList() {
       ))}
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
-      {selectedProduct && (
-        <Modal product={selectedProduct} onClose={closeModal} />
-      )}
+      {selectedProduct && <Modal product={selectedProduct} onClose={closeModal} />}
     </div>
   );
 }

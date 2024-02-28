@@ -13,15 +13,12 @@ function LogoAndLink() {
   return (
     <div id="logo-and-link-container">
       <div id="logo-and-link">
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={handleClick}
-          onKeyDown={handleClick}
-        >
+        <div role="button" tabIndex={0} onClick={handleClick} onKeyDown={handleClick}>
           <img id="logo" src={`${whitelabel.blobStorageUrl}logo.png`} alt={instagramProfileName} />
         </div>
-        <a href={whitelabel.instagramProfile.url} target="_blank" rel="noreferrer">{instagramProfileName}</a>
+        <a href={whitelabel.instagramProfile.url} target="_blank" rel="noreferrer">
+          {instagramProfileName}
+        </a>
       </div>
     </div>
   );
