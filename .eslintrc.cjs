@@ -11,7 +11,19 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
-  rules: { },
-}
+  plugins: ['react-refresh', 'import'],
+  settings: {
+    react: { version: '18.2' },
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@components', './src/components'],
+          ['@context', './src/context'],
+          ['@utils', './src/utils'],
+        ],
+        extensions: ['.js', '.jsx', '.json'],
+      },
+    },
+  },
+  rules: {},
+};

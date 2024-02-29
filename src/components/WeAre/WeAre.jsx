@@ -1,5 +1,6 @@
+import React from 'react';
 import './WeAre.css';
-import useWhitelabelContext from '../../context/useWhitelabelContext';
+import useWhitelabelContext from '@context/useWhitelabelContext';
 import LogoAndLink from './LogoAndLink/LogoAndLink';
 
 function WeAre() {
@@ -10,7 +11,12 @@ function WeAre() {
       <LogoAndLink />
       <div id="text-container">
         <h2>{whitelabel.shop.name}</h2>
-        {whitelabel.shop.description}
+        {whitelabel.shop.description.split('\n').map((item) => (
+          <React.Fragment key={item}>
+            {item}
+            <br />
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );

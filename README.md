@@ -2,11 +2,7 @@
 Sample React + Vite application created for learning purposes.
 
 # Prerequisites
-Running the application requires blob storage with files:
-- `logo.png`
-- products images in format `m-{id}.png` for medium size
-- products images in format `l-{id}.png` for large size
-- `products.json`
+Running the application requires blob storage with file `products.json`:
 ```
 [
     {
@@ -16,23 +12,26 @@ Running the application requires blob storage with files:
         "description": ""
     }
     ...
-}
+]
 ```
 
 # Running the sample locally
 Add basic project settings to the `whitelabel.json` file in `public` folder:
 ```
 {
-    "shop": {
-        "name": "",
-        "description": ""
-    },
-    "blobStorageUrl": "",
-    "instagramProfile": {
-        "name": "",
-        "url": ""
-    }   
+  "shop": {
+    "name": string,
+    "description": string,
+    "logo": string
+  },
+  "blobStorageUrl": string,
+  "instagramProfile": {
+    "name": string,
+    "url": string
+  },
+  "productsSrc": string
 }
+
 ```
 
 Run:

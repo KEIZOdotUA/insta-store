@@ -1,5 +1,5 @@
 import './LogoAndLink.css';
-import useWhitelabelContext from '../../../context/useWhitelabelContext';
+import useWhitelabelContext from '@context/useWhitelabelContext';
 
 function LogoAndLink() {
   const whitelabel = useWhitelabelContext();
@@ -14,7 +14,7 @@ function LogoAndLink() {
     <div id="logo-and-link-container">
       <div id="logo-and-link">
         <div role="button" tabIndex={0} onClick={handleClick} onKeyDown={handleClick}>
-          <img id="logo" src={`${whitelabel.blobStorageUrl}logo.png`} alt={instagramProfileName} />
+          <img id="logo" src={whitelabel.shop.logo} alt={instagramProfileName} />
         </div>
         <a href={whitelabel.instagramProfile.url} target="_blank" rel="noreferrer">
           {instagramProfileName}

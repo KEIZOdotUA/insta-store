@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
+import useWhitelabelContext from '@context/useWhitelabelContext';
 import Product from './Product/Product';
 import Modal from './Modal/Modal';
-import useWhitelabelContext from '../../context/useWhitelabelContext';
 
 function ProductsList() {
   const whitelabel = useWhitelabelContext();
@@ -12,7 +12,7 @@ function ProductsList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${whitelabel.blobStorageUrl}products.json`);
+        const response = await fetch(whitelabel.productsSrc);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -71,7 +71,7 @@ function ProductsList() {
   return (
     <div id="products-list">
       {products.slice(0, visibleProducts).map((p) => (
-        <Product key={p.id} productId={p.id} productName={p.name} onClick={() => openModal(p.id)} />
+        <Product key={p.id} product={p} onClick={() => openModal(p.id)} />
       ))}
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}

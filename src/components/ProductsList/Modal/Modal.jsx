@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import './Modal.css';
 import PropTypes from 'prop-types';
-import useWhitelabelContext from '../../../context/useWhitelabelContext';
+import useWhitelabelContext from '@context/useWhitelabelContext';
+import getImgSrc from '@utils/getImgSrc';
 
 function Modal({ product, onClose }) {
   const whitelabel = useWhitelabelContext();
@@ -26,14 +27,14 @@ function Modal({ product, onClose }) {
         </button>
         <img
           className="modal-img"
-          src={`${whitelabel.blobStorageUrl}l-${product.id}.png`}
+          src={getImgSrc(whitelabel.blobStorageUrl, 'l', product.id)}
           alt={product.name}
         />
         <h2>{product.name}</h2>
         <h2>{`${product.price} ₴`}</h2>
         <p>{product.description}</p>
         <button className="buy" onClick={handleClick} type="button">
-          Придбати
+          Замовити
         </button>
       </div>
     </div>

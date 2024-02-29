@@ -1,7 +1,7 @@
 import './App.css';
-import WeAre from './components/WeAre/WeAre';
-import ProductsList from './components/ProductsList/ProductsList';
-import WhitelabelContextProvider from './context/WhitelabelContextProvider';
+import WeAre from '@components/WeAre/WeAre';
+import ProductsList from '@components/ProductsList/ProductsList';
+import WhitelabelContextProvider from '@context/WhitelabelContextProvider';
 
 function App() {
   return (

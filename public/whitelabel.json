@@ -1,11 +1,13 @@
 {
   "shop": {
-    "name": "WhiteLabel",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam..."
+    "name": "",
+    "description": "",
+    "logo": ""
   },
-  "blobStorageUrl": "https://example.com/",
+  "blobStorageUrl": "",
   "instagramProfile": {
-    "name": "whitelabel",
-    "url": "https://www.instagram.com"
-  }
+    "name": "",
+    "url": ""
+  },
+  "productsSrc": ""
 }
