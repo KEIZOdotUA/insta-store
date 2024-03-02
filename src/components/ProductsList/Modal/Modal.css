@@ -22,11 +22,6 @@
   overflow-y: auto;
 }
 
-.modal-content button {
-  border: none;
-  cursor: pointer;
-}
-
 .modal-close {
   background: none;
   position: absolute;
@@ -46,15 +41,5 @@
 
 .buy {
   width: 100%;
-  min-width: fit-content;
-  min-height: 52px;
-  padding: 15px 10px !important;
-  font-size: 16px !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--button-color);
-  color: var(--button-text-color);
-  border-radius: 8px;
   margin-bottom: 25px;
 }
