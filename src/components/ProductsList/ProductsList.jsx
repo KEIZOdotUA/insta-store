@@ -21,7 +21,7 @@ function ProductsList() {
     };
 
     fetchData();
-  }, [whitelabel.blobStorageUrl]);
+  }, [whitelabel.blobStorageUrl, whitelabel.productsSrc]);
 
   const [visibleProducts, setVisibleProducts] = useState(itemsPerPage);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +59,10 @@ function ProductsList() {
     };
   }, [observerTarget]);
 
+  const moreProducts = () => {
+    window.open(whitelabel.instagramProfile.url, '_blank');
+  };
+
   const openModal = (productId) => {
     const selected = products.find((p) => p.id === productId);
     setSelectedProduct(selected);
@@ -73,6 +77,11 @@ function ProductsList() {
       {products.slice(0, visibleProducts).map((p) => (
         <Product key={p.id} product={p} onClick={() => openModal(p.id)} />
       ))}
+      <div id="more-products">
+        <button className="filled-button" onClick={moreProducts} type="button">
+          Дивитись інші товари в instagram профілі
+        </button>
+      </div>
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
       {selectedProduct && <Modal product={selectedProduct} onClose={closeModal} />}

@@ -33,7 +33,7 @@ function Modal({ product, onClose }) {
         <h2>{product.name}</h2>
         <h2>{`${product.price} ₴`}</h2>
         <p>{product.description}</p>
-        <button className="buy" onClick={handleClick} type="button">
+        <button className="filled-button buy" onClick={handleClick} type="button">
           Замовити
         </button>
       </div>
