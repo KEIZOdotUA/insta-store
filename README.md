@@ -6,10 +6,10 @@ Running the application requires blob storage with file `products.json`:
 ```
 [
     {
-        "id": 0,
-        "name": "",
-        "price": 0,
-        "description": ""
+        "id": number,
+        "name": string,
+        "price": number,
+        "description": string
     }
     ...
 ]
