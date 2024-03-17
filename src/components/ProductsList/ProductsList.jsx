@@ -23,13 +23,13 @@ function ProductsList() {
     fetchData();
   }, [whitelabel.blobStorageUrl, whitelabel.productsSrc]);
 
-  const [visibleProducts, setVisibleProducts] = useState(itemsPerPage);
+  const [numberOfVisibleProducts, setNumberOfVisibleProducts] = useState(itemsPerPage);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProductId, setSelectedProductId] = useState(0);
 
   const loadMore = () => {
     setIsLoading(true);
-    setVisibleProducts((prevVisibleProducts) => prevVisibleProducts + itemsPerPage);
+    setNumberOfVisibleProducts((prevNum) => prevNum + itemsPerPage);
     setIsLoading(false);
   };
 
@@ -64,27 +64,30 @@ function ProductsList() {
   };
 
   const openModal = (productId) => {
-    const selected = products.find((p) => p.id === productId);
-    setSelectedProduct(selected);
+    setSelectedProductId(productId);
   };
 
   const closeModal = () => {
-    setSelectedProduct(null);
+    setSelectedProductId(0);
   };
 
   return (
     <div id="products-list">
-      {products.slice(0, visibleProducts).map((p) => (
+      {products.slice(0, numberOfVisibleProducts).map((p) => (
         <Product key={p.id} product={p} onClick={() => openModal(p.id)} />
       ))}
-      <div id="more-products">
-        <button className="filled-button" onClick={moreProducts} type="button">
-          Дивитись інші товари в instagram профілі
-        </button>
-      </div>
+      {products.length <= numberOfVisibleProducts && (
+        <div id="more-products">
+          <button className="filled-button" onClick={moreProducts} type="button">
+            Дивитись інші товари в instagram профілі
+          </button>
+        </div>
+      )}
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
-      {selectedProduct && <Modal product={selectedProduct} onClose={closeModal} />}
+      {selectedProductId && (
+        <Modal product={products.find((p) => p.id === selectedProductId)} onClose={closeModal} />
+      )}
     </div>
   );
 }
