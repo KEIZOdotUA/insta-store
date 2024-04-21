@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
 import useWhitelabelContext from '@context/useWhitelabelContext';
+import Transition from '@components/shared/Transition/Transition';
 import Product from './Product/Product';
 import Modal from './Modal/Modal';
 
 function ProductsList() {
   const whitelabel = useWhitelabelContext();
   const itemsPerPage = 9;
+  const animationDuration = 250;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ function ProductsList() {
   const [numberOfVisibleProducts, setNumberOfVisibleProducts] = useState(itemsPerPage);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(0);
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
 
   const loadMore = () => {
     setIsLoading(true);
@@ -65,10 +68,12 @@ function ProductsList() {
 
   const openModal = (productId) => {
     setSelectedProductId(productId);
+    setIsVisibleModal(true);
   };
 
   const closeModal = () => {
-    setSelectedProductId(0);
+    setIsVisibleModal(false);
+    setTimeout(() => setSelectedProductId(0), animationDuration * 2);
   };
 
   return (
@@ -85,9 +90,11 @@ function ProductsList() {
       )}
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
-      {selectedProductId !== 0 && (
-        <Modal product={products.find((p) => p.id === selectedProductId)} onClose={closeModal} />
-      )}
+      <Transition transitionType="opacity" isVisible={isVisibleModal} duration={animationDuration}>
+        {selectedProductId !== 0 && (
+          <Modal product={products.find((p) => p.id === selectedProductId)} onClose={closeModal} />
+        )}
+      </Transition>
     </div>
   );
 }
