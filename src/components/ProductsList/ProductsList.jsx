@@ -85,7 +85,7 @@ function ProductsList() {
       )}
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
-      {selectedProductId && (
+      {selectedProductId !== 0 && (
         <Modal product={products.find((p) => p.id === selectedProductId)} onClose={closeModal} />
       )}
     </div>
