@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
-import useWhitelabelContext from '@context/useWhitelabelContext';
+import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
 import Transition from '@components/shared/Transition/Transition';
-import Product from './Product/Product';
-import Modal from './Modal/Modal';
+import Button from '@components/shared/Button/Button';
+import Product from '@components/Product/Product';
+import Modal from '@components/Product//Modal/ProductModal';
 
 function ProductsList() {
   const whitelabel = useWhitelabelContext();
@@ -83,14 +84,14 @@ function ProductsList() {
       ))}
       {products.length <= numberOfVisibleProducts && (
         <div id="more-products">
-          <button className="filled-button" onClick={moreProducts} type="button">
+          <Button onClick={moreProducts} dark>
             Дивитись інші товари в instagram профілі
-          </button>
+          </Button>
         </div>
       )}
       <div ref={observerTarget} />
       {isLoading && <p>Loading...</p>}
-      <Transition transitionType="opacity" isVisible={isVisibleModal} duration={animationDuration}>
+      <Transition transitionType="opacity" visible={isVisibleModal} duration={animationDuration}>
         {selectedProductId !== 0 && (
           <Modal product={products.find((p) => p.id === selectedProductId)} onClose={closeModal} />
         )}

@@ -20,12 +20,12 @@ function Transition({
   children,
   transitionType,
   duration,
-  isVisible,
+  visible,
 }) {
   const nodeRef = useRef(null);
 
   return (
-    <TransitionGroup nodeRef={nodeRef} in={isVisible} timeout={duration}>
+    <TransitionGroup nodeRef={nodeRef} in={visible} timeout={duration}>
       {(state) => (
         <div
           style={{
@@ -45,7 +45,7 @@ Transition.propTypes = {
   children: PropTypes.node.isRequired,
   transitionType: PropTypes.oneOf(['transform', 'opacity']).isRequired,
   duration: PropTypes.number.isRequired,
-  isVisible: PropTypes.bool.isRequired,
+  visible: PropTypes.bool.isRequired,
 };
 
 export default Transition;

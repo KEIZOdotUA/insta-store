@@ -1,16 +1,29 @@
 import './App.css';
-import WeAre from '@components/WeAre/WeAre';
-import ProductsList from '@components/ProductsList/ProductsList';
-import WhitelabelContextProvider from '@context/WhitelabelContextProvider';
+import { useState } from 'react';
+import Header from '@components/Header/Header';
+import Bio from '@components/Bio/Bio';
+import ProductsList from '@components/Product/List/ProductsList';
+import Sidebar from '@components/Sidebar/Sidebar';
+import WhitelabelContextProvider from '@contexts/Whitelabel/WhitelabelContextProvider';
+import CartContextProvider from '@contexts/Cart/CartContextProvider';
 
 function App() {
+  const [visibleSidebar, setVisibleSidebar] = useState(false);
+
   return (
-    <div id="app-container">
-      <WhitelabelContextProvider>
-        <WeAre />
-        <ProductsList />
-      </WhitelabelContextProvider>
-    </div>
+    <WhitelabelContextProvider>
+      <CartContextProvider>
+        <Header sidebarToggler={() => setVisibleSidebar(!visibleSidebar)} />
+        <main>
+          <Bio />
+          <ProductsList />
+          <Sidebar
+            visible={visibleSidebar}
+            sidebarToggler={() => setVisibleSidebar(!visibleSidebar)}
+          />
+        </main>
+      </CartContextProvider>
+    </WhitelabelContextProvider>
   );
 }
 

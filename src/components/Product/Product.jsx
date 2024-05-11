@@ -1,17 +1,11 @@
 import './Product.css';
 import PropTypes from 'prop-types';
-import useWhitelabelContext from '@context/useWhitelabelContext';
-import getImgSrc from '@utils/getImgSrc';
+import ProductImage from '@components/Product/Image/ProductImage';
 
 function Product({ product, onClick }) {
-  const whitelabel = useWhitelabelContext();
   return (
     <div className="product" onClick={onClick} onKeyDown={onClick} role="button" tabIndex="0">
-      <img
-        className="product-img"
-        src={getImgSrc(whitelabel.blobStorageUrl, 'm', product.id)}
-        alt={product.name}
-      />
+      <ProductImage id={product.id} name={product.name} size="m" className="product-img" />
     </div>
   );
 }

@@ -1,0 +1,38 @@
+.sidebar-open-close {
+  background: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 15px;
+}
+
+#sidebar-placeholder {
+  top: 0;
+  right: 0;
+  position: fixed;
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  pointer-events: none;
+}
+
+#sidebar-content {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: visible;
+  background: var(--main-body);
+  padding: 20px;
+  box-shadow: 0 0 10px var(--shadow);
+  margin: auto;
+  pointer-events: auto;
+  font-weight: 300;
+  text-align: left;
+}
+
+.sidebar-close {
+  display: block;
+  position: fixed;
+  bottom: 80px;
+  width: 100%;
+  max-width: 390px;
+}

@@ -1,0 +1,39 @@
+.quantity-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 6px var(--shadow), 0 3px 6px var(--shadow);
+  border-radius: 3px;
+  width: 78px;
+}
+
+.quantity-input-modifier, .quantity-input-screen {
+  user-select: none;
+  outline: none;
+}
+
+.quantity-input-modifier {
+  background: var(--button-color);
+  color: var(--button-text-color);
+  border: var(--border);
+  text-align: center;
+  text-shadow: var(--shadow);
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+}
+
+.quantity-input-modifier--left {
+  border-radius: 3px 0 0 3px;
+}
+
+.quantity-input-modifier--right {
+  border-radius: 0 3px 3px 0;
+}
+
+.quantity-input-screen {
+  height: 24px;
+  width: 24px;
+  border: 0;
+  text-align: center;
+}

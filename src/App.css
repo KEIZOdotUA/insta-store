@@ -1,11 +1,15 @@
 :root {
   --text: rgba(38, 44, 64, 1);
+  --dark-background: rgba(38, 44, 64, 1);
   --modal-background: rgba(38, 44, 64, 0.5);
-  --modal-shadow: rgba(38, 44, 64, 0.3);
+  --shadow: rgba(38, 44, 64, 0.3);
   --link: rgba(65, 78, 110, 1);
+  --border: rgba(65, 78, 110, 1);
+  --disabled-button-color: rgba(38, 44, 64, 0.5);
   --button-color: rgba(65, 78, 110, 1);
   --main-body: rgba(242, 247, 251, 1);
   --button-text-color: rgba(242, 247, 251, 1);
+  --red: rgba(220, 32, 32, 1);
 }
 
 body {
@@ -17,6 +21,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--main-body);
   color: var(--text);
+  overflow-x: hidden;
 }
 
 a {
@@ -25,27 +30,9 @@ a {
   text-decoration: none;
 }
 
-button {
-  border: none;
-  cursor: pointer;
-}
-
-.filled-button {
-  min-width: fit-content;
-  min-height: 52px;
-  padding: 15px 10px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--button-color);
-  color: var(--button-text-color);
-  border-radius: 8px;
-}
-
-#app-container {
+main {
   margin: auto;
   max-width: 900px;
-  padding: 50px 0px;
+  padding: 50px 0px 50px 0px;
   display: block;
 }

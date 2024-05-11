@@ -1,0 +1,10 @@
+#header {
+  background-color: var(--main-body);
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  height: 48px;
+  width: 100%;
+  position: fixed;
+}

@@ -1,0 +1,29 @@
+#cart-icon {
+  width: auto;
+  position: relative;
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+}
+
+#cart-icon > img {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+}
+
+#cart-count {
+  width: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 7px;
+  height: 15px;
+  bottom: 7px;
+  border-radius: 100%;
+  color: var(--button-text-color);
+  background: var(--dark-background);
+  line-height: 9px;
+  position: absolute;
+  font-size: 9px;
+}
