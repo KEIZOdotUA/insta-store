@@ -1,0 +1,24 @@
+.text-input {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.text-input > input {
+  width: calc(100% - 16px);
+  height: 32px;
+  background-color: var(--main-body);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 7px;
+  color: var(--text);
+}
+
+.error {
+  border-color: var(--red) !important;
+}
+
+.error-message {
+  color: var(--red);
+}

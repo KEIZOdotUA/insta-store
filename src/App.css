@@ -9,6 +9,7 @@
   --button-color: rgba(65, 78, 110, 1);
   --main-body: rgba(242, 247, 251, 1);
   --button-text-color: rgba(242, 247, 251, 1);
+  --disabled: rgba(234, 242, 255, 1);
   --red: rgba(220, 32, 32, 1);
 }
 
@@ -28,6 +29,10 @@ a {
   font-weight: bold;
   color: var(--link);
   text-decoration: none;
+}
+
+input:focus {
+  outline: none;
 }
 
 main {

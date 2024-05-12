@@ -2,7 +2,7 @@ import React from 'react';
 import './Bio.css';
 import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
 
-function WeAre() {
+function Bio() {
   const whitelabel = useWhitelabelContext();
 
   return (
@@ -18,4 +18,4 @@ function WeAre() {
   );
 }
 
-export default WeAre;
+export default Bio;

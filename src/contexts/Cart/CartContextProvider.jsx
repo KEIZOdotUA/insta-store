@@ -54,6 +54,8 @@ function CartContextProvider({ children }) {
 
     const getTotal = () => cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
+    const clearCart = () => setCartItems([]);
+
     return {
       findCartItem,
       getItems,
@@ -62,6 +64,7 @@ function CartContextProvider({ children }) {
       decrementItemQuantity,
       removeItem,
       getTotal,
+      clearCart,
     };
   }, [cartItems]);
 

@@ -5,7 +5,7 @@
 }
 
 #cart-items {
-  height: calc(100vh - 288px);
+  height: calc(100vh - 338px);
   overflow-x: hidden;
   margin-bottom: 20px;
   border-bottom: 1px solid var(--border);
@@ -24,7 +24,7 @@
 .order-btn {
   display: block;
   position: fixed;
-  bottom: 140px;
+  bottom: 190px;
   width: 100%;
   max-width: 390px;
 }
