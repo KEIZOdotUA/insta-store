@@ -1,20 +1,22 @@
-import './ShippingDetails.css';
+import './OrderDetails.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import useCartContext from '@contexts/Cart/useCartContext';
 import TextInput from '@components/shared/TextInput/TextInput';
 import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
+import TextArea from '@components/shared/TextArea/TextArea';
 import Button from '@components/shared/Button/Button';
 
-function ShippingDetails({ onOrder }) {
+function OrderDetails({ onOrder }) {
   const { clearCart } = useCartContext();
 
-  const [shippingDetails, setShippingDetails] = useState({
+  const [orderDetails, setOrderDetails] = useState({
     city: '',
     department: '',
     phoneNumber: '',
     lastName: '',
     firstName: '',
+    comment: '',
   });
 
   const [errors, setErrors] = useState({
@@ -23,9 +25,13 @@ function ShippingDetails({ onOrder }) {
     phoneNumber: '',
     lastName: '',
     firstName: '',
+    comment: '',
   });
 
   const validateField = (value, field) => {
+    if (field === 'comment') {
+      return '';
+    }
     const errorMessage = 'Перевірте правильність введених даних';
 
     if (field === 'phoneNumber' && value.length !== 9) {
@@ -42,22 +48,25 @@ function ShippingDetails({ onOrder }) {
   const onChange = (field) => (event) => {
     const { target: { value } } = event;
 
-    setShippingDetails({ ...shippingDetails, [field]: value });
+    setOrderDetails({ ...orderDetails, [field]: value });
     setErrors({ ...errors, [field]: validateField(value, field) });
   };
 
-  const validateAllFields = () => (
-    setErrors(Object.keys(shippingDetails).reduce((validationErrors, field) => (
-      { ...validationErrors, [field]: validateField(shippingDetails[field], field) }
-    ), {}))
+  const validateAllFields = () => Object.keys(orderDetails).reduce(
+    (validationErrors, field) => ({
+      ...validationErrors,
+      [field]: validateField(orderDetails[field], field),
+    }),
+    {},
   );
 
-  const hasErrors = () => (
-    Object.values(errors).some((errorMessage) => Boolean(errorMessage.length)));
+  const checkErrors = (validationResult) => (
+    Object.values(validationResult).some((errorMessage) => Boolean(errorMessage.length)));
 
   const createOrder = () => {
-    validateAllFields();
-    if (hasErrors()) {
+    const validationResult = validateAllFields();
+    if (checkErrors(validationResult)) {
+      setErrors(validationResult);
       return;
     }
 
@@ -67,41 +76,47 @@ function ShippingDetails({ onOrder }) {
 
   return (
     <>
-      <div id="shipping-title">Доставка</div>
+      <div id="order-title">Замовлення</div>
       <TextInput
         label="Населений пункт"
-        value={shippingDetails.city}
+        value={orderDetails.city}
         error={errors.city}
         onChange={onChange('city')}
         required
       />
       <TextInput
         label={'Точка видачі "Нова Пошта"'}
-        value={shippingDetails.department}
+        value={orderDetails.department}
         error={errors.department}
         onChange={onChange('department')}
         required
       />
       <PhoneInput
         label="Номер телефону одержувача"
-        value={shippingDetails.phoneNumber}
+        value={orderDetails.phoneNumber}
         error={errors.phoneNumber}
         onChange={onChange('phoneNumber')}
         required
       />
       <TextInput
         label="Прізвище"
-        value={shippingDetails.lastName}
+        value={orderDetails.lastName}
         error={errors.lastName}
         onChange={onChange('lastName')}
         required
       />
       <TextInput
         label="Ім'я"
-        value={shippingDetails.firstName}
+        value={orderDetails.firstName}
         error={errors.firstName}
         onChange={onChange('firstName')}
         required
+      />
+      <TextArea
+        label="Коментар"
+        value={orderDetails.comment}
+        onChange={onChange('comment')}
+        placeholder="Розмір браслета чи інші побажання щодо замовлення"
       />
       <Button className="order-btn" onClick={createOrder} dark>
         замовити
@@ -110,8 +125,8 @@ function ShippingDetails({ onOrder }) {
   );
 }
 
-ShippingDetails.propTypes = {
+OrderDetails.propTypes = {
   onOrder: PropTypes.func.isRequired,
 };
 
-export default ShippingDetails;
+export default OrderDetails;

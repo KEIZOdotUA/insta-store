@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
 import Cart from '@components/Cart/Cart';
-import ShippingDetails from '@components/ShippingDetails/ShippingDetails';
+import OrderDetails from '@components/OrderDetails/OrderDetails';
 import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
 
 function Sidebar({ visible, sidebarToggler }) {
@@ -13,7 +13,7 @@ function Sidebar({ visible, sidebarToggler }) {
   const getSteppedComponent = () => {
     switch (orderStep) {
       case 0: return <Cart onOrder={() => setOrderStep(1)} />;
-      case 1: return <ShippingDetails onOrder={() => setOrderStep(2)} />;
+      case 1: return <OrderDetails onOrder={() => setOrderStep(2)} />;
       case 2: return <ConfirmationNotification />;
       default: return null;
     }

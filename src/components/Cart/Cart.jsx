@@ -20,9 +20,11 @@ function Cart({ onOrder }) {
       </div>
       <div className="price">Разом без доставки:</div>
       <div className="price price-number">{`${total} грн`}</div>
-      <Button className="order-btn" onClick={onOrder} dark>
-        оформити замовлення
-      </Button>
+      {total > 0 && (
+        <Button className="order-btn" onClick={onOrder} dark>
+          оформити замовлення
+        </Button>
+      )}
     </>
   );
 }

@@ -1,0 +1,18 @@
+.text-area {
+  display: block;
+  width: 100%;
+  margin-top: 42px;
+  font-size: 14px;
+}
+
+.text-area > textarea {
+  width: calc(100% - 16px);
+  height: 64px;
+  background-color: var(--main-body);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 7px;
+  color: var(--text);
+  resize: none;
+  font-family: inherit;
+}

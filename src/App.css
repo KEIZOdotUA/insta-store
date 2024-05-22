@@ -35,6 +35,10 @@ input:focus {
   outline: none;
 }
 
+textarea:focus {
+  outline: none;
+}
+
 main {
   margin: auto;
   max-width: 900px;
