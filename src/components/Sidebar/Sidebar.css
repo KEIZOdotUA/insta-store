@@ -21,7 +21,7 @@
   overflow-x: hidden;
   overflow-y: visible;
   background: var(--main-body);
-  padding: 20px;
+  padding: 10px 20px;
   box-shadow: 0 0 10px var(--shadow);
   margin: auto;
   pointer-events: auto;
@@ -31,8 +31,7 @@
 
 .sidebar-close {
   display: block;
-  position: fixed;
-  bottom: 130px;
   width: 100%;
   max-width: 390px;
+  margin-bottom: 40px;
 }

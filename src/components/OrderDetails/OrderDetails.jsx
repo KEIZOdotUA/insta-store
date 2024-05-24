@@ -77,47 +77,49 @@ function OrderDetails({ onOrder }) {
   return (
     <>
       <div id="order-title">Замовлення</div>
-      <TextInput
-        label="Населений пункт"
-        value={orderDetails.city}
-        error={errors.city}
-        onChange={onChange('city')}
-        required
-      />
-      <TextInput
-        label={'Точка видачі "Нова Пошта"'}
-        value={orderDetails.department}
-        error={errors.department}
-        onChange={onChange('department')}
-        required
-      />
-      <PhoneInput
-        label="Номер телефону одержувача"
-        value={orderDetails.phoneNumber}
-        error={errors.phoneNumber}
-        onChange={onChange('phoneNumber')}
-        required
-      />
-      <TextInput
-        label="Прізвище"
-        value={orderDetails.lastName}
-        error={errors.lastName}
-        onChange={onChange('lastName')}
-        required
-      />
-      <TextInput
-        label="Ім'я"
-        value={orderDetails.firstName}
-        error={errors.firstName}
-        onChange={onChange('firstName')}
-        required
-      />
-      <TextArea
-        label="Коментар"
-        value={orderDetails.comment}
-        onChange={onChange('comment')}
-        placeholder="Розмір браслета чи інші побажання щодо замовлення"
-      />
+      <div id="order-form">
+        <TextInput
+          label="Населений пункт"
+          value={orderDetails.city}
+          error={errors.city}
+          onChange={onChange('city')}
+          required
+        />
+        <TextInput
+          label={'Точка видачі "Нова Пошта"'}
+          value={orderDetails.department}
+          error={errors.department}
+          onChange={onChange('department')}
+          required
+        />
+        <PhoneInput
+          label="Номер телефону одержувача"
+          value={orderDetails.phoneNumber}
+          error={errors.phoneNumber}
+          onChange={onChange('phoneNumber')}
+          required
+        />
+        <TextInput
+          label="Прізвище"
+          value={orderDetails.lastName}
+          error={errors.lastName}
+          onChange={onChange('lastName')}
+          required
+        />
+        <TextInput
+          label="Ім'я"
+          value={orderDetails.firstName}
+          error={errors.firstName}
+          onChange={onChange('firstName')}
+          required
+        />
+        <TextArea
+          label="Коментар"
+          value={orderDetails.comment}
+          onChange={onChange('comment')}
+          placeholder="Розмір браслета чи інші побажання щодо замовлення"
+        />
+      </div>
       <Button className="order-btn" onClick={createOrder} dark>
         замовити
       </Button>
