@@ -6,9 +6,10 @@ import TextInput from '@components/shared/TextInput/TextInput';
 import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
 import Button from '@components/shared/Button/Button';
+import sendOrder from '@services/orderService';
 
 function OrderDetails({ onOrder }) {
-  const { clearCart } = useCartContext();
+  const { getItems, clearCart } = useCartContext();
 
   const [orderDetails, setOrderDetails] = useState({
     city: '',
@@ -32,6 +33,11 @@ function OrderDetails({ onOrder }) {
     if (field === 'comment') {
       return '';
     }
+
+    if (field === 'department' && value.length > 0) {
+      return '';
+    }
+
     const errorMessage = 'Перевірте правильність введених даних';
 
     if (field === 'phoneNumber' && value.length !== 9) {
@@ -69,6 +75,7 @@ function OrderDetails({ onOrder }) {
       setErrors(validationResult);
       return;
     }
+    sendOrder(orderDetails, getItems());
 
     clearCart();
     onOrder();

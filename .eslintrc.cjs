@@ -19,6 +19,7 @@ module.exports = {
         map: [
           ['@components', './src/components'],
           ['@contexts', './src/contexts'],
+          ['@services', './src/services'],
         ],
         extensions: ['.js', '.jsx', '.json'],
       },

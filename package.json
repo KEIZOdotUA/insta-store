@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.2.1",
+    "axios": "^1.7.2",
     "eslint-import-resolver-alias": "^1.1.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
