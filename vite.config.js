@@ -4,6 +4,10 @@ import eslint from 'vite-plugin-eslint';
 import path from 'path';
 
 export default defineConfig({
+  build: {
+    minify: 'esbuild',
+    target: "esnext"
+  },
   plugins: [react(), eslint()],
   resolve: {
     alias: [

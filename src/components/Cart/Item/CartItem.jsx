@@ -13,7 +13,7 @@ function CartItem({ product }) {
         <ProductImage
           id={product.id}
           name={product.name}
-          size="m"
+          size="s"
           className="cart-img"
         />
       </div>

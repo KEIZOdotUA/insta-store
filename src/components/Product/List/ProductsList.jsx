@@ -17,7 +17,7 @@ function ProductsList() {
       try {
         const response = await fetch(whitelabel.productsSrc);
         const data = await response.json();
-        setProducts(data);
+        setProducts(data.filter((product) => product.available));
       } catch (error) {
         setProducts([]);
       }
