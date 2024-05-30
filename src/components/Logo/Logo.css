@@ -3,8 +3,9 @@
   display: flex;
   width: fit-content;
   cursor: pointer;
-  margin: auto;
+  margin-right: calc(100% - 242px);
   align-items: center;
+  font-size: 22px;
 }
 
 #logo > img {

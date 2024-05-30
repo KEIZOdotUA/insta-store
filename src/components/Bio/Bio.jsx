@@ -7,8 +7,13 @@ function Bio() {
 
   return (
     <div id="bio">
-      <h2>{whitelabel.shop.name}</h2>
-      {whitelabel.shop.description.split('\n').map((item) => (
+      <h2>
+        {whitelabel.shop.description}
+      </h2>
+      Замовлення на сайті або
+      <a href={whitelabel.instagramProfile.url}> intagram сторінці</a>
+      <br />
+      {whitelabel.shop.bulletPoints.map((item) => (
         <React.Fragment key={item}>
           {item}
           <br />

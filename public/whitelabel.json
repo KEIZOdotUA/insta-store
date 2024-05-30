@@ -2,6 +2,9 @@
   "shop": {
     "name": "",
     "description": "",
+    "bulletPoints": [
+      ""
+    ],
     "logo": ""
   },
   "blobStorageUrl": "",

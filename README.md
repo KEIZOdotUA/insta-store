@@ -9,7 +9,8 @@ Running the application requires blob storage with file `products.json`:
         "id": number,
         "name": string,
         "price": number,
-        "description": string
+        "description": string,
+        "available": bool
     }
     ...
 ]
@@ -22,6 +23,7 @@ Add basic project settings to the `whitelabel.json` file in `public` folder:
   "shop": {
     "name": string,
     "description": string,
+    "bulletPoints": string[],
     "logo": string
   },
   "blobStorageUrl": string,

@@ -14,14 +14,12 @@ function App() {
     <WhitelabelContextProvider>
       <CartContextProvider>
         <Header sidebarToggler={() => setVisibleSidebar(!visibleSidebar)} />
-        <main>
-          <Bio />
-          <ProductsList />
-          <Sidebar
-            visible={visibleSidebar}
-            sidebarToggler={() => setVisibleSidebar(!visibleSidebar)}
-          />
-        </main>
+        <Bio />
+        <ProductsList />
+        <Sidebar
+          visible={visibleSidebar}
+          sidebarToggler={() => setVisibleSidebar(!visibleSidebar)}
+        />
       </CartContextProvider>
     </WhitelabelContextProvider>
   );
