@@ -24,7 +24,7 @@ function ProductsList() {
     };
 
     fetchData();
-  }, [whitelabel.blobStorageUrl, whitelabel.productsSrc]);
+  }, [whitelabel.storageUrl, whitelabel.productsSrc]);
 
   const [numberOfVisibleProducts, setNumberOfVisibleProducts] = useState(itemsPerPage);
   const [isLoading, setIsLoading] = useState(false);
