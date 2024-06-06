@@ -10,7 +10,7 @@ function ProductImage({
   const whitelabel = useWhitelabelContext();
 
   return (
-    <img src={`${whitelabel.storageUrl}/${size}-${id}.jpg`} className={className} alt={name} />
+    <img src={`${whitelabel.blobStorageUrl}/${size}-${id}.jpg`} className={className} alt={name} />
   );
 }
 

@@ -7,11 +7,12 @@
     ],
     "logo": ""
   },
-  "storageUrl": "",
+  "blobStorageUrl": "",
   "instagramProfile": {
     "name": "",
     "url": ""
   },
+  "categoriesSrc": "",
   "productsSrc": "",
   "createOrderUrl": ""
 }
