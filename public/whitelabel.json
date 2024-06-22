@@ -1,18 +1,15 @@
 {
   "shop": {
-    "name": "",
-    "description": "",
-    "bulletPoints": [
-      ""
-    ],
-    "logo": ""
+    "name": "WHITELABEL",
+    "description": "WHITELABEL - це онлайн магазин, де ви знайдете срібні браслети, намистини, підвіски та сережки.",
+    "logo": "blob-stub/logo.png"
   },
-  "blobStorageUrl": "",
+  "blobStorageUrl": "/blob-stub",
   "instagramProfile": {
-    "name": "",
-    "url": ""
+    "name": "whitelabel",
+    "url": "https://www.instagram.com"
   },
-  "categoriesSrc": "",
-  "productsSrc": "",
-  "createOrderUrl": ""
+  "categoriesSrc": "/blob-stub/categories.json",
+  "productsSrc": "/blob-stub/products.json",
+  "createOrderUrl": "https://example.com"
 }

@@ -1,0 +1,119 @@
+[
+  {
+    "id": 101001,
+    "name": "Намистина \"X\"",
+    "price": 499,
+    "description": "",
+    "available": true,
+    "category": 101,
+    "sizes": ""
+  },
+  {
+    "id": 106001,
+    "name": "Браслет із застібкою \"X\"",
+    "price": 1189,
+    "description": "",
+    "available": true,
+    "category": 106,
+    "sizes": "16,17,18,19,20,21"
+  },
+  {
+    "id": 106002,
+    "name": "Браслет із застібкою \"Y\"",
+    "price": 1189,
+    "description": "",
+    "available": true,
+    "category": 106,
+    "sizes": "16,17,18,19,20,21"
+  },
+  {
+    "id": 101002,
+    "name": "Намистина \"Y\"",
+    "price": 549,
+    "description": "",
+    "available": true,
+    "category": 101,
+    "sizes": ""
+  },
+  {
+    "id": 102001,
+    "name": "Підвіска \"X\"",
+    "price": 499,
+    "description": "",
+    "available": true,
+    "category": 102,
+    "sizes": ""
+  },
+  {
+    "id": 106003,
+    "name": "Браслет із застібкою \"Z\"",
+    "price": 1189,
+    "description": "",
+    "available": true,
+    "category": 106,
+    "sizes": "16,17,18,19,20,21"
+  },
+  {
+    "id": 102002,
+    "name": "Підвіска \"Y\"",
+    "price": 499,
+    "description": "",
+    "available": true,
+    "category": 102,
+    "sizes": ""
+  },
+  {
+    "id": 101003,
+    "name": "Намистина \"Z\"",
+    "price": 549,
+    "description": "",
+    "available": false,
+    "category": 101,
+    "sizes": ""
+  },
+  {
+    "id": 102003,
+    "name": "Підвіска \"Z\"",
+    "price": 499,
+    "description": "",
+    "available": false,
+    "category": 102,
+    "sizes": ""
+  },
+  {
+    "id": 107001,
+    "name": "Сережки \"X\"",
+    "price": 499,
+    "description": "",
+    "available": true,
+    "category": 107,
+    "sizes": ""
+  },
+  {
+    "id": 107002,
+    "name": "Сережки \"Y\"",
+    "price": 499,
+    "description": "",
+    "available": true,
+    "category": 107,
+    "sizes": ""
+  },
+  {
+    "id": 107003,
+    "name": "Сережки \"Z\"",
+    "price": 499,
+    "description": "",
+    "available": false,
+    "category": 107,
+    "sizes": ""
+  },
+  {
+    "id": 104001,
+    "name": "Захисний ланцюжок \"X\"",
+    "price": 499,
+    "description": "",
+    "available": false,
+    "category": 104,
+    "sizes": ""
+  }
+ ]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 106,
+    "name": "Браслети",
+    "available": true
+  },
+  {
+    "id": 101,
+    "name": "Намистини",
+    "available": true
+  },
+  {
+    "id": 102,
+    "name": "Підвіски",
+    "available": true
+  },
+  {
+    "id": 107,
+    "name": "Сережки",
+    "available": true
+  },
+  {
+    "id": 103,
+    "name": "Кліпси",
+    "available": false
+  },
+  {
+    "id": 104,
+    "name": "Захисні ланцюжки",
+    "available": false
+  },
+  {
+    "id": 105,
+    "name": "Мурано",
+    "available": false
+  }
+ ]
