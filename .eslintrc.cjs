@@ -20,6 +20,7 @@ module.exports = {
           ['@components', './src/components'],
           ['@contexts', './src/contexts'],
           ['@services', './src/services'],
+          ['@helpers', './src/helpers'],
         ],
         extensions: ['.js', '.jsx', '.json'],
       },
