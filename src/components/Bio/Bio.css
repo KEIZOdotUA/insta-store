@@ -1,4 +1,12 @@
 #bio {
+  padding: 0 20px 0 20px;
   display: block;
-  text-align: center;
+  text-align: justify;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#bio > p > b {
+  font-weight: 500;
+  color: var(--text);
 }

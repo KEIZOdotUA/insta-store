@@ -1,14 +1,10 @@
 {
   "shop": {
     "name": "WHITELABEL",
-    "description": "WHITELABEL - це онлайн магазин, де ви знайдете срібні браслети, намистини, підвіски та сережки.",
-    "logo": "blob-stub/logo.png"
+    "logo": "blob-stub/logo.png",
+    "bio": "<b>WHITELABEL - це онлайн магазин, де ви знайдете срібні браслети, намистини, підвіски та сережки.</b> В нас Ви можете придбати прикраси за цінами від виробника. Для замовлення необхідно всього декілька кліків на сайті, або ж Ви можете звернутись за консультацією на нашій <a href=\"https://www.instagram.com\"> intagram сторінці </a> та оформити замовлення там. Доставка здійснюється за допомогою сервісу &quot;Нова Пошта&quot;, а оплата - при отриманні. Також, протягом 14 днів діє функція обміну та легкого повернення."
   },
   "blobStorageUrl": "/blob-stub",
-  "instagramProfile": {
-    "name": "whitelabel",
-    "url": "https://www.instagram.com"
-  },
   "categoriesSrc": "/blob-stub/categories.json",
   "productsSrc": "/blob-stub/products.json",
   "createOrderUrl": "https://example.com"
