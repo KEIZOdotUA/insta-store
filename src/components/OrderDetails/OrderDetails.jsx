@@ -7,9 +7,10 @@ import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
 import Button from '@components/shared/Button/Button';
 import sendOrder from '@services/orderService';
+import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function OrderDetails({ onOrder }) {
-  const { getItems, clearCart } = useCartContext();
+  const { getItems, clearCart, getTotal } = useCartContext();
 
   const [orderDetails, setOrderDetails] = useState({
     city: '',
@@ -77,6 +78,21 @@ function OrderDetails({ onOrder }) {
     }
     sendOrder(orderDetails, getItems());
 
+    dispatchTrackingEvent({
+      event: 'purchase',
+      ecommerce: {
+        transaction_id: new Date().toISOString(),
+        value: getTotal(),
+        currency: 'UAH',
+        items: (getItems()).map((item, index) => ({
+          item_id: item.id,
+          item_name: item.name,
+          index,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+      },
+    });
     clearCart();
     onOrder();
   };

@@ -1,13 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './ProductModal.css';
 import PropTypes from 'prop-types';
 import ProductImage from '@components/Product/Image/ProductImage';
 import Button from '@components/shared/Button/Button';
+import SizePicker from '@components/shared/SizePicker/SizePicker';
 import useCartContext from '@contexts/Cart/useCartContext';
+import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function ProductModal({ product, onClose }) {
+  const [selectedSize, setSelectedSize] = useState(0);
   const { findCartItem, addItem: addProductToCart } = useCartContext();
-  const isProductInCart = findCartItem(product.id);
+  const itemInCart = findCartItem(product.id);
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -16,6 +19,32 @@ function ProductModal({ product, onClose }) {
       document.body.style.overflow = 'auto';
     };
   }, []);
+
+  useEffect(() => {
+    if (itemInCart && product.sizes) {
+      setSelectedSize(itemInCart.selectedSize);
+    }
+  }, [itemInCart, product.sizes]);
+
+  const onAddProductToCart = (item) => {
+    addProductToCart(item);
+    dispatchTrackingEvent({
+      event: 'add_to_cart',
+      ecommerce: {
+        currency: 'UAH',
+        value: item.price,
+        items: [
+          {
+            item_id: item.id,
+            item_name: item.name,
+            index: 0,
+            price: item.price,
+            quantity: 1,
+          },
+        ],
+      },
+    });
+  };
 
   return (
     <div className="modal-overlay">
@@ -26,13 +55,21 @@ function ProductModal({ product, onClose }) {
         <ProductImage id={product.id} name={product.name} size="l" className="modal-img" />
         <h2>{product.name}</h2>
         <h2>{`${product.price} ₴`}</h2>
+        {product.sizes && (
+          <SizePicker
+            sizes={product.sizes}
+            setSize={setSelectedSize}
+            selectedSize={selectedSize}
+            disabled={Boolean(itemInCart)}
+          />
+        )}
         <p>{product.description}</p>
-        {isProductInCart ? (
+        {itemInCart ? (
           <Button className="modal-btn" onClick={() => {}} disabled>
             додано в кошик
           </Button>
         ) : (
-          <Button className="modal-btn" onClick={() => addProductToCart(product)} dark>
+          <Button className="modal-btn" onClick={() => onAddProductToCart({ ...product, selectedSize })} dark>
             додати в кошик
           </Button>
         )}
@@ -50,6 +87,8 @@ ProductModal.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
+    category: PropTypes.number.isRequired,
+    sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
 };

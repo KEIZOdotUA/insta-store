@@ -5,6 +5,7 @@ import Transition from '@components/shared/Transition/Transition';
 import Category from '@components/Product/Category/Category';
 import Product from '@components/Product/Product';
 import Modal from '@components/Product/Modal/ProductModal';
+import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function ProductsList() {
   const whitelabel = useWhitelabelContext();
@@ -20,6 +21,20 @@ function ProductsList() {
   const [categories, setCategories] = useState([]);
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
+
+  const pushGA4ViewTtemList = (products) => {
+    dispatchTrackingEvent({
+      event: 'view_item_list',
+      ecommerce: {
+        items: products.map((product, index) => ({
+          item_id: product.id,
+          item_name: product.name,
+          index,
+          price: product.price,
+        })),
+      },
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,9 +55,16 @@ function ProductsList() {
 
       try {
         const productsResponse = await fetch(whitelabel.productsSrc);
-        const productsData = await productsResponse.json();
+        const productsData = (await productsResponse.json()).map((product) => (
+          {
+            ...product,
+            sizes: product.sizes
+              ? product.sizes.split(',').map((size) => parseInt(size, 10))
+              : [],
+          }));
         setAvailableProducts(productsData.filter((product) => product.available));
         setFilteredProducts(productsData.filter((product) => product.available));
+        pushGA4ViewTtemList(productsData.filter((product) => product.available));
       } catch (error) {
         setAvailableProducts([]);
         setFilteredProducts([]);
@@ -90,11 +112,29 @@ function ProductsList() {
     }
 
     setFilteredProducts(availableProducts.filter((product) => product.category === categoryId));
+    pushGA4ViewTtemList(availableProducts.filter((product) => product.category === categoryId));
   };
 
-  const openModal = (productId) => {
-    setSelectedProductId(productId);
+  const openModal = (product) => {
+    setSelectedProductId(product.id);
     setIsVisibleModal(true);
+
+    dispatchTrackingEvent({
+      event: 'view_item',
+      ecommerce: {
+        currency: 'UAH',
+        value: product.price,
+        items: [
+          {
+            item_id: product.id,
+            item_name: product.name,
+            index: 0,
+            price: product.price,
+            quantity: 1,
+          },
+        ],
+      },
+    });
   };
 
   const closeModal = () => {
@@ -110,7 +150,7 @@ function ProductsList() {
         ))}
       </div>
       {filteredProducts.slice(0, numberOfVisibleProducts).map((p) => (
-        <Product key={p.id} product={p} onClick={() => openModal(p.id)} />
+        <Product key={p.id} product={p} onClick={() => openModal(p)} />
       ))}
       <div ref={observerTarget} />
       <Transition transitionType="opacity" visible={isVisibleModal} duration={animationDuration}>
