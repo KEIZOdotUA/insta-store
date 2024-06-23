@@ -55,7 +55,7 @@ function ProductModal({ product, onClose }) {
         <ProductImage id={product.id} name={product.name} size="l" className="modal-img" />
         <h2>{product.name}</h2>
         <h2>{`${product.price} ₴`}</h2>
-        {product.sizes && (
+        {product.sizes.length > 0 && (
           <SizePicker
             sizes={product.sizes}
             setSize={setSelectedSize}
