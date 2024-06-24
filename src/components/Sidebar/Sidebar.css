@@ -1,4 +1,4 @@
-.sidebar-open-close {
+.sidebar__open-close {
   background: none;
   position: fixed;
   top: 0;
@@ -6,7 +6,7 @@
   margin: 15px;
 }
 
-#sidebar-placeholder {
+#sidebar__placeholder {
   top: 0;
   right: 0;
   position: fixed;
@@ -16,7 +16,7 @@
   pointer-events: none;
 }
 
-#sidebar-content {
+#sidebar__content {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: visible;
@@ -29,7 +29,7 @@
   text-align: left;
 }
 
-.sidebar-close {
+.sidebar__close {
   display: block;
   width: 100%;
   max-width: 390px;

@@ -6,14 +6,14 @@ function QuantityInput({ quantity, onIncrement, onDecrement }) {
   return (
     <div className="quantity-input">
       <Button
-        className="quantity-input-modifier quantity-input-modifier--left"
+        className="quantity-input__modifier quantity-input__modifier--left"
         onClick={onDecrement}
       >
         &mdash;
       </Button>
-      <input className="quantity-input-screen" type="text" value={quantity} readOnly />
+      <input className="quantity-input__screen" type="text" value={quantity} readOnly />
       <Button
-        className="quantity-input-modifier quantity-input-modifier--right"
+        className="quantity-input__modifier quantity-input__modifier--right"
         onClick={onIncrement}
       >
         &#xff0b;

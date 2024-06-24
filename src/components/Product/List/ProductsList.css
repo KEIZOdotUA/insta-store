@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   margin-bottom: 50px;
+  padding: 0px 10px 0px 10px;
 }
 
 #categories-list {

@@ -27,14 +27,14 @@ function Sidebar({ visible, sidebarToggler }) {
   };
 
   return (
-    <div id="sidebar-placeholder">
+    <div id="sidebar__placeholder">
       <Transition transitionType="transform" visible={visible} duration={animationDuration}>
-        <div id="sidebar-content">
-          <Button className="sidebar-open-close" onClick={onClose}>
+        <div id="sidebar__content">
+          <Button className="sidebar__open-close" onClick={onClose}>
             <img src="./close.svg" alt="close" />
           </Button>
           {getSteppedComponent()}
-          <Button className="sidebar-close" onClick={onClose} light>
+          <Button className="sidebar__close" onClick={onClose} light>
             продовжити покупки
           </Button>
         </div>

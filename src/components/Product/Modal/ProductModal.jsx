@@ -47,12 +47,12 @@ function ProductModal({ product, onClose }) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <Button className="modal-close" onClick={onClose}>
+    <div className="modal__overlay">
+      <div className="modal__content">
+        <Button className="modal__close" onClick={onClose}>
           <img src="./close.svg" alt="close" />
         </Button>
-        <ProductImage id={product.id} name={product.name} size="l" className="modal-img" />
+        <ProductImage id={product.id} name={product.name} size="l" className="modal__img" />
         <h2>{product.name}</h2>
         <h2>{`${product.price} ₴`}</h2>
         {product.sizes.length > 0 && (
@@ -65,15 +65,15 @@ function ProductModal({ product, onClose }) {
         )}
         <p>{product.description}</p>
         {itemInCart ? (
-          <Button className="modal-btn" onClick={() => {}} disabled>
+          <Button className="modal__btn" onClick={() => {}} disabled>
             додано в кошик
           </Button>
         ) : (
-          <Button className="modal-btn" onClick={() => onAddProductToCart({ ...product, selectedSize })} dark>
+          <Button className="modal__btn" onClick={() => onAddProductToCart({ ...product, selectedSize })} dark>
             додати в кошик
           </Button>
         )}
-        <Button className="modal-btn" onClick={onClose} light>
+        <Button className="modal__btn" onClick={onClose} light>
           продовжити покупки
         </Button>
       </div>

@@ -9,17 +9,17 @@ function CartItem({ item }) {
 
   return (
     <div className="cart-item">
-      <div className="cart-item-img-container">
+      <div className="cart-item__img-container">
         <ProductImage id={item.id} name={item.name} size="s" className="cart-img" />
       </div>
-      <div className="cart-item-description-container">
-        <div className="cart-item-title">
+      <div className="cart-item__description-container">
+        <div className="cart-item__title">
           {item.name}
-          {item.selectedSize && `, ${item.selectedSize} розмір`}
+          {item.selectedSize > 0 && `, ${item.selectedSize} розмір`}
         </div>
-        <div className="cart-item-price">{`${item.price} ₴`}</div>
+        <div className="cart-item__price">{`${item.price} ₴`}</div>
         <div
-          className="cart-item-delete"
+          className="cart-item__delete"
           role="button"
           tabIndex={0}
           onClick={() => removeItem(item.id)}
@@ -27,7 +27,7 @@ function CartItem({ item }) {
         >
           видалити
         </div>
-        <div className="cart-item-quantity">
+        <div className="cart-item__quantity">
           <QuantityInput
             quantity={item.quantity}
             onIncrement={() => incrementItemQuantity(item.id)}

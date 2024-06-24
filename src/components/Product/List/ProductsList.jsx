@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
 import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
 import Transition from '@components/shared/Transition/Transition';
-import Category from '@components/Product/Category/Category';
-import Product from '@components/Product/Product';
+import ProductCategory from '@components/Product/Category/ProductCategory';
+import ProductCard from '@components/Product/Card/ProductCard';
 import Modal from '@components/Product/Modal/ProductModal';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
@@ -146,13 +146,17 @@ function ProductsList() {
     <div id="products-list">
       <div id="categories-list">
         {categories.map((c) => (
-          <Category key={c.id} name={c.name} onClick={() => filterProductsByCategory(c.id)} />
+          <ProductCategory
+            key={c.id}
+            name={c.name}
+            onClick={() => filterProductsByCategory(c.id)}
+          />
         ))}
       </div>
       {filteredProducts.slice(0, numberOfVisibleProducts).map((p) => (
-        <Product key={p.id} product={p} onClick={() => openModal(p)} />
+        <ProductCard key={p.id} product={p} onClick={() => openModal(p)} />
       ))}
-      <div ref={observerTarget} />
+      <div ref={observerTarget} style={{ width: '100%' }} />
       <Transition transitionType="opacity" visible={isVisibleModal} duration={animationDuration}>
         {selectedProductId !== 0 && (
           <Modal
