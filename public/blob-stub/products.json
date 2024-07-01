@@ -15,7 +15,8 @@
     "description": "",
     "available": true,
     "category": 106,
-    "sizes": "16,17,18,19,20,21"
+    "sizes": "16,17,18,19,20,21",
+    "sizeHint": "підказка"
   },
   {
     "id": 106002,
@@ -24,7 +25,8 @@
     "description": "",
     "available": true,
     "category": 106,
-    "sizes": "16,17,18,19,20,21"
+    "sizes": "16,17,18,19,20,21",
+    "sizeHint": "підказка"
   },
   {
     "id": 101002,
@@ -51,7 +53,8 @@
     "description": "",
     "available": true,
     "category": 106,
-    "sizes": "16,17,18,19,20,21"
+    "sizes": "16,17,18,19,20,21",
+    "sizeHint": "підказка"
   },
   {
     "id": 102002,

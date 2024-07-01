@@ -2,12 +2,14 @@ import { useEffect } from 'react';
 import './SizePicker.css';
 import PropTypes from 'prop-types';
 import SizeButton from './SizeButton/SizeButton';
+import SizePickerHint from './Hint/SizePickerHint';
 
 function SizePicker({
   sizes,
   setSize,
   selectedSize,
   disabled,
+  sizeHint,
 }) {
   useEffect(() => {
     if (selectedSize === 0) {
@@ -24,8 +26,8 @@ function SizePicker({
 
   return (
     <>
-      <div className="title">
-        <strong>Оберіть розмір:</strong>
+      <div className="size-picker__title">
+        <strong>Pозмір:</strong>
       </div>
       <div>
         {sizes.map((size) => (
@@ -38,15 +40,21 @@ function SizePicker({
           />
         ))}
       </div>
+      {sizeHint.length > 0 && <SizePickerHint hint={sizeHint} />}
     </>
   );
 }
+
+SizePicker.defaultProps = {
+  sizeHint: '',
+};
 
 SizePicker.propTypes = {
   sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
   setSize: PropTypes.func.isRequired,
   selectedSize: PropTypes.number.isRequired,
   disabled: PropTypes.bool.isRequired,
+  sizeHint: PropTypes.string,
 };
 
 export default SizePicker;

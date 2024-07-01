@@ -5,7 +5,7 @@
 }
 
 #cart-items {
-  min-height: calc(100vh - 338px);
+  min-height: calc(100vh - 400px);
   overflow-x: hidden;
   margin-bottom: 20px;
   border-bottom: 1px solid var(--border);

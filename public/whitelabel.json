@@ -7,5 +7,6 @@
   "blobStorageUrl": "/blob-stub",
   "categoriesSrc": "/blob-stub/categories.json",
   "productsSrc": "/blob-stub/products.json",
+  "packagingSrc": "/blob-stub/packaging.json",
   "createOrderUrl": "https://example.com"
 }

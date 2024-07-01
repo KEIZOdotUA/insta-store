@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './ProductModal.css';
 import PropTypes from 'prop-types';
 import ProductImage from '@components/Product/Image/ProductImage';
+import Modal from '@components/shared/Modal/Modal';
 import Button from '@components/shared/Button/Button';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
 import useCartContext from '@contexts/Cart/useCartContext';
@@ -47,37 +48,37 @@ function ProductModal({ product, onClose }) {
   };
 
   return (
-    <div className="modal__overlay">
-      <div className="modal__content">
-        <Button className="modal__close" onClick={onClose}>
-          <img src="./close.svg" alt="close" />
+    <Modal onClose={onClose}>
+      <ProductImage id={product.id} name={product.name} size="l" className="product-modal__img" />
+      <h2>{product.name}</h2>
+      <h2>{`${product.price} грн`}</h2>
+      {product.sizes.length > 0 && (
+        <SizePicker
+          sizes={product.sizes}
+          setSize={setSelectedSize}
+          selectedSize={selectedSize}
+          disabled={Boolean(itemInCart)}
+          sizeHint={product.sizeHint}
+        />
+      )}
+      <p>{product.description}</p>
+      {itemInCart ? (
+        <Button className="product-modal__btn" onClick={() => {}} disabled>
+          додано в кошик
         </Button>
-        <ProductImage id={product.id} name={product.name} size="l" className="modal__img" />
-        <h2>{product.name}</h2>
-        <h2>{`${product.price} ₴`}</h2>
-        {product.sizes.length > 0 && (
-          <SizePicker
-            sizes={product.sizes}
-            setSize={setSelectedSize}
-            selectedSize={selectedSize}
-            disabled={Boolean(itemInCart)}
-          />
-        )}
-        <p>{product.description}</p>
-        {itemInCart ? (
-          <Button className="modal__btn" onClick={() => {}} disabled>
-            додано в кошик
-          </Button>
-        ) : (
-          <Button className="modal__btn" onClick={() => onAddProductToCart({ ...product, selectedSize })} dark>
-            додати в кошик
-          </Button>
-        )}
-        <Button className="modal__btn" onClick={onClose} light>
-          продовжити покупки
+      ) : (
+        <Button
+          className="product-modal__btn"
+          onClick={() => onAddProductToCart({ ...product, selectedSize })}
+          dark
+        >
+          додати в кошик
         </Button>
-      </div>
-    </div>
+      )}
+      <Button className="product-modal__btn" onClick={onClose} light>
+        продовжити покупки
+      </Button>
+    </Modal>
   );
 }
 
@@ -89,6 +90,7 @@ ProductModal.propTypes = {
     description: PropTypes.string.isRequired,
     category: PropTypes.number.isRequired,
     sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
+    sizeHint: PropTypes.string.isRequired,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
 };

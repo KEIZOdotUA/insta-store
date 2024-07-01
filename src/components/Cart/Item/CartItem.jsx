@@ -17,7 +17,7 @@ function CartItem({ item }) {
           {item.name}
           {item.selectedSize > 0 && `, ${item.selectedSize} розмір`}
         </div>
-        <div className="cart-item__price">{`${item.price} ₴`}</div>
+        <div className="cart-item__price">{`${item.price} грн`}</div>
         <div
           className="cart-item__delete"
           role="button"

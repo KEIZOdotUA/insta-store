@@ -1,6 +1,7 @@
 import './Cart.css';
 import PropTypes from 'prop-types';
 import useCartContext from '@contexts/Cart/useCartContext';
+import AdditionalPackaging from '@components/AdditionalPackaging/AdditionalPackaging';
 import Button from '@components/shared/Button/Button';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 import CartItem from './Item/CartItem';
@@ -38,6 +39,7 @@ function Cart({ onOrder }) {
           <CartItem key={item.id} item={item} />
         ))}
       </div>
+      {total > 0 && <AdditionalPackaging />}
       <div className="price">Разом без доставки:</div>
       <div className="price price-number">{`${total} грн`}</div>
       {total > 0 && (

@@ -6,6 +6,7 @@ import TextInput from '@components/shared/TextInput/TextInput';
 import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
 import Button from '@components/shared/Button/Button';
+import Checkbox from '@components/shared/Checkbox/Checkbox';
 import sendOrder from '@services/orderService';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
@@ -18,6 +19,7 @@ function OrderDetails({ onOrder }) {
     phoneNumber: '',
     lastName: '',
     firstName: '',
+    doNotCallBack: false,
     comment: '',
   });
 
@@ -27,11 +29,13 @@ function OrderDetails({ onOrder }) {
     phoneNumber: '',
     lastName: '',
     firstName: '',
+    doNotCallBack: '',
     comment: '',
   });
 
   const validateField = (value, field) => {
-    if (field === 'comment') {
+    const skipValidationFor = ['comment', 'doNotCallBack'];
+    if (skipValidationFor.includes(field)) {
       return '';
     }
 
@@ -54,7 +58,6 @@ function OrderDetails({ onOrder }) {
 
   const onChange = (field) => (event) => {
     const { target: { value } } = event;
-
     setOrderDetails({ ...orderDetails, [field]: value });
     setErrors({ ...errors, [field]: validateField(value, field) });
   };
@@ -136,11 +139,19 @@ function OrderDetails({ onOrder }) {
           onChange={onChange('firstName')}
           required
         />
+        <Checkbox
+          label="Мені не потрібно телефонувати"
+          value={orderDetails.doNotCallBack}
+          onChange={() => setOrderDetails({
+            ...orderDetails,
+            doNotCallBack: !orderDetails.doNotCallBack,
+          })}
+        />
         <TextArea
           label="Коментар"
           value={orderDetails.comment}
           onChange={onChange('comment')}
-          placeholder="Розмір браслета чи інші побажання щодо замовлення"
+          placeholder="Промокод чи інші побажання щодо замовлення"
         />
       </div>
       <Button className="order-btn" onClick={createOrder} dark>
