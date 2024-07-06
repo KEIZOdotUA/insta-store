@@ -25,17 +25,12 @@ function ProductCard({ product, onClick }) {
         {product.name}
       </div>
       <div className="product-card__price">
-        {`${product.price} `}
+        {'Ціна: '}
+        {product.oldPrice > 0 && product.oldPrice !== product.price && (
+          <s>{`${product.oldPrice}`}</s>
+        )}
+        {` ${product.price} `}
         грн
-      </div>
-      <div
-        className="product-card__open-product"
-        onClick={onClick}
-        onKeyDown={onClick}
-        role="button"
-        tabIndex="0"
-      >
-        <span>ПЕРЕГЛЯНУТИ</span>
       </div>
     </div>
   );
@@ -45,6 +40,7 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    oldPrice: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
