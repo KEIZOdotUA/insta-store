@@ -1,7 +1,7 @@
 import './TextArea.css';
 import PropTypes from 'prop-types';
 
-function TextInput({
+function TextArea({
   label,
   value,
   onChange,
@@ -15,16 +15,16 @@ function TextInput({
   );
 }
 
-TextInput.defaultProps = {
+TextArea.defaultProps = {
   value: '',
   placeholder: '',
 };
 
-TextInput.propTypes = {
+TextArea.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
 };
 
-export default TextInput;
+export default TextArea;
