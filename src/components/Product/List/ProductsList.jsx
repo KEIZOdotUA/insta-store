@@ -46,7 +46,7 @@ function ProductsList() {
         setCategories(
           [
             defaultCategory,
-            ...categoriesData.filter((category) => category.available),
+            ...categoriesData,
           ],
         );
       } catch (error) {

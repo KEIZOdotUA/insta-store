@@ -13,6 +13,7 @@ This project was developed as a sample website for small jewelry stores that pri
 - ESLint
 - Axios
 - Prop-Types
+- Vitest
 
 # Running the sample locally
 
