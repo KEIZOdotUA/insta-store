@@ -1,0 +1,25 @@
+#contact-us {
+  font-size: 17px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+
+#contact-us > p {
+  display: flex;
+  text-transform: none;
+  font-weight: 400;
+}
+
+#contact-us > p > a {
+  display: flex;
+  text-transform: none;
+  font-weight: 400;
+}
+
+#contact-us > p > img {
+  margin-right: 5px;
+}
+
+#contact-us > p > a > img {
+  margin-right: 5px;
+}

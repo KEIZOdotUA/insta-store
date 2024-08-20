@@ -2,12 +2,8 @@
   height: 100%;
   display: flex;
   width: fit-content;
-  cursor: pointer;
-  margin-right: calc(100% - 242px);
+  text-align: center;
   align-items: center;
+  cursor: pointer;
   font-size: 22px;
-}
-
-#logo > img {
-  margin-right: 10px;
 }

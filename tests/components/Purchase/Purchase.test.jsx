@@ -6,15 +6,15 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import Sidebar from '@components/Sidebar/Sidebar';
+import Purchase from '@components/Purchase/Purchase';
 
 vi.mock('@components/ConfirmationNotification/ConfirmationNotification');
 
-describe('Sidebar', () => {
-  const mockSidebarToggler = vi.fn();
+describe('Purchase', () => {
+  const mockPurchaseToggler = vi.fn();
 
   beforeEach(() => {
-    mockSidebarToggler.mockClear();
+    mockPurchaseToggler.mockClear();
     vi.mock('@components/shared/Transition/Transition', () => ({
       __esModule: true,
       default: vi.fn(({ children }) => <div>{children}</div>),
@@ -35,7 +35,7 @@ describe('Sidebar', () => {
 
   it('default', () => {
     const { getByText } = render(
-      <Sidebar visible sidebarToggler={mockSidebarToggler} />,
+      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     expect(getByText('Mocked Cart')).toBeInTheDocument();
@@ -43,7 +43,7 @@ describe('Sidebar', () => {
 
   it('OrderDetails', () => {
     const { getByText } = render(
-      <Sidebar visible sidebarToggler={mockSidebarToggler} />,
+      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     fireEvent.click(getByText('Mocked Cart'));
@@ -52,7 +52,7 @@ describe('Sidebar', () => {
 
   it('ConfirmationNotification ', () => {
     const { getByText } = render(
-      <Sidebar visible sidebarToggler={mockSidebarToggler} />,
+      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     fireEvent.click(getByText('Mocked Cart'));
@@ -62,7 +62,7 @@ describe('Sidebar', () => {
 
   it('resets', async () => {
     const { getByText, getByAltText } = render(
-      <Sidebar visible sidebarToggler={mockSidebarToggler} />,
+      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     fireEvent.click(getByText('Mocked Cart'));
@@ -71,7 +71,7 @@ describe('Sidebar', () => {
     fireEvent.click(getByAltText('close'));
 
     await waitFor(() => {
-      expect(mockSidebarToggler).toHaveBeenCalledTimes(1);
+      expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
     });
 
     await waitFor(() => {
@@ -80,21 +80,21 @@ describe('Sidebar', () => {
     });
   });
 
-  it('sidebarToggler', async () => {
+  it('purchaseToggler', async () => {
     const { getByAltText } = render(
-      <Sidebar visible sidebarToggler={mockSidebarToggler} />,
+      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     fireEvent.click(getByAltText('close'));
 
     await waitFor(() => {
-      expect(mockSidebarToggler).toHaveBeenCalledTimes(1);
+      expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
     });
   });
 
   it('продовжити покупки', async () => {
     const { getByText } = render(
-      <Sidebar visible sidebarToggler={mockSidebarToggler} />,
+      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     fireEvent.click(getByText('Mocked Cart'));
@@ -103,7 +103,7 @@ describe('Sidebar', () => {
     fireEvent.click(getByText('продовжити покупки'));
 
     await waitFor(() => {
-      expect(mockSidebarToggler).toHaveBeenCalledTimes(1);
+      expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
       expect(getByText('Mocked Cart')).toBeInTheDocument();
     });
   });

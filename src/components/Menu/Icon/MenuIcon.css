@@ -1,0 +1,13 @@
+#menu-icon {
+  width: auto;
+  position: relative;
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+}
+
+#menu-icon > img {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+}

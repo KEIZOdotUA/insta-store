@@ -2,7 +2,14 @@
   "shop": {
     "name": "WHITELABEL",
     "logo": "blob-stub/logo.png",
-    "bio": "<b>WHITELABEL - це онлайн магазин, де ви знайдете срібні браслети, намистини, підвіски та сережки.</b> В нас Ви можете придбати прикраси за цінами від виробника. Для замовлення необхідно всього декілька кліків на сайті, або ж Ви можете звернутись за консультацією на нашій <a href=\"https://www.instagram.com\"> intagram сторінці </a> та оформити замовлення там. Доставка здійснюється за допомогою сервісу &quot;Нова Пошта&quot;, а оплата - при отриманні. Також, протягом 14 днів діє функція обміну та легкого повернення."
+    "bio": "<b>WHITELABEL - це онлайн магазин, де ви знайдете срібні браслети, намистини, підвіски та сережки.</b> В нас Ви можете придбати прикраси за цінами від виробника. Для замовлення необхідно всього декілька кліків на сайті, або ж Ви можете звернутись за консультацією на нашій <a href=\"https://www.instagram.com\"> intagram сторінці </a> та оформити замовлення там. Доставка здійснюється за допомогою сервісу &quot;Нова Пошта&quot;, а оплата - при отриманні. Також, протягом 14 днів діє функція обміну та легкого повернення.",
+    "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "contacts": {
+      "instagram": { "name": "instagram", "link": "https://www.instagram.com" },
+      "mail": "mail@mail.com",
+      "facebook": { "name": "facebook", "link": "https://www.facebook.com/" },
+      "phone": "+01234567891"
+    }
   },
   "blobStorageUrl": "/blob-stub",
   "categoriesSrc": "/blob-stub/categories.json",

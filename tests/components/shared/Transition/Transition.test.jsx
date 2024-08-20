@@ -44,4 +44,16 @@ describe('Transition', () => {
     expect(element.parentElement).toHaveStyle('transition: transform 300ms ease-in-out');
     expect(element.parentElement).toHaveStyle('transform: translateX(0)');
   });
+
+  it('styles for reverted transform transition', async () => {
+    const { getByText } = render(
+      <Transition transitionType="transform" duration={300} visible reverted>
+        <div>Transition Content</div>
+      </Transition>,
+    );
+
+    const element = getByText('Transition Content');
+    expect(element.parentElement).toHaveStyle('transition: transform 300ms ease-in-out');
+    expect(element.parentElement).toHaveStyle('transform: translateX(0)');
+  });
 });

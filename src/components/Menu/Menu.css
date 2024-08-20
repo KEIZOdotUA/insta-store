@@ -1,4 +1,4 @@
-.sidebar__open-close {
+.menu__open-close {
   background: none;
   position: fixed;
   top: 0;
@@ -6,9 +6,9 @@
   margin: 15px;
 }
 
-#sidebar__placeholder {
+#menu__placeholder {
   top: 0;
-  right: 0;
+  left: 0;
   position: fixed;
   width: 100%;
   max-width: 430px;
@@ -16,22 +16,29 @@
   pointer-events: none;
 }
 
-#sidebar__content {
+#menu__content {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: visible;
   background: var(--main-body);
-  padding: 10px 20px;
+  padding: 40px 20px;
   box-shadow: 0 0 10px var(--shadow);
   margin: auto;
   pointer-events: auto;
-  font-weight: 300;
   text-align: left;
+  text-transform: uppercase;
 }
 
-.sidebar__close {
-  display: block;
+#menu__content > ul {
+  font-weight: 300;
+  font-size: 20px;
+  list-style: none;
+  min-height: calc(100vh - 340px);
+}
+
+#menu__content > ul > li {
+  display: flex;
   width: 100%;
-  max-width: 390px;
-  margin: 15px 0 40px 0;
+  height: 48px;
+  align-items: center;
 }

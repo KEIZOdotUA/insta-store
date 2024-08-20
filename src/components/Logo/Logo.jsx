@@ -1,17 +1,13 @@
 import './Logo.css';
+import { Link } from 'react-router-dom';
 import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
 
 function Logo() {
   const whitelabel = useWhitelabelContext();
 
-  const handleClick = () => {
-    window.location.reload();
-  };
-
   return (
-    <div id="logo" role="button" tabIndex={0} onClick={handleClick} onKeyDown={handleClick}>
-      <img height="40px" src={whitelabel.shop.logo} alt="logo" />
-      {whitelabel.shop.name}
+    <div id="logo">
+      <Link to="/">{whitelabel.shop.name}</Link>
     </div>
   );
 }

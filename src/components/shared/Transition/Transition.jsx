@@ -10,15 +10,26 @@ const transitionStyles = {
     exiting: { transform: 'translateX(100%)' },
     exited: { transform: 'translateX(100%)' },
   },
+  'reverted-transform': {
+    entering: { transform: 'translateX(0)' },
+    entered: { transform: 'translateX(0)' },
+    exiting: { transform: 'translateX(-100%)' },
+    exited: { transform: 'translateX(-100%)' },
+  },
   opacity: {
     entered: { opacity: 1 },
     exited: { opacity: 0 },
+  },
+  'reverted-opacity': {
+    entered: { opacity: 0 },
+    exited: { opacity: 1 },
   },
 };
 
 function Transition({
   children,
   transitionType,
+  reverted,
   duration,
   visible,
 }) {
@@ -30,7 +41,7 @@ function Transition({
         <div
           style={{
             transition: `${transitionType} ${duration}ms ease-in-out`,
-            ...transitionStyles[transitionType][state],
+            ...transitionStyles[reverted ? `reverted-${transitionType}` : transitionType][state],
           }}
           className="rtg-transition"
         >
@@ -44,6 +55,7 @@ function Transition({
 Transition.propTypes = {
   children: PropTypes.node.isRequired,
   transitionType: PropTypes.oneOf(['transform', 'opacity']).isRequired,
+  reverted: PropTypes.bool.isRequired,
   duration: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
 };
