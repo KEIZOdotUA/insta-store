@@ -4,14 +4,5 @@
   justify-content: space-around;
   margin-bottom: 50px;
   padding: 0px 10px 0px 10px;
-}
-
-#categories-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  width: 100%;
-  margin: 0 0 25px 0;
-  font-weight: 500;
-  max-height: 97px;
+  margin-top: 14px;
 }

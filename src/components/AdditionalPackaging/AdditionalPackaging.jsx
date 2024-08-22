@@ -1,5 +1,5 @@
 import './AdditionalPackaging.css';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 import useCartContext from '@contexts/Cart/useCartContext';
 import { useState, useEffect } from 'react';
 import Transition from '@components/shared/Transition/Transition';
@@ -9,7 +9,7 @@ import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 const defaultPackaging = { id: 0 };
 
 function AdditionalPackaging() {
-  const whitelabel = useWhitelabelContext();
+  const { whitelabel } = useAppContext();
   const {
     findCartItem,
     addItem: addPackagingToCart,

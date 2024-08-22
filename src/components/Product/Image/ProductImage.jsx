@@ -1,4 +1,4 @@
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 import PropTypes from 'prop-types';
 
 function ProductImage({
@@ -7,7 +7,7 @@ function ProductImage({
   className,
   name,
 }) {
-  const whitelabel = useWhitelabelContext();
+  const { whitelabel } = useAppContext();
 
   return (
     <img src={`${whitelabel.blobStorageUrl}/${size}-${id}.jpg`} className={className} alt={name} />

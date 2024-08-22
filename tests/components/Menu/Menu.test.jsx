@@ -6,8 +6,10 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import useAppContext from '@contexts/App/useAppContext';
 import Menu from '@components/Menu/Menu';
 
+vi.mock('@contexts/App/useAppContext');
 vi.mock('@components/shared/Button/Button', () => ({
   __esModule: true,
   default: ({ onClick }) => (
@@ -27,6 +29,15 @@ vi.mock('@components/Menu/ContactUs/ContactUs', () => ({
   default: () => <div>Contact Us</div>,
 }));
 
+const mockAppContext = {
+  categories: [
+    { id: 1, name: 'Category 1', slug: 'Category1' },
+    { id: 2, name: 'Category 2', slug: 'Category2' },
+  ],
+};
+
+useAppContext.mockReturnValue(mockAppContext);
+
 describe('Menu', () => {
   it('default', () => {
     const mockMenuToggler = vi.fn();
@@ -44,6 +55,8 @@ describe('Menu', () => {
     expect(mockMenuToggler).toHaveBeenCalled();
 
     expect(getByText('головна')).toBeInTheDocument();
+    expect(getByText('Category 1')).toBeInTheDocument();
+    expect(getByText('Category 2')).toBeInTheDocument();
     expect(getByText('про нас')).toBeInTheDocument();
     expect(getByText('Contact Us')).toBeInTheDocument();
   });

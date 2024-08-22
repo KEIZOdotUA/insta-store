@@ -1,12 +1,15 @@
 import './Menu.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useAppContext from '@contexts/App/useAppContext';
 import Button from '@components/shared/Button/Button';
 import Transition from '@components/shared/Transition/Transition';
 import ContactUs from './ContactUs/ContactUs';
 
 function Menu({ visible, menuToggler }) {
   const animationDuration = 250;
+
+  const { categories } = useAppContext();
 
   const onClose = () => {
     menuToggler();
@@ -30,6 +33,13 @@ function Menu({ visible, menuToggler }) {
                 головна
               </Link>
             </li>
+            {categories.map((category) => (
+              <li key={category.id}>
+                <Link to={`/${category.slug}`} onClick={onClose}>
+                  {category.name}
+                </Link>
+              </li>
+            ))}
             <li>
               <Link to="/about" onClick={onClose}>
                 про нас

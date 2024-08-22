@@ -8,11 +8,11 @@ import {
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import AdditionalPackaging from '@components/AdditionalPackaging/AdditionalPackaging';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 import useCartContext from '@contexts/Cart/useCartContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext');
+vi.mock('@contexts/App/useAppContext');
 vi.mock('@contexts/Cart/useCartContext');
 vi.mock('@helpers/dispatchTrackingEvent');
 vi.mock('@components/shared/Transition/Transition', () => ({
@@ -31,7 +31,9 @@ vi.mock('@components/Product/Modal/ProductModal', () => ({
 
 describe('AdditionalPackaging', () => {
   const mockWhitelabel = {
-    packagingSrc: '/mock-packaging-src',
+    whitelabel: {
+      packagingSrc: '/mock-packaging-src',
+    },
   };
 
   const mockFindCartItem = vi.fn();
@@ -43,7 +45,7 @@ describe('AdditionalPackaging', () => {
       { json: () => Promise.resolve({ id: 1, name: 'Mock Packaging', price: 100 }) },
     ));
 
-    useWhitelabelContext.mockReturnValue(mockWhitelabel);
+    useAppContext.mockReturnValue(mockWhitelabel);
     useCartContext.mockReturnValue({
       findCartItem: mockFindCartItem,
       addItem: mockAddPackagingToCart,

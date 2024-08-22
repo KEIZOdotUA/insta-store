@@ -1,8 +1,8 @@
 import './ContactUs.css';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
 function ContactUs() {
-  const whitelabel = useWhitelabelContext();
+  const { whitelabel } = useAppContext();
 
   return (
     <div id="contact-us">

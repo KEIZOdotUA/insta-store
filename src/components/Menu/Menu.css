@@ -34,11 +34,21 @@
   font-size: 20px;
   list-style: none;
   min-height: calc(100vh - 340px);
+  padding: 0;
 }
 
 #menu__content > ul > li {
   display: flex;
-  width: 100%;
+  width: calc(100%-20px);
   height: 48px;
   align-items: center;
+  padding-left: 20px;
+}
+
+#menu__content > ul > li:first-child {
+  border-bottom: 1px solid var(--border);
+}
+
+#menu__content > ul > li:last-child {
+  border-top: 1px solid var(--border);
 }

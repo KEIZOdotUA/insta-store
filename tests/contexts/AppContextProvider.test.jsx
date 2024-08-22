@@ -6,9 +6,8 @@ import {
   vi,
 } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
-import WhitelabelContextProvider from '@contexts/Whitelabel/WhitelabelContextProvider';
+import AppContextProvider from '@contexts/App/AppContextProvider';
 
-// Partial mock for React, ensuring other exports are available
 vi.mock('react', async () => {
   const actual = await vi.importActual('react');
   return {
@@ -17,7 +16,7 @@ vi.mock('react', async () => {
   };
 });
 
-describe('WhitelabelContextProvider', () => {
+describe('AppContextProvider', () => {
   const mockFetch = vi.fn();
 
   beforeEach(() => {
@@ -32,9 +31,9 @@ describe('WhitelabelContextProvider', () => {
     );
 
     const { getByText } = render(
-      <WhitelabelContextProvider>
+      <AppContextProvider>
         <div>Child Component</div>
-      </WhitelabelContextProvider>,
+      </AppContextProvider>,
     );
 
     expect(getByText('Loading...')).toBeTruthy();
@@ -47,9 +46,9 @@ describe('WhitelabelContextProvider', () => {
     });
 
     const { getByText } = render(
-      <WhitelabelContextProvider>
+      <AppContextProvider>
         <div>Child Component</div>
-      </WhitelabelContextProvider>,
+      </AppContextProvider>,
     );
 
     await waitFor(() => expect(getByText('Child Component')).toBeTruthy());
@@ -59,9 +58,9 @@ describe('WhitelabelContextProvider', () => {
     mockFetch.mockRejectedValue(new Error('Fetch error'));
 
     const { getByText } = render(
-      <WhitelabelContextProvider>
+      <AppContextProvider>
         <div>Child Component</div>
-      </WhitelabelContextProvider>,
+      </AppContextProvider>,
     );
 
     await waitFor(() => expect(getByText('Loading...')).toBeTruthy());

@@ -7,18 +7,20 @@ import {
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Logo from '@components/Logo/Logo';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext', () => ({
+vi.mock('@contexts/App/useAppContext', () => ({
   __esModule: true,
   default: vi.fn(),
 }));
 
 describe('Logo', () => {
   it('default', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        name: 'Test Shop',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          name: 'Test Shop',
+        },
       },
     });
 
@@ -32,9 +34,11 @@ describe('Logo', () => {
   });
 
   it('Link', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        name: 'Test Shop',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          name: 'Test Shop',
+        },
       },
     });
 

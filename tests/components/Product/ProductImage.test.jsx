@@ -7,17 +7,19 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import ProductImage from '@components/Product/Image/ProductImage';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext');
+vi.mock('@contexts/App/useAppContext');
 
 describe('ProductImage', () => {
-  const mockWhitelabelContext = {
-    blobStorageUrl: 'https://mockstorage.com',
+  const mockAppContext = {
+    whitelabel: {
+      blobStorageUrl: 'https://mockstorage.com',
+    },
   };
 
   beforeEach(() => {
-    useWhitelabelContext.mockReturnValue(mockWhitelabelContext);
+    useAppContext.mockReturnValue(mockAppContext);
   });
 
   it('default', () => {

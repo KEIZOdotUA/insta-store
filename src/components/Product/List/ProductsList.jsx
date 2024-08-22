@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import { useParams } from 'react-router-dom';
+import useAppContext from '@contexts/App/useAppContext';
 import Transition from '@components/shared/Transition/Transition';
-import ProductCategory from '@components/Product/Category/ProductCategory';
 import ProductCard from '@components/Product/Card/ProductCard';
 import Modal from '@components/Product/Modal/ProductModal';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function ProductsList() {
-  const whitelabel = useWhitelabelContext();
+  const { whitelabel, categories } = useAppContext();
 
   const itemsPerPage = 9;
   const animationDuration = 250;
@@ -17,8 +17,6 @@ function ProductsList() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [numberOfVisibleProducts, setNumberOfVisibleProducts] = useState(itemsPerPage);
   const [selectedProductId, setSelectedProductId] = useState(0);
-
-  const [categories, setCategories] = useState([]);
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
@@ -38,21 +36,6 @@ function ProductsList() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const defaultCategory = { id: 0, name: 'Всі' };
-
-      try {
-        const categoriesResponse = await fetch(whitelabel.categoriesSrc);
-        const categoriesData = await categoriesResponse.json();
-        setCategories(
-          [
-            defaultCategory,
-            ...categoriesData,
-          ],
-        );
-      } catch (error) {
-        setCategories([defaultCategory]);
-      }
-
       try {
         const productsResponse = await fetch(whitelabel.productsSrc);
         const productsData = (await productsResponse.json()).map((product) => (
@@ -72,7 +55,23 @@ function ProductsList() {
     };
 
     fetchData();
-  }, [whitelabel.blobStorageUrl, whitelabel.productsSrc, whitelabel.categoriesSrc]);
+  }, [whitelabel.blobStorageUrl, whitelabel.productsSrc]);
+
+  const { categorySlug } = useParams();
+  useEffect(() => {
+    const filterProductsByCategory = (categoryId) => {
+      setNumberOfVisibleProducts(itemsPerPage * 2);
+      setFilteredProducts(availableProducts.filter((product) => product.category === categoryId));
+      pushGA4ViewTtemList(availableProducts.filter((product) => product.category === categoryId));
+    };
+
+    if (categorySlug) {
+      const category = categories.find((cat) => cat.slug === categorySlug);
+      if (category) {
+        filterProductsByCategory(category.id);
+      }
+    }
+  }, [categorySlug, availableProducts, categories]);
 
   const loadMore = () => {
     setNumberOfVisibleProducts((prevNum) => prevNum + itemsPerPage);
@@ -104,17 +103,6 @@ function ProductsList() {
     };
   }, [observerTarget]);
 
-  const filterProductsByCategory = (categoryId) => {
-    setNumberOfVisibleProducts(itemsPerPage * 2);
-    if (categoryId === 0) {
-      setFilteredProducts(availableProducts);
-      return;
-    }
-
-    setFilteredProducts(availableProducts.filter((product) => product.category === categoryId));
-    pushGA4ViewTtemList(availableProducts.filter((product) => product.category === categoryId));
-  };
-
   const openModal = (product) => {
     setSelectedProductId(product.id);
     setIsVisibleModal(true);
@@ -144,15 +132,6 @@ function ProductsList() {
 
   return (
     <div id="products-list">
-      <div id="categories-list">
-        {categories.map((c) => (
-          <ProductCategory
-            key={c.id}
-            name={c.name}
-            onClick={() => filterProductsByCategory(c.id)}
-          />
-        ))}
-      </div>
       {filteredProducts.slice(0, numberOfVisibleProducts).map((p) => (
         <ProductCard key={p.id} product={p} onClick={() => openModal(p)} />
       ))}

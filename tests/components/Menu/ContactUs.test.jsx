@@ -6,25 +6,27 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import ContactUs from '@components/Menu/ContactUs/ContactUs';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext');
+vi.mock('@contexts/App/useAppContext');
 
 describe('ContactUs', () => {
   it('instagram', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        contacts: {
-          instagram: {
-            link: 'https://instagram.com/shopname',
-            name: 'shopname',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          contacts: {
+            instagram: {
+              link: 'https://instagram.com/shopname',
+              name: 'shopname',
+            },
+            mail: '',
+            facebook: {
+              link: '',
+              name: '',
+            },
+            phone: '',
           },
-          mail: '',
-          facebook: {
-            link: '',
-            name: '',
-          },
-          phone: '',
         },
       },
     });
@@ -38,19 +40,21 @@ describe('ContactUs', () => {
   });
 
   it('mail', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        contacts: {
-          instagram: {
-            link: '',
-            name: '',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          contacts: {
+            instagram: {
+              link: '',
+              name: '',
+            },
+            mail: 'contact@shop.com',
+            facebook: {
+              link: '',
+              name: '',
+            },
+            phone: '',
           },
-          mail: 'contact@shop.com',
-          facebook: {
-            link: '',
-            name: '',
-          },
-          phone: '',
         },
       },
     });
@@ -64,19 +68,21 @@ describe('ContactUs', () => {
   });
 
   it('facebook', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        contacts: {
-          instagram: {
-            link: '',
-            name: '',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          contacts: {
+            instagram: {
+              link: '',
+              name: '',
+            },
+            mail: '',
+            facebook: {
+              link: 'https://facebook.com/shopname',
+              name: 'Shop Name',
+            },
+            phone: '',
           },
-          mail: '',
-          facebook: {
-            link: 'https://facebook.com/shopname',
-            name: 'Shop Name',
-          },
-          phone: '',
         },
       },
     });
@@ -90,19 +96,21 @@ describe('ContactUs', () => {
   });
 
   it('phone', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        contacts: {
-          instagram: {
-            link: '',
-            name: '',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          contacts: {
+            instagram: {
+              link: '',
+              name: '',
+            },
+            mail: '',
+            facebook: {
+              link: '',
+              name: '',
+            },
+            phone: '+123456789',
           },
-          mail: '',
-          facebook: {
-            link: '',
-            name: '',
-          },
-          phone: '+123456789',
         },
       },
     });
@@ -116,19 +124,21 @@ describe('ContactUs', () => {
   });
 
   it('no contact info', () => {
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        contacts: {
-          instagram: {
-            link: '',
-            name: '',
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          contacts: {
+            instagram: {
+              link: '',
+              name: '',
+            },
+            mail: '',
+            facebook: {
+              link: '',
+              name: '',
+            },
+            phone: '',
           },
-          mail: '',
-          facebook: {
-            link: '',
-            name: '',
-          },
-          phone: '',
         },
       },
     });

@@ -6,16 +6,18 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import Bio from '@components/Bio/Bio';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext');
+vi.mock('@contexts/App/useAppContext');
 
 describe('Bio', () => {
   it('default', () => {
     const mockBio = '<strong>Test Bio</strong>';
-    useWhitelabelContext.mockReturnValue({
-      shop: {
-        bio: mockBio,
+    useAppContext.mockReturnValue({
+      whitelabel: {
+        shop: {
+          bio: mockBio,
+        },
       },
     });
 

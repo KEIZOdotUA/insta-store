@@ -1,9 +1,9 @@
 import './About.css';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 import parse from 'html-react-parser';
 
 function About() {
-  const whitelabel = useWhitelabelContext();
+  const { whitelabel } = useAppContext();
 
   return (
     <div id="about">

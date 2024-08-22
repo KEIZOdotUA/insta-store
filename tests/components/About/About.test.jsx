@@ -6,9 +6,9 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import About from '@components/About/About';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext', () => ({
+vi.mock('@contexts/App/useAppContext', () => ({
   __esModule: true,
   default: vi.fn(),
 }));
@@ -21,12 +21,14 @@ vi.mock('html-react-parser', () => ({
 describe('About', () => {
   it('default', () => {
     const mockWhitelabelData = {
-      shop: {
-        about: 'This is the about section',
+      whitelabel: {
+        shop: {
+          about: 'This is the about section',
+        },
       },
     };
 
-    useWhitelabelContext.mockReturnValue(mockWhitelabelData);
+    useAppContext.mockReturnValue(mockWhitelabelData);
 
     const { getByText } = render(<About />);
 

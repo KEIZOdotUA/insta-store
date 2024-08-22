@@ -2,21 +2,25 @@
   {
     "id": 106,
     "name": "Браслети",
-    "available": true
+    "available": true,
+    "slug": "bracelets"
   },
   {
     "id": 101,
     "name": "Намистини",
-    "available": true
+    "available": true,
+    "slug": "charms"
   },
   {
     "id": 102,
     "name": "Підвіски",
-    "available": true
+    "available": true,
+    "slug": "necklaces"
   },
   {
     "id": 107,
     "name": "Сережки",
-    "available": true
+    "available": true,
+    "slug": "earrings"
   }
  ]

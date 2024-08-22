@@ -18,6 +18,11 @@ vi.mock('@components/About/About', () => ({
   default: () => <div>About Page</div>,
 }));
 
+vi.mock('@components/Product/List/ProductsList', () => ({
+  __esModule: true,
+  default: () => <div>Products List Page</div>,
+}));
+
 vi.mock('@components/Layout/Layout', () => ({
   __esModule: true,
   default: () => (
@@ -49,5 +54,16 @@ describe('AppRouter', () => {
 
     expect(getByText('Layout')).toBeInTheDocument();
     expect(getByText('About Page')).toBeInTheDocument();
+  });
+
+  it('/category-slug', async () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/category-slug']}>
+        <AppRouter />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Products List Page')).toBeInTheDocument();
   });
 });

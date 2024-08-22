@@ -1,9 +1,9 @@
 import './Logo.css';
 import { Link } from 'react-router-dom';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import useAppContext from '@contexts/App/useAppContext';
 
 function Logo() {
-  const whitelabel = useWhitelabelContext();
+  const { whitelabel } = useAppContext();
 
   return (
     <div id="logo">

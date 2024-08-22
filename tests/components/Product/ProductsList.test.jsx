@@ -8,21 +8,15 @@ import {
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import ProductsList from '@components/Product/List/ProductsList';
-import useWhitelabelContext from '@contexts/Whitelabel/useWhitelabelContext';
+import { useParams } from 'react-router-dom';
+import useAppContext from '@contexts/App/useAppContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
-vi.mock('@contexts/Whitelabel/useWhitelabelContext');
+vi.mock('@contexts/App/useAppContext');
+vi.mock('react-router-dom');
 vi.mock('@components/shared/Transition/Transition', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <div>{children}</div>),
-}));
-vi.mock('@components/Product/Category/ProductCategory', () => ({
-  __esModule: true,
-  default: vi.fn(({ name, onClick }) => (
-    <div role="button" onClick={onClick} tabIndex={0} onKeyDown={onClick}>
-      {name}
-    </div>
-  )),
 }));
 vi.mock('@components/Product/Card/ProductCard', () => ({
   __esModule: true,
@@ -59,26 +53,23 @@ class IntersectionObserver {
 global.IntersectionObserver = IntersectionObserver;
 
 describe('ProductsList', () => {
-  const mockWhitelabelContext = {
-    categoriesSrc: '/mock-categories',
-    productsSrc: '/mock-products',
-    blobStorageUrl: 'http://mock-blob-storage',
+  const mockAppContext = {
+    whitelabel: {
+      categoriesSrc: '/mock-categories',
+      productsSrc: '/mock-products',
+      blobStorageUrl: 'http://mock-blob-storage',
+    },
+    categories: [
+      { id: 1, name: 'Category 1', slug: 'Category1' },
+      { id: 2, name: 'Category 2', slug: 'Category2' },
+    ],
   };
 
   beforeEach(() => {
-    useWhitelabelContext.mockReturnValue(mockWhitelabelContext);
+    useAppContext.mockReturnValue(mockAppContext);
 
     global.fetch = vi.fn((url) => {
-      if (url === mockWhitelabelContext.categoriesSrc) {
-        return Promise.resolve({
-          json: () => Promise.resolve([
-            { id: 1, name: 'Category 1' },
-            { id: 2, name: 'Category 2' },
-          ]),
-        });
-      }
-
-      if (url === mockWhitelabelContext.productsSrc) {
+      if (url === mockAppContext.whitelabel.productsSrc) {
         return Promise.resolve({
           json: () => Promise.resolve([
             {
@@ -108,26 +99,25 @@ describe('ProductsList', () => {
 
       return Promise.reject(new Error('not found'));
     });
+
+    useParams.mockReturnValue({ categorySlug: '' });
   });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it('renders categories and products', async () => {
+  it('default', async () => {
     const { findByText } = render(<ProductsList />);
 
-    expect(await findByText('Category 1')).toBeTruthy();
-    expect(await findByText('Category 2')).toBeTruthy();
     expect(await findByText('Product 1')).toBeTruthy();
     expect(await findByText('Product 2')).toBeTruthy();
   });
 
   it('filters products by category', async () => {
-    const { findByText, queryByText } = render(<ProductsList />);
+    useParams.mockReturnValue({ categorySlug: 'Category2' });
 
-    const category2 = await findByText('Category 2');
-    fireEvent.click(category2);
+    const { findByText, queryByText } = render(<ProductsList />);
 
     expect(await findByText('Product 2')).toBeTruthy();
     expect(queryByText('Product 1')).toBeNull();
