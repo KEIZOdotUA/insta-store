@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import useAppContext from '@contexts/App/useAppContext';
 import Button from '@components/shared/Button/Button';
 import Transition from '@components/shared/Transition/Transition';
+import CloseSvg from '@assets/close.svg';
 import ContactUs from './ContactUs/ContactUs';
 
 function Menu({ visible, menuToggler }) {
@@ -18,6 +19,7 @@ function Menu({ visible, menuToggler }) {
   return (
     <div id="menu__placeholder">
       <Transition
+        key="Menu"
         transitionType="transform"
         reverted
         visible={visible}
@@ -25,7 +27,7 @@ function Menu({ visible, menuToggler }) {
       >
         <div id="menu__content">
           <Button className="menu__open-close" onClick={onClose}>
-            <img src="./close.svg" alt="close" />
+            <CloseSvg />
           </Button>
           <ul>
             <li>

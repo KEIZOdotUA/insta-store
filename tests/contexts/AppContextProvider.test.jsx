@@ -1,68 +1,90 @@
 import {
+  vi,
   describe,
   it,
   expect,
   beforeEach,
-  vi,
 } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
 import AppContextProvider from '@contexts/App/AppContextProvider';
+import AppContext from '@contexts/App/AppContext';
 
-vi.mock('react', async () => {
-  const actual = await vi.importActual('react');
-  return {
-    ...actual,
-    useEffect: (callback) => callback(),
-  };
-});
+const mockWhitelabelData = {
+  categoriesSrc: '/categories.json',
+  productsSrc: '/products.json',
+  packagingSrc: '/packaging.json',
+};
+
+const mockCategoriesData = [{ id: 1, name: 'Category 1' }];
+const mockProductsData = [
+  { id: 1, name: 'Product 1', sizes: '1,2,3' },
+  { id: 2, name: 'Product 2', sizes: '4,5' },
+];
+const mockPackagingData = { id: 3, name: 'Packaging', sizes: '6,7' };
+
+vi.mock('./AppContext', () => ({
+  __esModule: true,
+  default: vi.fn(),
+}));
 
 describe('AppContextProvider', () => {
-  const mockFetch = vi.fn();
-
   beforeEach(() => {
-    global.fetch = mockFetch;
-  });
-
-  it('renders loading state initially', () => {
-    mockFetch.mockReturnValue(
-      new Promise(() => {
-        // Never resolves
-      }),
-    );
-
-    const { getByText } = render(
-      <AppContextProvider>
-        <div>Child Component</div>
-      </AppContextProvider>,
-    );
-
-    expect(getByText('Loading...')).toBeTruthy();
-  });
-
-  it('renders children after successful data fetch', async () => {
-    const mockData = { key: 'value' };
-    mockFetch.mockResolvedValue({
-      json: () => Promise.resolve(mockData),
+    global.fetch = vi.fn((url) => {
+      switch (url) {
+        case '/whitelabel.json':
+          return Promise.resolve({
+            json: () => Promise.resolve(mockWhitelabelData),
+          });
+        case '/categories.json':
+          return Promise.resolve({
+            json: () => Promise.resolve(mockCategoriesData),
+          });
+        case '/products.json':
+          return Promise.resolve({
+            json: () => Promise.resolve(mockProductsData),
+          });
+        case '/packaging.json':
+          return Promise.resolve({
+            json: () => Promise.resolve(mockPackagingData),
+          });
+        default:
+          return Promise.reject(new Error('Unknown URL'));
+      }
     });
-
-    const { getByText } = render(
-      <AppContextProvider>
-        <div>Child Component</div>
-      </AppContextProvider>,
-    );
-
-    await waitFor(() => expect(getByText('Child Component')).toBeTruthy());
   });
 
-  it('renders loading state if data fetch fails', async () => {
-    mockFetch.mockRejectedValue(new Error('Fetch error'));
+  it('default', async () => {
+    let receivedContext;
 
-    const { getByText } = render(
+    render(
       <AppContextProvider>
-        <div>Child Component</div>
+        <AppContext.Consumer>
+          {(context) => {
+            receivedContext = context;
+            return null;
+          }}
+        </AppContext.Consumer>
       </AppContextProvider>,
     );
 
-    await waitFor(() => expect(getByText('Loading...')).toBeTruthy());
+    await waitFor(() => {
+      expect(receivedContext.whitelabel).toEqual(mockWhitelabelData);
+      expect(receivedContext.categories).toEqual(mockCategoriesData);
+      expect(receivedContext.products).toEqual([
+        ...mockProductsData.map((product) => ({
+          ...product,
+          sizes: product.sizes.split(',').map((size) => parseInt(size, 10)),
+        })),
+        {
+          ...mockPackagingData,
+        },
+      ]);
+      expect(receivedContext.packaging).toEqual(mockPackagingData);
+    });
+  });
+
+  it('displays loading message initially', () => {
+    const { getByText } = render(<AppContextProvider><div /></AppContextProvider>);
+    expect(getByText('Loading...')).toBeInTheDocument();
   });
 });

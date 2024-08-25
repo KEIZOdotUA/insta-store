@@ -7,14 +7,18 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import MenuIcon from '@components/Menu/Icon/MenuIcon';
 
+vi.mock('@assets/menu.svg', () => ({
+  __esModule: true,
+  default: vi.fn(() => <span>menu</span>),
+}));
+
 describe('MenuIcon', () => {
   it('default', () => {
     const mockOnClick = vi.fn();
-    const { getByAltText } = render(<MenuIcon onClick={mockOnClick} />);
+    const { getByText } = render(<MenuIcon onClick={mockOnClick} />);
 
-    const menuIcon = getByAltText('menu');
+    const menuIcon = getByText('menu');
     expect(menuIcon).toBeInTheDocument();
-    expect(menuIcon.src).toContain('menu.svg');
   });
 
   it('onClick', () => {

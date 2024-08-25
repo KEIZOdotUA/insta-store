@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 
-#menu-icon > img {
+#menu-icon > svg {
   position: absolute;
   top: 13px;
   right: 13px;

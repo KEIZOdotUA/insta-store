@@ -2,6 +2,7 @@ import './CartIcon.css';
 import PropTypes from 'prop-types';
 import useCartContext from '@contexts/Cart/useCartContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import CartSvgIcon from '@assets/cart.svg';
 
 function CartIcon({ onClick }) {
   const { getItems, getTotal } = useCartContext();
@@ -31,7 +32,7 @@ function CartIcon({ onClick }) {
 
   return (
     <div id="cart-icon" onClick={onViewCart} role="button" tabIndex={0} onKeyDown={onClick}>
-      <img src="./cart.svg" alt="cart" />
+      <CartSvgIcon />
       <div id="cart-count">{cartCount}</div>
     </div>
   );

@@ -53,10 +53,11 @@ function Transition({
 }
 Transition.defaultProps = {
   reverted: false,
+  children: '',
 };
 
 Transition.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   transitionType: PropTypes.oneOf(['transform', 'opacity']).isRequired,
   reverted: PropTypes.bool,
   duration: PropTypes.number.isRequired,

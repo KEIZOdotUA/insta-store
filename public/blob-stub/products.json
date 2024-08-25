@@ -2,6 +2,7 @@
   {
     "id": 101001,
     "name": "Намистина \"X\"",
+    "oldPrice": 600,
     "price": 499,
     "description": "",
     "available": true,
@@ -11,6 +12,7 @@
   {
     "id": 106001,
     "name": "Браслет із застібкою \"X\"",
+    "oldPrice": 1189,
     "price": 1189,
     "description": "",
     "available": true,
@@ -21,6 +23,7 @@
   {
     "id": 106002,
     "name": "Браслет із застібкою \"Y\"",
+    "oldPrice": 1189,
     "price": 1189,
     "description": "",
     "available": true,
@@ -31,6 +34,7 @@
   {
     "id": 101002,
     "name": "Намистина \"Y\"",
+    "oldPrice": 600,
     "price": 549,
     "description": "",
     "available": true,
@@ -40,6 +44,7 @@
   {
     "id": 102001,
     "name": "Підвіска \"X\"",
+    "oldPrice": 600,
     "price": 499,
     "description": "",
     "available": true,
@@ -49,6 +54,7 @@
   {
     "id": 106003,
     "name": "Браслет із застібкою \"Z\"",
+    "oldPrice": 1189,
     "price": 1189,
     "description": "",
     "available": true,
@@ -59,6 +65,7 @@
   {
     "id": 102002,
     "name": "Підвіска \"Y\"",
+    "oldPrice": 499,
     "price": 499,
     "description": "",
     "available": true,
@@ -68,6 +75,7 @@
   {
     "id": 101003,
     "name": "Намистина \"Z\"",
+    "oldPrice": 549,
     "price": 549,
     "description": "",
     "available": false,
@@ -77,6 +85,7 @@
   {
     "id": 102003,
     "name": "Підвіска \"Z\"",
+    "oldPrice": 499,
     "price": 499,
     "description": "",
     "available": false,
@@ -86,6 +95,7 @@
   {
     "id": 107001,
     "name": "Сережки \"X\"",
+    "oldPrice": 499,
     "price": 499,
     "description": "",
     "available": true,
@@ -95,6 +105,7 @@
   {
     "id": 107002,
     "name": "Сережки \"Y\"",
+    "oldPrice": 499,
     "price": 499,
     "description": "",
     "available": true,
@@ -104,6 +115,7 @@
   {
     "id": 107003,
     "name": "Сережки \"Z\"",
+    "oldPrice": 499,
     "price": 499,
     "description": "",
     "available": false,
@@ -113,6 +125,7 @@
   {
     "id": 104001,
     "name": "Захисний ланцюжок \"X\"",
+    "oldPrice": 499,
     "price": 499,
     "description": "",
     "available": false,

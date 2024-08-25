@@ -30,6 +30,11 @@ vi.mock('@components/Purchase/Purchase', () => ({
   )),
 }));
 
+vi.mock('@components/Product/Modal/ProductModal', () => ({
+  __esModule: true,
+  default: vi.fn(() => <div>Mock Product Modal</div>),
+}));
+
 vi.mock('react-router-dom', () => ({
   __esModule: true,
   Outlet: vi.fn(() => <div>Mock Outlet</div>),
@@ -43,6 +48,7 @@ describe('Layout', () => {
     expect(getByText('Mock Menu Hidden')).toBeInTheDocument();
     expect(getByText('Mock Purchase Hidden')).toBeInTheDocument();
     expect(getByText('Mock Outlet')).toBeInTheDocument();
+    expect(getByText('Mock Product Modal')).toBeInTheDocument();
   });
 
   it('menuToggler', async () => {

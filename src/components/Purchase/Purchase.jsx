@@ -6,6 +6,7 @@ import Button from '@components/shared/Button/Button';
 import Cart from '@components/Cart/Cart';
 import OrderDetails from '@components/OrderDetails/OrderDetails';
 import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
+import CloseSvg from '@assets/close.svg';
 
 function Purchase({ visible, purchaseToggler }) {
   const [orderStep, setOrderStep] = useState(0);
@@ -28,10 +29,10 @@ function Purchase({ visible, purchaseToggler }) {
 
   return (
     <div id="purchase__placeholder">
-      <Transition transitionType="transform" visible={visible} duration={animationDuration}>
+      <Transition key="Purchase" transitionType="transform" visible={visible} duration={animationDuration}>
         <div id="purchase__content">
           <Button className="purchase__open-close" onClick={onClose}>
-            <img src="./close.svg" alt="close" />
+            <CloseSvg />
           </Button>
           {getSteppedComponent()}
           <Button className="purchase__close" onClick={onClose} light>

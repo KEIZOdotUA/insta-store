@@ -3,52 +3,49 @@ import {
   it,
   expect,
   vi,
+  beforeEach,
 } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Logo from '@components/Logo/Logo';
 import useAppContext from '@contexts/App/useAppContext';
 
-vi.mock('@contexts/App/useAppContext', () => ({
-  __esModule: true,
-  default: vi.fn(),
-}));
+vi.mock('@contexts/App/useAppContext');
 
 describe('Logo', () => {
-  it('default', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: {
-        shop: {
-          name: 'Test Shop',
-        },
-      },
-    });
+  const mockWhitelabel = {
+    shop: {
+      name: 'Test Shop',
+    },
+  };
 
-    const { getByText } = render(
-      <MemoryRouter>
-        <Logo />
-      </MemoryRouter>,
-    );
-
-    expect(getByText('Test Shop')).toBeInTheDocument();
+  beforeEach(() => {
+    useAppContext.mockReturnValue({ whitelabel: mockWhitelabel });
+    window.scrollTo = vi.fn();
   });
 
-  it('Link', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: {
-        shop: {
-          name: 'Test Shop',
-        },
-      },
-    });
-
+  it('default', () => {
     const { getByText } = render(
       <MemoryRouter>
         <Logo />
       </MemoryRouter>,
     );
 
-    const linkElement = getByText('Test Shop').closest('a');
-    expect(linkElement).toHaveAttribute('href', '/');
+    const linkElement = getByText('Test Shop');
+    expect(linkElement).toBeInTheDocument();
+    expect(linkElement.closest('a')).toHaveAttribute('href', '/');
+  });
+
+  it('onClick', () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <Logo />
+      </MemoryRouter>,
+    );
+
+    const linkElement = getByText('Test Shop');
+    fireEvent.click(linkElement);
+
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 });

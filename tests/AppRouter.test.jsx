@@ -18,11 +18,6 @@ vi.mock('@components/About/About', () => ({
   default: () => <div>About Page</div>,
 }));
 
-vi.mock('@components/Product/List/ProductsList', () => ({
-  __esModule: true,
-  default: () => <div>Products List Page</div>,
-}));
-
 vi.mock('@components/Layout/Layout', () => ({
   __esModule: true,
   default: () => (
@@ -33,8 +28,13 @@ vi.mock('@components/Layout/Layout', () => ({
   ),
 }));
 
+vi.mock('@components/Product/List/ProductsList', () => ({
+  __esModule: true,
+  default: () => <div>Products List</div>,
+}));
+
 describe('AppRouter', () => {
-  it('default', async () => {
+  it('default', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/']}>
         <AppRouter />
@@ -45,7 +45,7 @@ describe('AppRouter', () => {
     expect(getByText('Home Page')).toBeInTheDocument();
   });
 
-  it('/about', async () => {
+  it('/about', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/about']}>
         <AppRouter />
@@ -56,14 +56,47 @@ describe('AppRouter', () => {
     expect(getByText('About Page')).toBeInTheDocument();
   });
 
-  it('/category-slug', async () => {
+  it('/:categorySlug', () => {
     const { getByText } = render(
-      <MemoryRouter initialEntries={['/category-slug']}>
+      <MemoryRouter initialEntries={['/some-category']}>
         <AppRouter />
       </MemoryRouter>,
     );
 
     expect(getByText('Layout')).toBeInTheDocument();
-    expect(getByText('Products List Page')).toBeInTheDocument();
+    expect(getByText('Products List')).toBeInTheDocument();
+  });
+
+  it('/:categorySlug/:productId', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/some-category/123']}>
+        <AppRouter />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Products List')).toBeInTheDocument();
+  });
+
+  it('/products', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/products']}>
+        <AppRouter />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Home Page')).toBeInTheDocument();
+  });
+
+  it('/:products/:productId', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/products/123']}>
+        <AppRouter />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Home Page')).toBeInTheDocument();
   });
 });

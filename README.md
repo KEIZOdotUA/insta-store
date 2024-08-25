@@ -14,6 +14,7 @@ This project was developed as a sample website for small jewelry stores that pri
 - Axios
 - Prop-Types
 - Vitest
+- ReactrRouter
 
 # Running the sample locally
 

@@ -31,6 +31,10 @@ describe('Purchase', () => {
       __esModule: true,
       default: vi.fn(() => <div>Mocked ConfirmationNotification</div>),
     }));
+    vi.mock('@assets/close.svg', () => ({
+      __esModule: true,
+      default: vi.fn(() => <p>close</p>),
+    }));
   });
 
   it('default', () => {
@@ -61,31 +65,31 @@ describe('Purchase', () => {
   });
 
   it('resets', async () => {
-    const { getByText, getByAltText } = render(
+    const { getByText } = render(
       <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
     fireEvent.click(getByText('Mocked Cart'));
     fireEvent.click(getByText('Mocked OrderDetails'));
 
-    fireEvent.click(getByAltText('close'));
+    fireEvent.click(getByText('close'));
 
     await waitFor(() => {
       expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
     });
 
     await waitFor(() => {
-      fireEvent.click(getByAltText('close'));
+      fireEvent.click(getByText('close'));
       expect(getByText('Mocked Cart')).toBeInTheDocument();
     });
   });
 
   it('purchaseToggler', async () => {
-    const { getByAltText } = render(
+    const { getByText } = render(
       <Purchase visible purchaseToggler={mockPurchaseToggler} />,
     );
 
-    fireEvent.click(getByAltText('close'));
+    fireEvent.click(getByText('close'));
 
     await waitFor(() => {
       expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);

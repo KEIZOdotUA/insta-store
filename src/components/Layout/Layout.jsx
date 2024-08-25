@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '@components/Header/Header';
 import Menu from '@components/Menu/Menu';
 import Purchase from '@components/Purchase/Purchase';
+import ProductModal from '@components/Product/Modal/ProductModal';
 
 function Layout() {
   const [visibleMenu, setVisibleMenu] = useState(false);
@@ -23,6 +24,7 @@ function Layout() {
         visible={visiblePurchase}
         purchaseToggler={() => setVisiblePurchase(!visiblePurchase)}
       />
+      <ProductModal />
     </>
   );
 }

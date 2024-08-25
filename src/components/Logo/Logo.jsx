@@ -7,7 +7,7 @@ function Logo() {
 
   return (
     <div id="logo">
-      <Link to="/">{whitelabel.shop.name}</Link>
+      <Link to="/" onClick={() => window.scrollTo(0, 0)}>{whitelabel.shop.name}</Link>
     </div>
   );
 }

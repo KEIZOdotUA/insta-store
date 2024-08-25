@@ -11,6 +11,10 @@ import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 vi.mock('@contexts/Cart/useCartContext');
 vi.mock('@helpers/dispatchTrackingEvent');
+vi.mock('@assets/cart.svg', () => ({
+  __esModule: true,
+  default: () => <div>cart</div>,
+}));
 
 describe('CartIcon', () => {
   const mockOnClick = vi.fn();
@@ -26,7 +30,7 @@ describe('CartIcon', () => {
     expect(getByText('2')).toBeTruthy();
   });
 
-  it('calls onClick and dispatchTrackingEvent', () => {
+  it('onClick', () => {
     const mockItems = [
       {
         id: '1',
@@ -48,8 +52,8 @@ describe('CartIcon', () => {
       getTotal: () => mockTotal,
     });
 
-    const { getByAltText } = render(<CartIcon onClick={mockOnClick} />);
-    fireEvent.click(getByAltText('cart'));
+    const { getByText } = render(<CartIcon onClick={mockOnClick} />);
+    fireEvent.click(getByText('cart'));
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
     expect(dispatchTrackingEvent).toHaveBeenCalledWith({

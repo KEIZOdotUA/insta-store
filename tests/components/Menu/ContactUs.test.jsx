@@ -10,6 +10,26 @@ import useAppContext from '@contexts/App/useAppContext';
 
 vi.mock('@contexts/App/useAppContext');
 
+vi.mock('@assets/instagram.svg', () => ({
+  __esModule: true,
+  default: vi.fn(() => <span>instagram</span>),
+}));
+
+vi.mock('@assets/mail.svg', () => ({
+  __esModule: true,
+  default: vi.fn(() => <span>mail</span>),
+}));
+
+vi.mock('@assets/facebook.svg', () => ({
+  __esModule: true,
+  default: vi.fn(() => <span>facebook</span>),
+}));
+
+vi.mock('@assets/phone.svg', () => ({
+  __esModule: true,
+  default: vi.fn(() => <span>phone</span>),
+}));
+
 describe('ContactUs', () => {
   it('instagram', () => {
     useAppContext.mockReturnValue({
@@ -31,12 +51,12 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByAltText, getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs />);
 
     const instagramLink = getByText('@shopname');
     expect(instagramLink).toBeInTheDocument();
     expect(instagramLink.closest('a')).toHaveAttribute('href', 'https://instagram.com/shopname');
-    expect(getByAltText('instagram')).toBeInTheDocument();
+    expect(getByText('instagram')).toBeInTheDocument();
   });
 
   it('mail', () => {
@@ -59,12 +79,12 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByAltText, getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs />);
 
     const mailLink = getByText('contact@shop.com');
     expect(mailLink).toBeInTheDocument();
     expect(mailLink.closest('a')).toHaveAttribute('href', 'mailto:contact@shop.com');
-    expect(getByAltText('mail')).toBeInTheDocument();
+    expect(getByText('mail')).toBeInTheDocument();
   });
 
   it('facebook', () => {
@@ -87,12 +107,12 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByAltText, getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs />);
 
     const facebookLink = getByText('Shop Name');
     expect(facebookLink).toBeInTheDocument();
     expect(facebookLink.closest('a')).toHaveAttribute('href', 'https://facebook.com/shopname');
-    expect(getByAltText('facebook')).toBeInTheDocument();
+    expect(getByText('facebook')).toBeInTheDocument();
   });
 
   it('phone', () => {
@@ -115,12 +135,12 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByAltText, getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs />);
 
     const phoneLink = getByText('+123456789');
     expect(phoneLink).toBeInTheDocument();
     expect(phoneLink.closest('a')).toHaveAttribute('href', 'tel:+123456789');
-    expect(getByAltText('phone')).toBeInTheDocument();
+    expect(getByText('phone')).toBeInTheDocument();
   });
 
   it('no contact info', () => {
@@ -143,16 +163,16 @@ describe('ContactUs', () => {
       },
     });
 
-    const { queryByAltText, queryByText } = render(<ContactUs />);
+    const { queryByText } = render(<ContactUs />);
 
     expect(queryByText('@shopname')).toBeNull();
     expect(queryByText('contact@shop.com')).toBeNull();
     expect(queryByText('Shop Name')).toBeNull();
     expect(queryByText('+123456789')).toBeNull();
 
-    expect(queryByAltText('instagram')).toBeNull();
-    expect(queryByAltText('mail')).toBeNull();
-    expect(queryByAltText('facebook')).toBeNull();
-    expect(queryByAltText('phone')).toBeNull();
+    expect(queryByText('instagram')).toBeNull();
+    expect(queryByText('mail')).toBeNull();
+    expect(queryByText('facebook')).toBeNull();
+    expect(queryByText('phone')).toBeNull();
   });
 });

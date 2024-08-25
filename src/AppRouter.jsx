@@ -9,8 +9,11 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Home />} />
         <Route path="/:categorySlug" element={<ProductsList />} />
+        <Route path="/products/:productId" element={<Home />} />
+        <Route path="/:categorySlug/:productId" element={<ProductsList />} />
+        <Route path="/about" element={<About />} />
       </Route>
     </Routes>
   );

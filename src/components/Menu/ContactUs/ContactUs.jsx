@@ -1,5 +1,9 @@
 import './ContactUs.css';
 import useAppContext from '@contexts/App/useAppContext';
+import InstagramSvg from '@assets/instagram.svg';
+import MailSvg from '@assets/mail.svg';
+import FacebookSvg from '@assets/facebook.svg';
+import PhoneSvg from '@assets/phone.svg';
 
 function ContactUs() {
   const { whitelabel } = useAppContext();
@@ -12,7 +16,7 @@ function ContactUs() {
         && (
           <p>
             <a href={whitelabel.shop.contacts.instagram.link}>
-              <img src="./instagram.svg" alt="instagram" />
+              <InstagramSvg />
               {`@${whitelabel.shop.contacts.instagram.name}`}
             </a>
           </p>
@@ -21,7 +25,7 @@ function ContactUs() {
         && (
         <p>
           <a href={`mailto:${whitelabel.shop.contacts.mail}`}>
-            <img src="./mail.svg" alt="mail" />
+            <MailSvg />
             {whitelabel.shop.contacts.mail}
           </a>
         </p>
@@ -31,7 +35,7 @@ function ContactUs() {
         && (
           <p>
             <a href={whitelabel.shop.contacts.facebook.link}>
-              <img src="./facebook.svg" alt="facebook" />
+              <FacebookSvg />
               {`${whitelabel.shop.contacts.facebook.name}`}
             </a>
           </p>
@@ -40,7 +44,7 @@ function ContactUs() {
         && (
         <p>
           <a href={`tel:${whitelabel.shop.contacts.phone}`}>
-            <img src="./phone.svg" alt="phone" />
+            <PhoneSvg />
             {whitelabel.shop.contacts.phone}
           </a>
         </p>
