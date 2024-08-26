@@ -11,7 +11,12 @@ import sendOrder from '@services/orderService';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function OrderDetails({ onOrder }) {
-  const { getItems, clearCart, getTotal } = useCartContext();
+  const {
+    getCartId,
+    getItems,
+    clearCart,
+    getTotal,
+  } = useCartContext();
 
   const [orderDetails, setOrderDetails] = useState({
     city: '',
@@ -79,7 +84,7 @@ function OrderDetails({ onOrder }) {
       setErrors(validationResult);
       return;
     }
-    sendOrder(orderDetails, getItems());
+    sendOrder(getCartId(), getItems(), orderDetails);
 
     dispatchTrackingEvent({
       event: 'purchase',

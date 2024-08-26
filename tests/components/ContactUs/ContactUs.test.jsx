@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import ContactUs from '@components/Menu/ContactUs/ContactUs';
+import ContactUs from '@components/ContactUs/ContactUs';
 import useAppContext from '@contexts/App/useAppContext';
 
 vi.mock('@contexts/App/useAppContext');
@@ -51,7 +51,7 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs title="title" />);
 
     const instagramLink = getByText('@shopname');
     expect(instagramLink).toBeInTheDocument();
@@ -79,7 +79,7 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs title="title" />);
 
     const mailLink = getByText('contact@shop.com');
     expect(mailLink).toBeInTheDocument();
@@ -107,7 +107,7 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs title="title" />);
 
     const facebookLink = getByText('Shop Name');
     expect(facebookLink).toBeInTheDocument();
@@ -135,7 +135,7 @@ describe('ContactUs', () => {
       },
     });
 
-    const { getByText } = render(<ContactUs />);
+    const { getByText } = render(<ContactUs title="title" />);
 
     const phoneLink = getByText('+123456789');
     expect(phoneLink).toBeInTheDocument();
@@ -163,7 +163,7 @@ describe('ContactUs', () => {
       },
     });
 
-    const { queryByText } = render(<ContactUs />);
+    const { queryByText } = render(<ContactUs title="title" />);
 
     expect(queryByText('@shopname')).toBeNull();
     expect(queryByText('contact@shop.com')).toBeNull();

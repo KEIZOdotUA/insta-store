@@ -82,6 +82,7 @@ describe('OrderDetails', () => {
   const mockGetItems = vi.fn();
   const mockClearCart = vi.fn();
   const mockGetTotal = vi.fn();
+  const mockGetCartId = vi.fn(() => 1);
 
   beforeEach(() => {
     mockGetItems.mockReturnValue([
@@ -101,6 +102,7 @@ describe('OrderDetails', () => {
     mockGetTotal.mockReturnValue(500);
 
     useCartContext.mockReturnValue({
+      getCartId: mockGetCartId,
       getItems: mockGetItems,
       clearCart: mockClearCart,
       getTotal: mockGetTotal,
@@ -140,15 +142,19 @@ describe('OrderDetails', () => {
     const orderButton = getByText('замовити');
     fireEvent.click(orderButton);
 
-    expect(sendOrder).toHaveBeenCalledWith({
-      city: 'Kyiv',
-      department: 'Department 1',
-      phoneNumber: '123456789',
-      lastName: 'Doe',
-      firstName: 'John',
-      doNotCallBack: false,
-      comment: '',
-    }, mockGetItems());
+    expect(sendOrder).toHaveBeenCalledWith(
+      mockGetCartId(),
+      mockGetItems(),
+      {
+        city: 'Kyiv',
+        department: 'Department 1',
+        phoneNumber: '123456789',
+        lastName: 'Doe',
+        firstName: 'John',
+        doNotCallBack: false,
+        comment: '',
+      },
+    );
 
     expect(dispatchTrackingEvent).toHaveBeenCalledWith({
       event: 'purchase',

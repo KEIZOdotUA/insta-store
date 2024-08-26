@@ -1,16 +1,17 @@
 import './ContactUs.css';
+import PropTypes from 'prop-types';
 import useAppContext from '@contexts/App/useAppContext';
 import InstagramSvg from '@assets/instagram.svg';
 import MailSvg from '@assets/mail.svg';
 import FacebookSvg from '@assets/facebook.svg';
 import PhoneSvg from '@assets/phone.svg';
 
-function ContactUs() {
+function ContactUs({ title, separated }) {
   const { whitelabel } = useAppContext();
 
   return (
-    <div id="contact-us">
-      <strong>Зв&apos;язок з нами</strong>
+    <div className={`contact-us ${separated ? 'separated' : ''}`}>
+      <strong>{title}</strong>
       {whitelabel.shop.contacts.instagram.link.length > 0
         && whitelabel.shop.contacts.instagram.name.length > 0
         && (
@@ -52,5 +53,14 @@ function ContactUs() {
     </div>
   );
 }
+
+ContactUs.defaultProps = {
+  separated: false,
+};
+
+ContactUs.propTypes = {
+  title: PropTypes.string.isRequired,
+  separated: PropTypes.bool,
+};
 
 export default ContactUs;

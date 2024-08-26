@@ -1,25 +1,28 @@
-#contact-us {
+.contact-us {
   font-size: 17px;
+}
+
+.separated {
   padding: 10px;
   border-top: 1px solid var(--border);
 }
 
-#contact-us > p {
+.contact-us > p {
   display: flex;
   text-transform: none;
   font-weight: 400;
 }
 
-#contact-us > p > a {
+.contact-us > p > a {
   display: flex;
   text-transform: none;
   font-weight: 400;
 }
 
-#contact-us > p > svg {
+.contact-us > p > svg {
   margin-right: 5px;
 }
 
-#contact-us > p > a > svg {
+.contact-us > p > a > svg {
   margin-right: 5px;
 }

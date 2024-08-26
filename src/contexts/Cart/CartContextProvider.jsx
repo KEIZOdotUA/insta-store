@@ -3,15 +3,24 @@ import PropTypes from 'prop-types';
 import CartContext from './CartContext';
 
 function CartContextProvider({ children }) {
+  const [cartId, setCartId] = useState(
+    localStorage.getItem('cart')
+      ? JSON.parse(localStorage.getItem('cart')).id
+      : Date.now(),
+  );
   const [cartItems, setCartItems] = useState(
-    localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+    localStorage.getItem('cart')
+      ? JSON.parse(localStorage.getItem('cart')).items
+      : [],
   );
 
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+    localStorage.setItem('cart', JSON.stringify({ id: cartId, items: cartItems }));
+  }, [cartId, cartItems]);
 
   const cartFunctions = useMemo(() => {
+    const getCartId = () => cartId;
+
     const findCartItem = (itemId) => cartItems.find((cartItem) => cartItem.id === itemId);
 
     const getItems = () => cartItems;
@@ -19,6 +28,7 @@ function CartContextProvider({ children }) {
     const addItem = (item) => {
       const isItemInCart = findCartItem(item.id);
       if (!isItemInCart) {
+        setCartId(Date.now());
         setCartItems([...cartItems, { ...item, quantity: 1 }]);
       }
     };
@@ -57,6 +67,7 @@ function CartContextProvider({ children }) {
     const clearCart = () => setCartItems([]);
 
     return {
+      getCartId,
       findCartItem,
       getItems,
       addItem,
@@ -66,7 +77,7 @@ function CartContextProvider({ children }) {
       getTotal,
       clearCart,
     };
-  }, [cartItems]);
+  }, [cartId, cartItems]);
 
   return (
     <CartContext.Provider value={cartFunctions}>

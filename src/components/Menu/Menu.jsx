@@ -5,7 +5,7 @@ import useAppContext from '@contexts/App/useAppContext';
 import Button from '@components/shared/Button/Button';
 import Transition from '@components/shared/Transition/Transition';
 import CloseSvg from '@assets/close.svg';
-import ContactUs from './ContactUs/ContactUs';
+import ContactUs from '@components/ContactUs/ContactUs';
 
 function Menu({ visible, menuToggler }) {
   const animationDuration = 250;
@@ -48,7 +48,7 @@ function Menu({ visible, menuToggler }) {
               </Link>
             </li>
           </ul>
-          <ContactUs />
+          <ContactUs title="Зв'язок з нами" separated />
         </div>
       </Transition>
     </div>

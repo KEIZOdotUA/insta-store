@@ -15,6 +15,7 @@ import CartContextProvider from '@contexts/Cart/CartContextProvider';
 
 function TestComponent() {
   const {
+    getCartId,
     getItems,
     addItem,
     incrementItemQuantity,
@@ -35,6 +36,7 @@ function TestComponent() {
       <button type="button" onClick={clearCart}>Clear Cart</button>
       <div data-testid="total">{`Total: ${getTotal()}`}</div>
       <div data-testid="items">{JSON.stringify(getItems())}</div>
+      <div data-testid="cartId">{JSON.stringify(getCartId())}</div>
     </div>
   );
 }
@@ -111,5 +113,15 @@ describe('CartContextProvider', () => {
 
     expect(screen.getByTestId('items').textContent).toBe('[]');
     expect(screen.getByTestId('total').textContent).toBe('Total: 0');
+  });
+
+  it('gets cart id', () => {
+    render(
+      <CartContextProvider>
+        <TestComponent />
+      </CartContextProvider>,
+    );
+
+    expect(screen.getByTestId('cartId').textContent).not.toBe('');
   });
 });

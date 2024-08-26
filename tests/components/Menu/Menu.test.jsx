@@ -24,7 +24,7 @@ vi.mock('@components/shared/Transition/Transition', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-vi.mock('@components/Menu/ContactUs/ContactUs', () => ({
+vi.mock('@components/ContactUs/ContactUs', () => ({
   __esModule: true,
   default: () => <div>Contact Us</div>,
 }));

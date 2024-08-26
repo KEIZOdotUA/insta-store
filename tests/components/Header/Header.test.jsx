@@ -35,7 +35,7 @@ const mockMenuToggler = vi.fn();
 
 describe('Header', () => {
   it('default', () => {
-    render(<Header purchaseToggler={() => {}} />);
+    render(<Header purchaseToggler={() => {}} menuToggler={() => {}} />);
 
     expect(screen.getByText('Logo')).toBeInTheDocument();
     expect(screen.getByText('CartIcon')).toBeInTheDocument();
