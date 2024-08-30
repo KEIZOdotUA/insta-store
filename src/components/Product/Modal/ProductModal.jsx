@@ -83,7 +83,7 @@ function ProductModal() {
 
   return (
     product && (
-      <Modal onClose={onClose} hideOverflow>
+      <Modal onClose={onClose} hiddenOverflow>
         <ProductImage id={product.id} name={product.name} size="l" className="product-modal__img" />
         <h2>{product.name}</h2>
         <h2>{`${product.price} грн`}</h2>

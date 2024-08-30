@@ -54,7 +54,7 @@ describe('Modal', () => {
 
   it('sets body overflow', () => {
     render(
-      <Modal onClose={mockOnClose} hideOverflow>
+      <Modal onClose={mockOnClose} hiddenOverflow>
         <div>Modal Content</div>
       </Modal>,
     );
@@ -64,7 +64,7 @@ describe('Modal', () => {
 
   it('resets body overflow', () => {
     const { unmount } = render(
-      <Modal onClose={mockOnClose} hideOverflow>
+      <Modal onClose={mockOnClose} hiddenOverflow>
         <div>Modal Content</div>
       </Modal>,
     );

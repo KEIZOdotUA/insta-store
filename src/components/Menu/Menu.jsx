@@ -6,11 +6,14 @@ import Button from '@components/shared/Button/Button';
 import Transition from '@components/shared/Transition/Transition';
 import CloseSvg from '@assets/close.svg';
 import ContactUs from '@components/ContactUs/ContactUs';
+import useHiddenOverflow from '@helpers/useHiddenOverflow';
 
 function Menu({ visible, menuToggler }) {
   const animationDuration = 250;
 
   const { categories } = useAppContext();
+
+  useHiddenOverflow({ active: visible });
 
   const onClose = () => {
     menuToggler();

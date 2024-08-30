@@ -7,9 +7,12 @@ import Cart from '@components/Cart/Cart';
 import OrderDetails from '@components/OrderDetails/OrderDetails';
 import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
 import CloseSvg from '@assets/close.svg';
+import useHiddenOverflow from '@helpers/useHiddenOverflow';
 
 function Purchase({ visible, purchaseToggler }) {
   const [orderStep, setOrderStep] = useState(0);
+
+  useHiddenOverflow({ active: visible });
 
   const getSteppedComponent = () => {
     switch (orderStep) {

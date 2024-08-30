@@ -4,23 +4,14 @@ import PropTypes from 'prop-types';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
 import CloseSvg from '@assets/close.svg';
+import useHiddenOverflow from '@helpers/useHiddenOverflow';
 
-function Modal({ children, onClose, hideOverflow }) {
+function Modal({ children, onClose, hiddenOverflow }) {
   const animationDuration = 250;
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
-  useEffect(() => {
-    if (hideOverflow) {
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      if (hideOverflow) {
-        document.body.style.overflow = 'auto';
-      }
-    };
-  }, [hideOverflow]);
+  useHiddenOverflow({ forceUsage: hiddenOverflow });
 
   useEffect(() => {
     setTimeout(() => setIsVisibleModal(true), animationDuration * 2);
@@ -46,13 +37,13 @@ function Modal({ children, onClose, hideOverflow }) {
 }
 
 Modal.defaultProps = {
-  hideOverflow: false,
+  hiddenOverflow: false,
 };
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
-  hideOverflow: PropTypes.bool,
+  hiddenOverflow: PropTypes.bool,
 };
 
 export default Modal;
