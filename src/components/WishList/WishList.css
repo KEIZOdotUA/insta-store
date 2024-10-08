@@ -1,0 +1,26 @@
+.wishlist {
+  min-width: 375px;
+  width: 100%;
+  max-width: 430px;
+}
+
+.wishlist__title {
+  display: block;
+  font-size: 27px;
+  padding-bottom: 20px;
+}
+
+.wishlist__items {
+  height: 100%;
+  min-height: 300px;
+}
+
+.wishlist__items > span {
+  color: var(--gray-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+  border-top: 1px solid var(--border);
+}

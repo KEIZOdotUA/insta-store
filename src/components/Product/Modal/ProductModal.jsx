@@ -2,18 +2,26 @@ import { useEffect, useState } from 'react';
 import './ProductModal.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAppContext from '@contexts/App/useAppContext';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import ProductImage from '@components/Product/Image/ProductImage';
 import Modal from '@components/shared/Modal/Modal';
 import Button from '@components/shared/Button/Button';
+import LikeButton from '@components/shared/LikeButton/LikeButton';
+import ShareButton from '@components/shared/ShareButton/ShareButton';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function ProductModal() {
   const navigate = useNavigate();
   const { categorySlug, productId } = useParams();
-  const { products } = useAppContext();
-  const { findCartItem, addItem: addProductToCart } = useCartContext();
+  const { whitelabel, products } = useAppContext();
+  const {
+    findCartItem,
+    addCartItem,
+    findWishListItem,
+    addWishListItem,
+    removeWishListItem,
+  } = useShoppingContext();
 
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState(0);
@@ -21,7 +29,7 @@ function ProductModal() {
   const itemInCart = product && findCartItem(product.id);
 
   const onAddProductToCart = (item) => {
-    addProductToCart(item);
+    addCartItem(item);
     dispatchTrackingEvent({
       event: 'add_to_cart',
       ecommerce: {
@@ -50,6 +58,7 @@ function ProductModal() {
       const selectedProduct = products.find((prod) => prod.id === Number(productId));
       if (selectedProduct) {
         setProduct(selectedProduct);
+        setSelectedSize(0);
       }
     }
   }, [productId, products]);
@@ -81,10 +90,37 @@ function ProductModal() {
     }
   }, [product]);
 
+  const itemInWIshList = product && findWishListItem(product.id);
+
+  const toggleLike = (item) => {
+    if (itemInWIshList) {
+      removeWishListItem(item.id);
+
+      return;
+    }
+
+    addWishListItem(item);
+  };
+
   return (
     product && (
       <Modal onClose={onClose} hiddenOverflow>
-        <ProductImage id={product.id} name={product.name} size="l" className="product-modal__img" />
+        <div className="product-modal__img-container">
+          <ProductImage
+            id={product.id}
+            name={product.name}
+            size="l"
+            className="product-modal__img"
+          />
+          <div className="product-modal__buttons">
+            <LikeButton liked={Boolean(itemInWIshList)} onLike={() => toggleLike(product)} />
+            <ShareButton
+              title={whitelabel.shop.name}
+              text={product.name}
+              url={window.location.href}
+            />
+          </div>
+        </div>
         <h2>{product.name}</h2>
         <h2>{`${product.price} грн`}</h2>
         {product.sizes.length > 0 && (

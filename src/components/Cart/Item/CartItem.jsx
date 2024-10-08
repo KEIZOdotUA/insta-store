@@ -1,11 +1,15 @@
 import './CartItem.css';
 import PropTypes from 'prop-types';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
 import ProductImage from '@components/Product/Image/ProductImage';
 
 function CartItem({ item }) {
-  const { removeItem, incrementItemQuantity, decrementItemQuantity } = useCartContext();
+  const {
+    removeCartItem,
+    incrementCartItemQuantity,
+    decrementCartItemQuantity,
+  } = useShoppingContext();
 
   return (
     <div className="cart-item">
@@ -22,16 +26,16 @@ function CartItem({ item }) {
           className="cart-item__delete"
           role="button"
           tabIndex={0}
-          onClick={() => removeItem(item.id)}
-          onKeyDown={() => removeItem(item.id)}
+          onClick={() => removeCartItem(item.id)}
+          onKeyDown={() => removeCartItem(item.id)}
         >
           видалити
         </div>
         <div className="cart-item__quantity">
           <QuantityInput
             quantity={item.quantity}
-            onIncrement={() => incrementItemQuantity(item.id)}
-            onDecrement={() => decrementItemQuantity(item.id)}
+            onIncrement={() => incrementCartItemQuantity(item.id)}
+            onDecrement={() => decrementCartItemQuantity(item.id)}
           />
         </div>
       </div>

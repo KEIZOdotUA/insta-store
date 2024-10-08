@@ -1,9 +1,9 @@
 import './ConfirmationNotification.css';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import ContactUs from '@components/ContactUs/ContactUs';
 
 function ConfirmationNotification() {
-  const { getCartId } = useCartContext();
+  const { getCartId } = useShoppingContext();
   return (
     <div id="confirmation-notification">
       <h2>{`Ми прийняли Ваше замовлення №${getCartId()}`}</h2>

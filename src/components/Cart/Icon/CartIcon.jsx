@@ -1,18 +1,18 @@
 import './CartIcon.css';
 import PropTypes from 'prop-types';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 import CartSvgIcon from '@assets/cart.svg';
 
 function CartIcon({ onClick }) {
-  const { getItems, getTotal } = useCartContext();
-  const cartCount = getItems().length;
+  const { getCartItems, getCartTotal } = useShoppingContext();
+  const cartCount = getCartItems().length;
 
   const onViewCart = () => {
     onClick();
 
-    const items = getItems();
-    const total = getTotal();
+    const items = getCartItems();
+    const total = getCartTotal();
 
     dispatchTrackingEvent({
       event: 'view_cart',

@@ -9,11 +9,11 @@ import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter, useParams, useNavigate } from 'react-router-dom';
 import AdditionalPackaging from '@components/AdditionalPackaging/AdditionalPackaging';
 import useAppContext from '@contexts/App/useAppContext';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 vi.mock('@contexts/App/useAppContext');
-vi.mock('@contexts/Cart/useCartContext');
+vi.mock('@contexts/Shopping/useShoppingContext');
 vi.mock('@helpers/dispatchTrackingEvent');
 vi.mock('react-router-dom', async (importOriginal) => {
   const actual = await importOriginal();
@@ -32,8 +32,8 @@ describe('AdditionalPackaging', () => {
   };
 
   const mockFindCartItem = vi.fn();
-  const mockAddItem = vi.fn();
-  const mockRemoveItem = vi.fn();
+  const mockAddCartItem = vi.fn();
+  const mockRemoveCartItem = vi.fn();
   const mockNavigate = vi.fn();
 
   beforeEach(() => {
@@ -41,10 +41,10 @@ describe('AdditionalPackaging', () => {
       packaging: mockPackaging,
     });
 
-    useCartContext.mockReturnValue({
+    useShoppingContext.mockReturnValue({
       findCartItem: mockFindCartItem,
-      addItem: mockAddItem,
-      removeItem: mockRemoveItem,
+      addCartItem: mockAddCartItem,
+      removeCartItem: mockRemoveCartItem,
     });
 
     useParams.mockReturnValue({ categorySlug: 'gifts' });
@@ -71,7 +71,7 @@ describe('AdditionalPackaging', () => {
     const addButton = getByText('так');
     fireEvent.click(addButton);
 
-    expect(mockAddItem).toHaveBeenCalledWith(mockPackaging);
+    expect(mockAddCartItem).toHaveBeenCalledWith(mockPackaging);
   });
 
   it('removes packaging', () => {
@@ -84,7 +84,7 @@ describe('AdditionalPackaging', () => {
     const removeButton = getByText('ні');
     fireEvent.click(removeButton);
 
-    expect(mockRemoveItem).toHaveBeenCalledWith(mockPackaging.id);
+    expect(mockRemoveCartItem).toHaveBeenCalledWith(mockPackaging.id);
   });
 
   it('packaging detail', () => {

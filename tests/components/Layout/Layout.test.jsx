@@ -30,6 +30,15 @@ vi.mock('@components/Purchase/Purchase', () => ({
   )),
 }));
 
+vi.mock('@components/WishList/WishList', () => ({
+  __esModule: true,
+  default: vi.fn(({ visible, onClose }) => (
+    <div role="button" onClick={onClose} onKeyDown={onClose} tabIndex={0}>
+      {visible ? 'Mock WishList Visible' : 'Mock WishList Hidden'}
+    </div>
+  )),
+}));
+
 vi.mock('@components/Product/Modal/ProductModal', () => ({
   __esModule: true,
   default: vi.fn(() => <div>Mock Product Modal</div>),
@@ -48,6 +57,7 @@ describe('Layout', () => {
     expect(getByText('Mock Menu Hidden')).toBeInTheDocument();
     expect(getByText('Mock Purchase Hidden')).toBeInTheDocument();
     expect(getByText('Mock Outlet')).toBeInTheDocument();
+    expect(getByText('Mock WishList Hidden')).toBeInTheDocument();
     expect(getByText('Mock Product Modal')).toBeInTheDocument();
   });
 
@@ -65,5 +75,13 @@ describe('Layout', () => {
     fireEvent.click(getByText('Mock Purchase Hidden'));
 
     expect(getByText('Mock Purchase Visible')).toBeInTheDocument();
+  });
+
+  it('wishListToggler', () => {
+    const { getByText } = render(<Layout />);
+
+    fireEvent.click(getByText('Mock WishList Hidden'));
+
+    expect(getByText('Mock WishList Visible')).toBeInTheDocument();
   });
 });

@@ -7,11 +7,11 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import Cart from '@components/Cart/Cart';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import CartItem from '@components/Cart/Item/CartItem';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
-vi.mock('@contexts/Cart/useCartContext');
+vi.mock('@contexts/Shopping/useShoppingContext');
 vi.mock('@components/AdditionalPackaging/AdditionalPackaging', () => ({
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
@@ -32,11 +32,11 @@ vi.mock('@helpers/dispatchTrackingEvent');
 
 describe('Cart', () => {
   const mockOnOrder = vi.fn();
-  const mockGetItems = vi.fn();
-  const mockGetTotal = vi.fn();
+  const mockGetCartItems = vi.fn();
+  const mockGetCartTotal = vi.fn();
 
   beforeEach(() => {
-    mockGetItems.mockReturnValue([
+    mockGetCartItems.mockReturnValue([
       {
         id: 1,
         name: 'Item 1',
@@ -50,11 +50,11 @@ describe('Cart', () => {
         quantity: 2,
       },
     ]);
-    mockGetTotal.mockReturnValue(500);
+    mockGetCartTotal.mockReturnValue(500);
 
-    useCartContext.mockReturnValue({
-      getItems: mockGetItems,
-      getTotal: mockGetTotal,
+    useShoppingContext.mockReturnValue({
+      getCartItems: mockGetCartItems,
+      getCartTotal: mockGetCartTotal,
     });
   });
 
@@ -114,7 +114,7 @@ describe('Cart', () => {
   });
 
   it('no order button', () => {
-    mockGetTotal.mockReturnValue(0);
+    mockGetCartTotal.mockReturnValue(0);
     const { queryByText } = render(<Cart onOrder={mockOnOrder} />);
 
     expect(queryByText('оформити замовлення')).toBeNull();

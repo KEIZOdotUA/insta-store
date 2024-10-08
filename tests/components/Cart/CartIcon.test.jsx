@@ -6,10 +6,10 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import CartIcon from '@components/Cart/Icon/CartIcon';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
-vi.mock('@contexts/Cart/useCartContext');
+vi.mock('@contexts/Shopping/useShoppingContext');
 vi.mock('@helpers/dispatchTrackingEvent');
 vi.mock('@assets/cart.svg', () => ({
   __esModule: true,
@@ -20,9 +20,9 @@ describe('CartIcon', () => {
   const mockOnClick = vi.fn();
 
   it('default', () => {
-    useCartContext.mockReturnValue({
-      getItems: () => [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }],
-      getTotal: () => 100,
+    useShoppingContext.mockReturnValue({
+      getCartItems: () => [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }],
+      getCartTotal: () => 100,
     });
 
     const { getByText } = render(<CartIcon onClick={mockOnClick} />);
@@ -47,9 +47,9 @@ describe('CartIcon', () => {
     ];
     const mockTotal = 100;
 
-    useCartContext.mockReturnValue({
-      getItems: () => mockItems,
-      getTotal: () => mockTotal,
+    useShoppingContext.mockReturnValue({
+      getCartItems: () => mockItems,
+      getCartTotal: () => mockTotal,
     });
 
     const { getByText } = render(<CartIcon onClick={mockOnClick} />);

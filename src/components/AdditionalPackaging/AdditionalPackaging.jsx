@@ -1,16 +1,16 @@
 import './AdditionalPackaging.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAppContext from '@contexts/App/useAppContext';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 function AdditionalPackaging() {
   const { packaging } = useAppContext();
   const {
     findCartItem,
-    addItem: addPackagingToCart,
-    removeItem: removePackagingFromCart,
-  } = useCartContext();
+    addCartItem: addPackagingToCart,
+    removeCartItem: removePackagingFromCart,
+  } = useShoppingContext();
   const { categorySlug } = useParams();
   const navigate = useNavigate();
 

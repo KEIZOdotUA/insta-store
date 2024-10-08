@@ -1,0 +1,15 @@
+#wishlist-icon {
+  width: auto;
+  position: relative;
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+}
+
+#wishlist-icon > svg {
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  width: 31px;
+  height: 31px
+}

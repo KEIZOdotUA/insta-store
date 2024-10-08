@@ -5,17 +5,17 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
 
-vi.mock('@contexts/Cart/useCartContext');
+vi.mock('@contexts/Shopping/useShoppingContext');
 
 vi.mock('@components/ContactUs/ContactUs', () => ({
   __esModule: true,
   default: () => <div>Contact Us</div>,
 }));
 
-useCartContext.mockReturnValue({
+useShoppingContext.mockReturnValue({
   getCartId: vi.fn(() => 1),
 });
 

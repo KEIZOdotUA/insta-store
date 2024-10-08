@@ -1,24 +1,24 @@
 import './Cart.css';
 import PropTypes from 'prop-types';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import AdditionalPackaging from '@components/AdditionalPackaging/AdditionalPackaging';
 import Button from '@components/shared/Button/Button';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 import CartItem from './Item/CartItem';
 
 function Cart({ onOrder }) {
-  const { getItems, getTotal } = useCartContext();
+  const { getCartItems, getCartTotal } = useShoppingContext();
 
-  const items = getItems();
-  const total = getTotal();
+  const items = getCartItems();
+  const total = getCartTotal();
 
   const beginCheckout = () => {
     dispatchTrackingEvent({
       event: 'begin_checkout',
       ecommerce: {
         currency: 'UAH',
-        value: getTotal(),
-        items: (getItems()).map((item, index) => ({
+        value: getCartTotal(),
+        items: (getCartItems()).map((item, index) => ({
           item_id: item.id,
           item_name: item.name,
           index,

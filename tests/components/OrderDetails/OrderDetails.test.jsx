@@ -7,11 +7,11 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import OrderDetails from '@components/OrderDetails/OrderDetails';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import sendOrder from '@services/orderService';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
-vi.mock('@contexts/Cart/useCartContext');
+vi.mock('@contexts/Shopping/useShoppingContext');
 vi.mock('@components/shared/TextInput/TextInput', () => ({
   __esModule: true,
   default: vi.fn(({
@@ -79,13 +79,13 @@ vi.mock('@helpers/dispatchTrackingEvent');
 
 describe('OrderDetails', () => {
   const mockOnOrder = vi.fn();
-  const mockGetItems = vi.fn();
+  const mockGetCartItems = vi.fn();
   const mockClearCart = vi.fn();
-  const mockGetTotal = vi.fn();
+  const mockGetCartTotal = vi.fn();
   const mockGetCartId = vi.fn(() => 1);
 
   beforeEach(() => {
-    mockGetItems.mockReturnValue([
+    mockGetCartItems.mockReturnValue([
       {
         id: 1,
         name: 'Item 1',
@@ -99,13 +99,13 @@ describe('OrderDetails', () => {
         quantity: 2,
       },
     ]);
-    mockGetTotal.mockReturnValue(500);
+    mockGetCartTotal.mockReturnValue(500);
 
-    useCartContext.mockReturnValue({
+    useShoppingContext.mockReturnValue({
       getCartId: mockGetCartId,
-      getItems: mockGetItems,
+      getCartItems: mockGetCartItems,
       clearCart: mockClearCart,
-      getTotal: mockGetTotal,
+      getCartTotal: mockGetCartTotal,
     });
   });
 
@@ -144,7 +144,7 @@ describe('OrderDetails', () => {
 
     expect(sendOrder).toHaveBeenCalledWith(
       mockGetCartId(),
-      mockGetItems(),
+      mockGetCartItems(),
       {
         city: 'Kyiv',
         department: 'Department 1',

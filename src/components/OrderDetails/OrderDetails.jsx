@@ -1,7 +1,7 @@
 import './OrderDetails.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import useCartContext from '@contexts/Cart/useCartContext';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import TextInput from '@components/shared/TextInput/TextInput';
 import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
@@ -13,10 +13,10 @@ import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 function OrderDetails({ onOrder }) {
   const {
     getCartId,
-    getItems,
+    getCartItems,
     clearCart,
-    getTotal,
-  } = useCartContext();
+    getCartTotal,
+  } = useShoppingContext();
 
   const [orderDetails, setOrderDetails] = useState({
     city: '',
@@ -84,15 +84,15 @@ function OrderDetails({ onOrder }) {
       setErrors(validationResult);
       return;
     }
-    sendOrder(getCartId(), getItems(), orderDetails);
+    sendOrder(getCartId(), getCartItems(), orderDetails);
 
     dispatchTrackingEvent({
       event: 'purchase',
       ecommerce: {
         transaction_id: new Date().toISOString(),
-        value: getTotal(),
+        value: getCartTotal(),
         currency: 'UAH',
-        items: (getItems()).map((item, index) => ({
+        items: (getCartItems()).map((item, index) => ({
           item_id: item.id,
           item_name: item.name,
           index,

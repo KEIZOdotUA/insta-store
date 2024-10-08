@@ -30,19 +30,42 @@ vi.mock('@components/Menu/Icon/MenuIcon', () => ({
   ),
 }));
 
+vi.mock('@components/WishList/Icon/WishListIcon', () => ({
+  __esModule: true,
+  default: ({ onClick }) => (
+    <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>
+      WishListIcon
+    </div>
+  ),
+}));
+
 const mockPurchaseToggler = vi.fn();
 const mockMenuToggler = vi.fn();
+const mockWishListToggler = vi.fn();
 
 describe('Header', () => {
   it('default', () => {
-    render(<Header purchaseToggler={() => {}} menuToggler={() => {}} />);
+    render(
+      <Header
+        purchaseToggler={() => {}}
+        menuToggler={() => {}}
+        wishListToggler={() => {}}
+      />,
+    );
 
     expect(screen.getByText('Logo')).toBeInTheDocument();
     expect(screen.getByText('CartIcon')).toBeInTheDocument();
+    expect(screen.getByText('WishListIcon')).toBeInTheDocument();
   });
 
   it('purchaseToggler', () => {
-    render(<Header purchaseToggler={mockPurchaseToggler} menuToggler={mockMenuToggler} />);
+    render(
+      <Header
+        menuToggler={mockMenuToggler}
+        purchaseToggler={mockPurchaseToggler}
+        wishListToggler={mockWishListToggler}
+      />,
+    );
 
     fireEvent.click(screen.getByText('CartIcon'));
 
@@ -50,10 +73,30 @@ describe('Header', () => {
   });
 
   it('menuToggler', () => {
-    render(<Header menuToggler={mockMenuToggler} purchaseToggler={mockPurchaseToggler} />);
+    render(
+      <Header
+        menuToggler={mockMenuToggler}
+        purchaseToggler={mockPurchaseToggler}
+        wishListToggler={mockWishListToggler}
+      />,
+    );
 
     fireEvent.click(screen.getByText('MenuIcon'));
 
     expect(mockMenuToggler).toHaveBeenCalledTimes(1);
+  });
+
+  it('wishListToggler', () => {
+    render(
+      <Header
+        menuToggler={mockMenuToggler}
+        purchaseToggler={mockPurchaseToggler}
+        wishListToggler={mockWishListToggler}
+      />,
+    );
+
+    fireEvent.click(screen.getByText('WishListIcon'));
+
+    expect(mockWishListToggler).toHaveBeenCalledTimes(1);
   });
 });
