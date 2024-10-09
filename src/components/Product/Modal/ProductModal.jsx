@@ -122,6 +122,7 @@ function ProductModal() {
           </div>
         </div>
         <h2>{product.name}</h2>
+        <span className="article">{`Артикул: ${product.id}`}</span>
         <h2>{`${product.price} грн`}</h2>
         {product.sizes.length > 0 && (
           <SizePicker

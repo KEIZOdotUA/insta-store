@@ -85,6 +85,7 @@ describe('ProductModal', () => {
     );
 
     expect(getByText(mockProduct.name)).toBeInTheDocument();
+    expect(getByText('Артикул: 1')).toBeInTheDocument();
     expect(getByText(`${mockProduct.price} грн`)).toBeInTheDocument();
     expect(getByText(mockProduct.description)).toBeInTheDocument();
     expect(getByText('Size Picker')).toBeInTheDocument();

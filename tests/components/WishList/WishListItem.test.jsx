@@ -27,18 +27,23 @@ vi.mock('react-router-dom', async (importOriginal) => {
 });
 
 describe('WishListItem', () => {
-  const mockItem = { id: 1, name: 'Test Product' };
+  const mockItem = { id: 1, name: 'Test Product', price: 500 };
   const mockRemoveWishListItem = vi.fn();
   const mockNavigate = vi.fn();
+  const mockFindCartItem = vi.fn();
 
   beforeEach(() => {
-    useShoppingContext.mockReturnValue({ removeWishListItem: mockRemoveWishListItem });
+    useShoppingContext.mockReturnValue({
+      removeWishListItem: mockRemoveWishListItem,
+      findCartItem: mockFindCartItem,
+    });
     useNavigate.mockReturnValue(mockNavigate);
     useParams.mockReturnValue({ categorySlug: 'test-category' });
     vi.clearAllMocks();
   });
 
   it('default', () => {
+    mockFindCartItem.mockReturnValue(null);
     const { getByText } = render(
       <MemoryRouter>
         <WishListItem item={mockItem} />
@@ -47,9 +52,23 @@ describe('WishListItem', () => {
 
     expect(getByText('ProductImage')).toBeInTheDocument();
     expect(getByText(mockItem.name)).toBeInTheDocument();
+    expect(getByText(`${mockItem.price} грн`)).toBeInTheDocument();
+    expect(getByText('додати в кошик')).toBeInTheDocument();
   });
 
-  it('image onClick', () => {
+  it('item in the cart', () => {
+    mockFindCartItem.mockReturnValue(mockItem);
+    const { getByText } = render(
+      <MemoryRouter>
+        <WishListItem item={mockItem} />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('додано в кошик')).toBeInTheDocument();
+  });
+
+  it('on image click', () => {
+    mockFindCartItem.mockReturnValue(null);
     const { getByText } = render(
       <MemoryRouter>
         <WishListItem item={mockItem} />
@@ -60,7 +79,8 @@ describe('WishListItem', () => {
     expect(mockNavigate).toHaveBeenCalledWith(`/test-category/${mockItem.id}`);
   });
 
-  it('delete onClick', () => {
+  it('on delete', () => {
+    mockFindCartItem.mockReturnValue(null);
     const { getByText } = render(
       <MemoryRouter>
         <WishListItem item={mockItem} />
@@ -71,7 +91,8 @@ describe('WishListItem', () => {
     expect(mockRemoveWishListItem).toHaveBeenCalledWith(mockItem.id);
   });
 
-  it('image onKeyDown', () => {
+  it('on image key press', () => {
+    mockFindCartItem.mockReturnValue(null);
     const { getByText } = render(
       <MemoryRouter>
         <WishListItem item={mockItem} />
@@ -82,7 +103,8 @@ describe('WishListItem', () => {
     expect(mockNavigate).toHaveBeenCalledWith(`/test-category/${mockItem.id}`);
   });
 
-  it('delete onKeyDown', () => {
+  it('on delete key press', () => {
+    mockFindCartItem.mockReturnValue(null);
     const { getByText } = render(
       <MemoryRouter>
         <WishListItem item={mockItem} />

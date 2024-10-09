@@ -8,6 +8,7 @@
 .wishlist-item__img-container {
   display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .wishlist-item__img {
@@ -29,15 +30,32 @@
   font-size: 14px;
   font-weight: 500;
   width: 100%;  
-  margin-bottom: 45px;
+  margin-bottom: 10px;
+  cursor: pointer;
 }
 
-.wishlist-item__delete {
+.wishlist-item__price {
   display: block;
+  font-size: 12px;
+  font-weight: 400;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.wishlist-item__action {
+  display: inline-block;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 500;
-  color: var(--red);
   cursor: pointer;
-  float: right;
+}
+
+.wishlist-item__added-to-cart {
+  color: var(--gray-text);
+  cursor: default;
+}
+
+.wishlist-item__delete {
+  color: var(--red);
+  margin-left: 70px;
 }

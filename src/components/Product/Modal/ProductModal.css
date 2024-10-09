@@ -39,3 +39,7 @@
 .product-modal__btn:last-child {
   margin-bottom: 25px;
 }
+
+.article {
+  color: var(--gray-text);
+}

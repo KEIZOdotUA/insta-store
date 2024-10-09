@@ -5,7 +5,9 @@ import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import ProductImage from '@components/Product/Image/ProductImage';
 
 function WishListItem({ item }) {
-  const { removeWishListItem } = useShoppingContext();
+  const { findCartItem, removeWishListItem } = useShoppingContext();
+
+  const itemInCart = findCartItem(item.id);
 
   const { categorySlug } = useParams();
   const navigate = useNavigate();
@@ -35,8 +37,25 @@ function WishListItem({ item }) {
         >
           {item.name}
         </div>
+        <div className="wishlist-item__price">{`${item.price} грн`}</div>
+        {!itemInCart && (
+          <div
+            className="wishlist-item__action"
+            role="button"
+            tabIndex={0}
+            onClick={() => onItemClick(item.id)}
+            onKeyDown={() => onItemClick(item.id)}
+          >
+            додати в кошик
+          </div>
+        )}
+        {itemInCart && (
+          <div className="wishlist-item__action wishlist-item__added-to-cart">
+            додано в кошик
+          </div>
+        )}
         <div
-          className="wishlist-item__delete"
+          className="wishlist-item__action wishlist-item__delete"
           role="button"
           tabIndex={0}
           onClick={() => removeWishListItem(item.id)}
@@ -53,6 +72,7 @@ WishListItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
   }).isRequired,
 };
 

@@ -6,6 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
+import { useParams, useNavigate } from 'react-router-dom';
 import CartItem from '@components/Cart/Item/CartItem';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
@@ -20,11 +21,17 @@ vi.mock('@components/Product/Image/ProductImage', () => ({
   __esModule: true,
   default: vi.fn(() => <div>ProductImage</div>),
 }));
+vi.mock('react-router-dom', () => ({
+  __esModule: true,
+  useParams: vi.fn(),
+  useNavigate: vi.fn(),
+}));
 
 describe('CartItem', () => {
   const mockRemoveCartItem = vi.fn();
   const mockIncrementCartItemQuantity = vi.fn();
   const mockDecrementCartItemQuantity = vi.fn();
+  const mockNavigate = vi.fn();
 
   beforeEach(() => {
     useShoppingContext.mockReturnValue({
@@ -32,6 +39,8 @@ describe('CartItem', () => {
       incrementCartItemQuantity: mockIncrementCartItemQuantity,
       decrementCartItemQuantity: mockDecrementCartItemQuantity,
     });
+    useNavigate.mockReturnValue(mockNavigate);
+    useParams.mockReturnValue({ categorySlug: 'test-category' });
   });
 
   const item = {
@@ -58,21 +67,31 @@ describe('CartItem', () => {
     );
   });
 
-  it('remove Cart Item', () => {
+  it('image and title onClick', () => {
+    const { getByText } = render(<CartItem item={item} />);
+
+    const imageContainer = getByText('ProductImage').closest('div[role="link"]');
+    fireEvent.click(imageContainer);
+    expect(mockNavigate).toHaveBeenCalledWith('/test-category/1');
+
+    const title = getByText('Test Product, 42 розмір');
+    fireEvent.click(title);
+    expect(mockNavigate).toHaveBeenCalledWith('/test-category/1');
+  });
+
+  it('delete onCLick', () => {
     const { getByText } = render(<CartItem item={item} />);
     const deleteButton = getByText('видалити');
 
     fireEvent.click(deleteButton);
-
     expect(mockRemoveCartItem).toHaveBeenCalledWith(item.id);
   });
 
-  it('remove Cart Item onKeyDown', () => {
+  it('delete onKeyDown', () => {
     const { getByText } = render(<CartItem item={item} />);
     const deleteButton = getByText('видалити');
 
     fireEvent.keyDown(deleteButton, { key: 'Enter', code: 'Enter' });
-
     expect(mockRemoveCartItem).toHaveBeenCalledWith(item.id);
   });
 });

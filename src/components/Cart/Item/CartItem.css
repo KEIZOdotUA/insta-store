@@ -8,6 +8,7 @@
 .cart-item__img-container {
   display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 }
 
 .cart-img {
@@ -21,7 +22,7 @@
   vertical-align: middle;
   padding-left: 15px;
   max-width: 250px;
-  width: 100%
+  width: 100%;
 }
 
 .cart-item__title {
@@ -30,6 +31,7 @@
   font-weight: 500;
   width: 100%;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .cart-item__price {
