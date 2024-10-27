@@ -2,7 +2,7 @@
   width: 100%;
   padding: 13px 0px;
   overflow: hidden;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-color);
 }
 
 .wishlist-item__img-container {
@@ -51,11 +51,11 @@
 }
 
 .wishlist-item__added-to-cart {
-  color: var(--gray-text);
+  color: var(--disabled-text-color);
   cursor: default;
 }
 
 .wishlist-item__delete {
-  color: var(--red);
+  color: var(--error-color);
   margin-left: 70px;
 }

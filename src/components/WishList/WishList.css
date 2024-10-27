@@ -16,11 +16,11 @@
 }
 
 .wishlist__items > span {
-  color: var(--gray-text);
+  color: var(--disabled-text-color);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 300px;
   width: 100%;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-color);
 }

@@ -4,13 +4,18 @@
   text-align: justify;
   font-size: 14px;
   font-weight: 400;
-}
 
-#bio > p {
-  margin: 14px 0 0 0;
-}
+  > p {
+    margin: 14px 0 0 0;
 
-#bio > p > b {
-  font-weight: 500;
-  color: var(--text);
+    > b {
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    > a {
+      font-weight: 400;
+      color: var(--link-color);
+    }
+  }
 }

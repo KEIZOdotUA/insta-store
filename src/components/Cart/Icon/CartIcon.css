@@ -22,7 +22,7 @@
   bottom: 7px;
   border-radius: 100%;
   color: var(--button-text-color);
-  background: var(--dark-background);
+  background: var(--dark-background-color);
   line-height: 9px;
   position: absolute;
   font-size: 9px;

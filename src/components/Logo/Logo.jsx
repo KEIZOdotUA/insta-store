@@ -6,8 +6,12 @@ function Logo() {
   const { whitelabel } = useAppContext();
 
   return (
-    <div id="logo">
-      <Link to="/" onClick={() => window.scrollTo(0, 0)}>{whitelabel.shop.name}</Link>
+    <div className="logo">
+      <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+        {whitelabel.shop.logo.length
+          ? <img src={whitelabel.shop.logo} alt="logo" />
+          : whitelabel.shop.name}
+      </Link>
     </div>
   );
 }

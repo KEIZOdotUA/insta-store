@@ -15,7 +15,7 @@
 .quantity-input__modifier {
   background: var(--button-color);
   color: var(--button-text-color);
-  border: var(--border);
+  border: var(--border-color);
   text-align: center;
   text-shadow: var(--shadow);
   cursor: pointer;

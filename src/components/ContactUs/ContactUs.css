@@ -4,7 +4,7 @@
 
 .separated {
   padding: 10px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-color);
 }
 
 .contact-us > p {

@@ -20,7 +20,7 @@
   height: 100vh;
   overflow-x: hidden;
   overflow-y: visible;
-  background: var(--main-body);
+  background: var(--light-background-color);
   padding: 40px 20px;
   box-shadow: 0 0 10px var(--shadow);
   margin: auto;
@@ -46,9 +46,9 @@
 }
 
 #menu__content > ul > li:first-child {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-color);
 }
 
 #menu__content > ul > li:last-child {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-color);
 }

@@ -1,7 +1,7 @@
 button {
   border: none;
   cursor: pointer;
-  background-color: var(--main-body);
+  background-color: var(--light-background-color);
   text-transform: uppercase;
 }
 
@@ -39,7 +39,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--disabled-button-color);
+  background-color: var(--disabled-background-color);
   color: var(--button-text-color);
   border-radius: 8px;
 }

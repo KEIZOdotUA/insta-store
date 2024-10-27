@@ -17,7 +17,7 @@
   max-width: 126px;
   border-radius: 8px;
   box-shadow: 0 0 10px var(--shadow);
-  background: var(--main-body);
+  background: var(--light-background-color);
   display: flex;
 }
 
@@ -28,7 +28,7 @@
 
 .product-modal__buttons button:nth-child(2) {
   border-radius: 0px 8px 8px 0px;
-  border-left: solid 1px var(--border);
+  border-left: solid 1px var(--border-color);
 }
 
 .product-modal__btn {
@@ -41,5 +41,5 @@
 }
 
 .article {
-  color: var(--gray-text);
+  color: var(--disabled-text-color);
 }
