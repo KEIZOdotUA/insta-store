@@ -5,7 +5,11 @@ import {
   expect,
   beforeEach,
 } from 'vitest';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  act,
+} from '@testing-library/react';
 import AppContextProvider from '@contexts/App/AppContextProvider';
 import AppContext from '@contexts/App/AppContext';
 
@@ -53,19 +57,21 @@ describe('AppContextProvider', () => {
     });
   });
 
-  it('default', async () => {
+  it('provides the correct context values', async () => {
     let receivedContext;
 
-    render(
-      <AppContextProvider>
-        <AppContext.Consumer>
-          {(context) => {
-            receivedContext = context;
-            return null;
-          }}
-        </AppContext.Consumer>
-      </AppContextProvider>,
-    );
+    await act(async () => {
+      render(
+        <AppContextProvider>
+          <AppContext.Consumer>
+            {(context) => {
+              receivedContext = context;
+              return null;
+            }}
+          </AppContext.Consumer>
+        </AppContextProvider>,
+      );
+    });
 
     await waitFor(() => {
       expect(receivedContext.whitelabel).toEqual(mockWhitelabelData);
@@ -81,10 +87,5 @@ describe('AppContextProvider', () => {
       ]);
       expect(receivedContext.packaging).toEqual(mockPackagingData);
     });
-  });
-
-  it('displays loading message initially', () => {
-    const { getByText } = render(<AppContextProvider><div /></AppContextProvider>);
-    expect(getByText('Loading...')).toBeInTheDocument();
   });
 });

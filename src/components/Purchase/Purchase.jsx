@@ -32,7 +32,13 @@ function Purchase({ visible, purchaseToggler }) {
 
   return (
     <div id="purchase__placeholder">
-      <Transition key="Purchase" transitionType="transform" visible={visible} duration={animationDuration}>
+      <Transition
+        key="Purchase"
+        transitionType="transform"
+        transitionDirection="right"
+        visible={visible}
+        duration={animationDuration}
+      >
         <div id="purchase__content">
           <Button className="purchase__open-close" onClick={onClose}>
             <CloseSvg />

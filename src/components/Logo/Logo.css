@@ -6,19 +6,13 @@
   align-items: center;
   cursor: pointer;
   font-size: 22px;
-
-  > a {
-    color: var(--text-color);
-
-    > img {
-      height: 48px;
-    }
-  }
 }
 
-@media (width <= 590px) {
-  .logo > a > img {
-    height: auto;
-    max-width: 190px;
-  }
+.logo > a {
+  color: var(--text-color);
+}
+
+.logo > a > img {
+  max-height: 48px;
+  max-width: 90%;
 }

@@ -1,5 +1,5 @@
 import './WishListItem.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import ProductImage from '@components/Product/Image/ProductImage';
@@ -12,8 +12,14 @@ function WishListItem({ item }) {
   const { categorySlug } = useParams();
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
   const onItemClick = (itemId) => {
-    navigate(`/${categorySlug || 'products'}/${itemId}`);
+    const searchParam = searchParams.get('q');
+    const param = searchParam
+      ? `?q=${searchParam}`
+      : '';
+
+    navigate(`/${categorySlug || 'products'}/${itemId}${param}`);
   };
 
   return (

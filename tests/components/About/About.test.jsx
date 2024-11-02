@@ -32,7 +32,7 @@ describe('About', () => {
 
     const { getByText } = render(<About />);
 
-    expect(getByText('Про нас')).toBeInTheDocument();
+    expect(getByText('ПРО НАС')).toBeInTheDocument();
     expect(getByText('This is the about section')).toBeInTheDocument();
   });
 });

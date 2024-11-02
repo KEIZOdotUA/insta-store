@@ -24,7 +24,7 @@ function Menu({ visible, menuToggler }) {
       <Transition
         key="Menu"
         transitionType="transform"
-        reverted
+        transitionDirection="left"
         visible={visible}
         duration={animationDuration}
       >

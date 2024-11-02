@@ -1,5 +1,5 @@
 import './CartItem.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
@@ -15,8 +15,14 @@ function CartItem({ item }) {
   const { categorySlug } = useParams();
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
   const onItemClick = (itemId) => {
-    navigate(`/${categorySlug || 'products'}/${itemId}`);
+    const searchParam = searchParams.get('q');
+    const param = searchParam
+      ? `?q=${searchParam}`
+      : '';
+
+    navigate(`/${categorySlug || 'products'}/${itemId}${param}`);
   };
 
   return (

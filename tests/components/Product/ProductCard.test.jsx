@@ -5,29 +5,32 @@ import {
   vi,
   afterEach,
 } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ProductCard from '@components/Product/Card/ProductCard';
 import ProductImage from '@components/Product/Image/ProductImage';
 
 vi.mock('@components/Product/Image/ProductImage');
 
 describe('ProductCard', () => {
-  const mockOnClick = vi.fn();
   const product = {
     id: 1,
     name: 'Test Product',
     oldPrice: 150,
     price: 100,
   };
+  const link = '/product/1';
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('default', () => {
+  it('renders product details correctly', () => {
     ProductImage.mockImplementation(() => <img alt={product.name} />);
     const { getByText, getByAltText } = render(
-      <ProductCard product={product} onClick={mockOnClick} />,
+      <Router>
+        <ProductCard product={product} link={link} />
+      </Router>,
     );
 
     const nameElement = getByText('Test Product');
@@ -39,31 +42,26 @@ describe('ProductCard', () => {
     expect(imgElement).toBeInTheDocument();
   });
 
-  it('old price', () => {
-    const { getByText } = render(<ProductCard product={product} onClick={mockOnClick} />);
-    const oldPriceElement = getByText('150');
+  it('displays old price with strikethrough when applicable', () => {
+    const { getByText } = render(
+      <Router>
+        <ProductCard product={product} link={link} />
+      </Router>,
+    );
 
+    const oldPriceElement = getByText('150');
     expect(oldPriceElement.tagName).toBe('S');
     expect(oldPriceElement).toBeInTheDocument();
   });
 
-  it('onClick', () => {
-    const { getByText } = render(
-      <ProductCard product={product} onClick={mockOnClick} />,
+  it('navigates to the correct link on click', () => {
+    const { getByRole } = render(
+      <Router>
+        <ProductCard product={product} link={link} />
+      </Router>,
     );
 
-    const cardElement = getByText('Test Product').closest('.product-card');
-    fireEvent.click(cardElement);
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('onKeyDown', () => {
-    const { getByText } = render(<ProductCard product={product} onClick={mockOnClick} />);
-    const cardElement = getByText('Test Product').closest('.product-card');
-
-    fireEvent.keyDown(cardElement, { key: 'Enter', code: 'Enter' });
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
+    const linkElement = getByRole('link');
+    expect(linkElement).toHaveAttribute('href', link);
   });
 });

@@ -110,6 +110,8 @@ function OrderDetails({ onOrder }) {
       <div id="order-title">Замовлення</div>
       <div id="order-form">
         <TextInput
+          id="city"
+          className="order-input"
           label="Населений пункт"
           value={orderDetails.city}
           error={errors.city}
@@ -117,6 +119,8 @@ function OrderDetails({ onOrder }) {
           required
         />
         <TextInput
+          id="department"
+          className="order-input"
           label={'Точка видачі "Нова Пошта"'}
           value={orderDetails.department}
           error={errors.department}
@@ -131,6 +135,8 @@ function OrderDetails({ onOrder }) {
           required
         />
         <TextInput
+          id="lastName"
+          className="order-input"
           label="Прізвище"
           value={orderDetails.lastName}
           error={errors.lastName}
@@ -138,6 +144,8 @@ function OrderDetails({ onOrder }) {
           required
         />
         <TextInput
+          id="firstName"
+          className="order-input"
           label="Ім'я"
           value={orderDetails.firstName}
           error={errors.firstName}

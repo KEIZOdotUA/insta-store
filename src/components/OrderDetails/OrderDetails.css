@@ -11,6 +11,11 @@
   margin-bottom: 20px;
 }
 
+.order-input {
+  margin-top: 14px;
+  width: 100%;
+}
+
 .order-btn {
   display: block;
   width: 100%;

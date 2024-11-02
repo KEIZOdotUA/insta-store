@@ -1,0 +1,7 @@
+.search-results {
+  margin: 0;
+  background-color: var(--light-background-color);
+  list-style-type: none;
+  padding: 0px 10px 0px 10px;
+  pointer-events: auto;
+}

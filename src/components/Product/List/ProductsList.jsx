@@ -1,9 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import './ProductsList.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import {
+  useParams,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import useAppContext from '@contexts/App/useAppContext';
 import ProductCard from '@components/Product/Card/ProductCard';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import filterProductsByQuery from '@helpers/filterProductsByQuery';
 
 function ProductsList() {
   const { categories, products } = useAppContext();
@@ -13,6 +18,7 @@ function ProductsList() {
   const [availableProducts, setAvailableProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [numberOfVisibleProducts, setNumberOfVisibleProducts] = useState(itemsPerPage);
+  const [productListName, setProductListName] = useState('');
 
   const pushGA4ViewTtemList = (productItems) => {
     dispatchTrackingEvent({
@@ -39,6 +45,9 @@ function ProductsList() {
   }, [products]);
 
   const { categorySlug } = useParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchParam = searchParams.get('q');
   useEffect(() => {
     const filterProductsByCategory = (categoryId) => {
       setNumberOfVisibleProducts(itemsPerPage * 2);
@@ -46,13 +55,33 @@ function ProductsList() {
       pushGA4ViewTtemList(availableProducts.filter((product) => product.category === categoryId));
     };
 
+    const filterProductsBySearch = (searchQuery) => {
+      setNumberOfVisibleProducts(itemsPerPage * 2);
+      const searchResults = filterProductsByQuery(availableProducts, searchQuery);
+      setFilteredProducts(searchResults);
+      pushGA4ViewTtemList(searchResults);
+    };
+
+    if (categorySlug === 'search' && searchParam) {
+      const searchQuery = decodeURIComponent(searchParam);
+      setProductListName(`РЕЗУЛЬТАТИ ПОШУКУ "${searchQuery}"`);
+      filterProductsBySearch(searchQuery);
+
+      return;
+    }
+
     if (categorySlug) {
       const category = categories.find((cat) => cat.slug === categorySlug);
       if (category) {
+        setProductListName(category.name.toUpperCase());
         filterProductsByCategory(category.id);
+
+        return;
       }
+
+      navigate('/');
     }
-  }, [categorySlug, availableProducts, categories]);
+  }, [categorySlug, availableProducts, categories, navigate, searchParam]);
 
   const loadMore = () => {
     setNumberOfVisibleProducts((prevNum) => prevNum + itemsPerPage);
@@ -84,18 +113,29 @@ function ProductsList() {
     };
   }, [observerTarget]);
 
-  const navigate = useNavigate();
-  const onProductClick = (productId) => {
-    navigate(`/${categorySlug || 'products'}/${productId}`);
+  const getProductLink = (productId) => {
+    const category = categorySlug || 'products';
+    const param = searchParam
+      ? `?q=${searchParam}`
+      : '';
+
+    return `/${category}/${productId}${param}`;
   };
 
   return (
-    <div id="products-list">
-      {filteredProducts.slice(0, numberOfVisibleProducts).map((p) => (
-        <ProductCard key={p.id} product={p} onClick={() => onProductClick(p.id)} />
-      ))}
-      <div ref={observerTarget} style={{ width: '100%' }} />
-    </div>
+    <>
+      {productListName && <center><h1>{productListName}</h1></center>}
+      <div id="products-list">
+        {filteredProducts.slice(0, numberOfVisibleProducts).map((p) => (
+          <ProductCard
+            product={p}
+            link={getProductLink(p.id)}
+            key={p.id}
+          />
+        ))}
+        <div ref={observerTarget} style={{ width: '100%' }} />
+      </div>
+    </>
   );
 }
 

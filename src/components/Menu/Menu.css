@@ -45,6 +45,10 @@
   padding-left: 20px;
 }
 
+#menu__content > ul > li > a {
+  font-weight: 700;
+}
+
 #menu__content > ul > li:first-child {
   border-bottom: 1px solid var(--border-color);
 }

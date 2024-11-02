@@ -13,18 +13,39 @@ import useAppContext from '@contexts/App/useAppContext';
 vi.mock('@contexts/App/useAppContext');
 
 describe('Logo', () => {
-  const mockWhitelabel = {
+  const mockWhitelabelWithLogo = {
     shop: {
       name: 'Test Shop',
+      logo: 'https://example.com/logo.png',
+    },
+  };
+
+  const mockWhitelabelWithoutLogo = {
+    shop: {
+      name: 'Test Shop',
+      logo: '',
     },
   };
 
   beforeEach(() => {
-    useAppContext.mockReturnValue({ whitelabel: mockWhitelabel });
     window.scrollTo = vi.fn();
   });
 
-  it('default', () => {
+  it('renders with logo image when logo URL is present', () => {
+    useAppContext.mockReturnValue({ whitelabel: mockWhitelabelWithLogo });
+    const { getByAltText } = render(
+      <MemoryRouter>
+        <Logo />
+      </MemoryRouter>,
+    );
+
+    const logoImage = getByAltText('logo');
+    expect(logoImage).toBeInTheDocument();
+    expect(logoImage).toHaveAttribute('src', 'https://example.com/logo.png');
+  });
+
+  it('renders with shop name when logo URL is absent', () => {
+    useAppContext.mockReturnValue({ whitelabel: mockWhitelabelWithoutLogo });
     const { getByText } = render(
       <MemoryRouter>
         <Logo />
@@ -36,7 +57,8 @@ describe('Logo', () => {
     expect(linkElement.closest('a')).toHaveAttribute('href', '/');
   });
 
-  it('onClick', () => {
+  it('calls scrollTo on link click', () => {
+    useAppContext.mockReturnValue({ whitelabel: mockWhitelabelWithoutLogo });
     const { getByText } = render(
       <MemoryRouter>
         <Logo />

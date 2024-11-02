@@ -12,7 +12,7 @@ vi.mock('react-transition-group', () => ({
 }));
 
 describe('Transition', () => {
-  it('children', () => {
+  it('renders children', () => {
     const { getByText } = render(
       <Transition transitionType="opacity" duration={300} visible>
         <div>Transition Content</div>
@@ -21,7 +21,7 @@ describe('Transition', () => {
     expect(getByText('Transition Content')).toBeTruthy();
   });
 
-  it('styles for opacity transition', () => {
+  it('applies opacity transition styles', () => {
     const { getByText } = render(
       <Transition transitionType="opacity" duration={300} visible>
         <div>Transition Content</div>
@@ -33,9 +33,9 @@ describe('Transition', () => {
     expect(element.parentElement).toHaveStyle('opacity: 1');
   });
 
-  it('styles for transform transition', async () => {
+  it('applies transform transition with direction "right"', () => {
     const { getByText } = render(
-      <Transition transitionType="transform" duration={300} visible>
+      <Transition transitionType="transform" transitionDirection="right" duration={300} visible>
         <div>Transition Content</div>
       </Transition>,
     );
@@ -45,9 +45,9 @@ describe('Transition', () => {
     expect(element.parentElement).toHaveStyle('transform: translateX(0)');
   });
 
-  it('styles for reverted transform transition', async () => {
+  it('applies transform transition with direction "left"', () => {
     const { getByText } = render(
-      <Transition transitionType="transform" duration={300} visible reverted>
+      <Transition transitionType="transform" transitionDirection="left" duration={300} visible>
         <div>Transition Content</div>
       </Transition>,
     );
@@ -55,5 +55,17 @@ describe('Transition', () => {
     const element = getByText('Transition Content');
     expect(element.parentElement).toHaveStyle('transition: transform 300ms ease-in-out');
     expect(element.parentElement).toHaveStyle('transform: translateX(0)');
+  });
+
+  it('applies transform transition with direction "bottom"', () => {
+    const { getByText } = render(
+      <Transition transitionType="transform" transitionDirection="bottom" duration={300} visible>
+        <div>Transition Content</div>
+      </Transition>,
+    );
+
+    const element = getByText('Transition Content');
+    expect(element.parentElement).toHaveStyle('transition: transform 300ms ease-in-out');
+    expect(element.parentElement).toHaveStyle('transform: translateY(0)');
   });
 });

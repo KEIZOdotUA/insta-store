@@ -6,21 +6,29 @@ import {
   beforeEach,
   afterEach,
 } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter, useParams, useNavigate } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import {
+  MemoryRouter,
+  useParams,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import ProductsList from '@components/Product/List/ProductsList';
 import useAppContext from '@contexts/App/useAppContext';
 import ProductCard from '@components/Product/Card/ProductCard';
+import filterProductsByQuery from '@helpers/filterProductsByQuery';
 
 vi.mock('@contexts/App/useAppContext');
 vi.mock('@components/Product/Card/ProductCard');
 vi.mock('@helpers/dispatchTrackingEvent');
+vi.mock('@helpers/filterProductsByQuery');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
     useParams: vi.fn(),
     useNavigate: vi.fn(),
+    useSearchParams: vi.fn(),
   };
 });
 
@@ -33,9 +41,8 @@ class IntersectionObserver {
     this.callback([{ isIntersecting: true }]);
   }
 
-  unobserve() { } // eslint-disable-line
-
-  disconnect() { } // eslint-disable-line
+  unobserve() {} // eslint-disable-line
+  disconnect() {} // eslint-disable-line
 }
 
 global.IntersectionObserver = IntersectionObserver;
@@ -59,36 +66,20 @@ describe('ProductsList', () => {
   ];
 
   const mockCategories = [
-    {
-      id: 1,
-      name: 'Category 1',
-      slug: 'category-1',
-    },
-    {
-      id: 2,
-      name: 'Category 2',
-      slug: 'category-2',
-    },
+    { id: 1, name: 'Category 1', slug: 'category-1' },
+    { id: 2, name: 'Category 2', slug: 'category-2' },
   ];
 
   const mockNavigate = vi.fn();
 
   beforeEach(() => {
-    useAppContext.mockReturnValue({
-      categories: mockCategories,
-      products: mockProducts,
-    });
-
+    useAppContext.mockReturnValue({ categories: mockCategories, products: mockProducts });
     useParams.mockReturnValue({ categorySlug: 'category-1' });
     useNavigate.mockReturnValue(mockNavigate);
+    useSearchParams.mockReturnValue([{ get: vi.fn() }]);
 
-    ProductCard.mockImplementation(({ product, onClick }) => (
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => onClick(product.id)}
-        onKeyDown={() => onClick(product.id)}
-      >
+    ProductCard.mockImplementation(({ product, link }) => (
+      <div role="link" data-testid="product-card" data-link={link}>
         {product.name}
       </div>
     ));
@@ -98,40 +89,41 @@ describe('ProductsList', () => {
     vi.clearAllMocks();
   });
 
-  it('default', () => {
-    const { getByText } = render(
+  it('renders product list for a category', () => {
+    const { getByText, queryByText } = render(
       <MemoryRouter>
         <ProductsList />
       </MemoryRouter>,
     );
 
-    const product = getByText('Product 1');
-    expect(product).toBeInTheDocument();
-
-    fireEvent.click(product);
-    expect(mockNavigate).toHaveBeenCalledWith('/category-1/1');
-  });
-
-  it('filters ', () => {
-    useParams.mockReturnValue({ categorySlug: 'category-2' });
-
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductsList />
-      </MemoryRouter>,
-    );
-
-    expect(getByText('Product 2')).toBeInTheDocument();
-    expect(() => getByText('Product 1')).toThrow();
-  });
-
-  it('loads more', () => {
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductsList />
-      </MemoryRouter>,
-    );
-
+    expect(getByText('CATEGORY 1')).toBeInTheDocument();
     expect(getByText('Product 1')).toBeInTheDocument();
+    expect(queryByText('Product 2')).not.toBeInTheDocument();
+  });
+
+  it('filters products by search query', () => {
+    useParams.mockReturnValue({ categorySlug: 'search' });
+    useSearchParams.mockReturnValue([{ get: () => 'test' }]);
+    filterProductsByQuery.mockReturnValue([mockProducts[1]]);
+
+    const { getByText, queryByText } = render(
+      <MemoryRouter>
+        <ProductsList />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('РЕЗУЛЬТАТИ ПОШУКУ "test"')).toBeInTheDocument();
+    expect(getByText('Product 2')).toBeInTheDocument();
+    expect(queryByText('Product 1')).not.toBeInTheDocument();
+  });
+
+  it('loads more products when the observer triggers', () => {
+    const { getByTestId } = render(
+      <MemoryRouter>
+        <ProductsList />
+      </MemoryRouter>,
+    );
+
+    expect(getByTestId('product-card').dataset.link).toBe('/category-1/1');
   });
 });

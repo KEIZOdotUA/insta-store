@@ -6,7 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import CartItem from '@components/Cart/Item/CartItem';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
@@ -25,6 +25,7 @@ vi.mock('react-router-dom', () => ({
   __esModule: true,
   useParams: vi.fn(),
   useNavigate: vi.fn(),
+  useSearchParams: vi.fn(),
 }));
 
 describe('CartItem', () => {
@@ -41,6 +42,7 @@ describe('CartItem', () => {
     });
     useNavigate.mockReturnValue(mockNavigate);
     useParams.mockReturnValue({ categorySlug: 'test-category' });
+    useSearchParams.mockReturnValue([{ get: vi.fn() }]);
   });
 
   const item = {

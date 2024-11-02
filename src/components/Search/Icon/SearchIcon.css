@@ -1,0 +1,13 @@
+.search-icon {
+  width: auto;
+  position: relative;
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+}
+
+.search-icon > svg {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+}

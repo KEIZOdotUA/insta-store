@@ -30,6 +30,15 @@ vi.mock('@components/Menu/Icon/MenuIcon', () => ({
   ),
 }));
 
+vi.mock('@components/Search/Icon/SearchIcon', () => ({
+  __esModule: true,
+  default: ({ onClick }) => (
+    <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>
+      SearchIcon
+    </div>
+  ),
+}));
+
 vi.mock('@components/WishList/Icon/WishListIcon', () => ({
   __esModule: true,
   default: ({ onClick }) => (
@@ -41,27 +50,32 @@ vi.mock('@components/WishList/Icon/WishListIcon', () => ({
 
 const mockPurchaseToggler = vi.fn();
 const mockMenuToggler = vi.fn();
+const mockSearchToggler = vi.fn();
 const mockWishListToggler = vi.fn();
 
 describe('Header', () => {
-  it('default', () => {
+  it('renders default elements', () => {
     render(
       <Header
-        purchaseToggler={() => {}}
         menuToggler={() => {}}
+        searchToggler={() => {}}
         wishListToggler={() => {}}
+        purchaseToggler={() => {}}
       />,
     );
 
     expect(screen.getByText('Logo')).toBeInTheDocument();
     expect(screen.getByText('CartIcon')).toBeInTheDocument();
     expect(screen.getByText('WishListIcon')).toBeInTheDocument();
+    expect(screen.getByText('MenuIcon')).toBeInTheDocument();
+    expect(screen.getByText('SearchIcon')).toBeInTheDocument();
   });
 
-  it('purchaseToggler', () => {
+  it('calls purchaseToggler on CartIcon click', () => {
     render(
       <Header
         menuToggler={mockMenuToggler}
+        searchToggler={mockSearchToggler}
         purchaseToggler={mockPurchaseToggler}
         wishListToggler={mockWishListToggler}
       />,
@@ -72,10 +86,11 @@ describe('Header', () => {
     expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
   });
 
-  it('menuToggler', () => {
+  it('calls menuToggler on MenuIcon click', () => {
     render(
       <Header
         menuToggler={mockMenuToggler}
+        searchToggler={mockSearchToggler}
         purchaseToggler={mockPurchaseToggler}
         wishListToggler={mockWishListToggler}
       />,
@@ -86,10 +101,26 @@ describe('Header', () => {
     expect(mockMenuToggler).toHaveBeenCalledTimes(1);
   });
 
-  it('wishListToggler', () => {
+  it('calls searchToggler on SearchIcon click', () => {
     render(
       <Header
         menuToggler={mockMenuToggler}
+        searchToggler={mockSearchToggler}
+        purchaseToggler={mockPurchaseToggler}
+        wishListToggler={mockWishListToggler}
+      />,
+    );
+
+    fireEvent.click(screen.getByText('SearchIcon'));
+
+    expect(mockSearchToggler).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls wishListToggler on WishListIcon click', () => {
+    render(
+      <Header
+        menuToggler={mockMenuToggler}
+        searchToggler={mockSearchToggler}
         purchaseToggler={mockPurchaseToggler}
         wishListToggler={mockWishListToggler}
       />,

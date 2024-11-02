@@ -7,7 +7,7 @@ function About() {
 
   return (
     <div id="about">
-      <h1>Про нас</h1>
+      <center><h1>ПРО НАС</h1></center>
       {parse(whitelabel.shop.about)}
     </div>
   );

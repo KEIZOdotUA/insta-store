@@ -1,7 +1,7 @@
 :root {
   --link-color: rgb(79, 87, 144); /* --accent-a5 */
   --dark-background-color: rgb(10, 9, 49); /* --accent-a9 */
-  --button-color: rgb(24, 27, 68); /* --accent-a12 */
+  --main-accent-color: rgb(24, 27, 68); /* --accent-a12 */
 
   --light-background-color: rgb(246, 245, 246); /* --gray-a1 */
   --button-text-color: rgb(246, 245, 246); /* --gray-a1 */
@@ -13,6 +13,7 @@
   --error-color: rgba(220, 32, 32, 1);
 
   --shadow: color-mix(in srgb, var(--dark-background-color) 30%, transparent);
+  --button-color: var(--main-accent-color);
 }
 
 body {
@@ -31,7 +32,6 @@ body {
 }
 
 a {
-  font-weight: bold;
   color: var(--text-color);
   text-decoration: none;
 }
@@ -42,4 +42,11 @@ input:focus {
 
 textarea:focus {
   outline: none;
+}
+
+h1 {
+  padding-left: 15px;
+  margin-top: 5px;
+  color: var(--main-accent-color);
+  font-weight: 500;
 }

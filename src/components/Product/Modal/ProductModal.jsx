@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './ProductModal.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import useAppContext from '@contexts/App/useAppContext';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import ProductImage from '@components/Product/Image/ProductImage';
@@ -48,9 +48,15 @@ function ProductModal() {
     });
   };
 
+  const [searchParams] = useSearchParams();
   const onClose = () => {
     setProduct(null);
-    navigate(`/${categorySlug || 'products'}`);
+    const searchParam = searchParams.get('q');
+    const param = searchParam
+      ? `?q=${searchParam}`
+      : '';
+
+    navigate(`/${categorySlug || 'products'}${param}`);
   };
 
   useEffect(() => {

@@ -9,7 +9,47 @@ import Layout from '@components/Layout/Layout';
 
 vi.mock('@components/Header/Header', () => ({
   __esModule: true,
-  default: vi.fn(() => <div>Mock Header</div>),
+  default: vi.fn(({
+    menuToggler,
+    searchToggler,
+    wishListToggler,
+    purchaseToggler,
+  }) => (
+    <div>
+      <div
+        role="button"
+        onClick={menuToggler}
+        onKeyDown={menuToggler}
+        tabIndex={0}
+      >
+        Mock Header
+      </div>
+      <div
+        role="button"
+        onClick={searchToggler}
+        onKeyDown={searchToggler}
+        tabIndex={0}
+      >
+        Mock Search Toggler
+      </div>
+      <div
+        role="button"
+        onClick={wishListToggler}
+        onKeyDown={wishListToggler}
+        tabIndex={0}
+      >
+        Mock WishList Toggler
+      </div>
+      <div
+        role="button"
+        onClick={purchaseToggler}
+        onKeyDown={purchaseToggler}
+        tabIndex={0}
+      >
+        Mock Purchase Toggler
+      </div>
+    </div>
+  )),
 }));
 
 vi.mock('@components/Menu/Menu', () => ({
@@ -17,6 +57,15 @@ vi.mock('@components/Menu/Menu', () => ({
   default: vi.fn(({ visible, menuToggler }) => (
     <div role="button" onClick={menuToggler} onKeyDown={menuToggler} tabIndex={0}>
       {visible ? 'Mock Menu Visible' : 'Mock Menu Hidden'}
+    </div>
+  )),
+}));
+
+vi.mock('@components/Search/Search', () => ({
+  __esModule: true,
+  default: vi.fn(({ visible, searchToggler }) => (
+    <div role="button" onClick={searchToggler} onKeyDown={searchToggler} tabIndex={0}>
+      {visible ? 'Mock Search Visible' : 'Mock Search Hidden'}
     </div>
   )),
 }));
@@ -50,38 +99,43 @@ vi.mock('react-router-dom', () => ({
 }));
 
 describe('Layout', () => {
-  it('default', () => {
+  it('renders the default layout with all components hidden', () => {
     const { getByText } = render(<Layout />);
 
     expect(getByText('Mock Header')).toBeInTheDocument();
     expect(getByText('Mock Menu Hidden')).toBeInTheDocument();
+    expect(getByText('Mock Search Hidden')).toBeInTheDocument();
     expect(getByText('Mock Purchase Hidden')).toBeInTheDocument();
-    expect(getByText('Mock Outlet')).toBeInTheDocument();
     expect(getByText('Mock WishList Hidden')).toBeInTheDocument();
     expect(getByText('Mock Product Modal')).toBeInTheDocument();
+    expect(getByText('Mock Outlet')).toBeInTheDocument();
   });
 
-  it('menuToggler', async () => {
+  it('toggles menu visibility when menuToggler is clicked', () => {
     const { getByText } = render(<Layout />);
 
     fireEvent.click(getByText('Mock Menu Hidden'));
-
     expect(getByText('Mock Menu Visible')).toBeInTheDocument();
   });
 
-  it('purchaseToggler', () => {
+  it('toggles search visibility when searchToggler is clicked', () => {
+    const { getByText } = render(<Layout />);
+
+    fireEvent.click(getByText('Mock Search Toggler'));
+    expect(getByText('Mock Search Visible')).toBeInTheDocument();
+  });
+
+  it('toggles purchase visibility when purchaseToggler is clicked', () => {
     const { getByText } = render(<Layout />);
 
     fireEvent.click(getByText('Mock Purchase Hidden'));
-
     expect(getByText('Mock Purchase Visible')).toBeInTheDocument();
   });
 
-  it('wishListToggler', () => {
+  it('toggles wishlist visibility when wishListToggler is clicked', () => {
     const { getByText } = render(<Layout />);
 
     fireEvent.click(getByText('Mock WishList Hidden'));
-
     expect(getByText('Mock WishList Visible')).toBeInTheDocument();
   });
 });

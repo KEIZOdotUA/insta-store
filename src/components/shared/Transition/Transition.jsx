@@ -4,32 +4,34 @@ import PropTypes from 'prop-types';
 import { Transition as TransitionGroup } from 'react-transition-group';
 
 const transitionStyles = {
-  transform: {
+  'transform-right': {
     entering: { transform: 'translateX(0)' },
     entered: { transform: 'translateX(0)' },
     exiting: { transform: 'translateX(100%)' },
     exited: { transform: 'translateX(100%)' },
   },
-  'reverted-transform': {
+  'transform-left': {
     entering: { transform: 'translateX(0)' },
     entered: { transform: 'translateX(0)' },
     exiting: { transform: 'translateX(-100%)' },
     exited: { transform: 'translateX(-100%)' },
   },
+  'transform-bottom': {
+    entering: { transform: 'translateY(0)' },
+    entered: { transform: 'translateY(0)' },
+    exiting: { transform: 'translateY(-100%)' },
+    exited: { transform: 'translateY(-100%)' },
+  },
   opacity: {
     entered: { opacity: 1 },
     exited: { opacity: 0 },
-  },
-  'reverted-opacity': {
-    entered: { opacity: 0 },
-    exited: { opacity: 1 },
   },
 };
 
 function Transition({
   children,
   transitionType,
-  reverted,
+  transitionDirection,
   duration,
   visible,
 }) {
@@ -41,7 +43,7 @@ function Transition({
         <div
           style={{
             transition: `${transitionType} ${duration}ms ease-in-out`,
-            ...transitionStyles[reverted ? `reverted-${transitionType}` : transitionType][state],
+            ...transitionStyles[transitionType === 'opacity' ? transitionType : `${transitionType}-${transitionDirection}`][state],
           }}
           className="rtg-transition"
         >
@@ -52,14 +54,14 @@ function Transition({
   );
 }
 Transition.defaultProps = {
-  reverted: false,
+  transitionDirection: '',
   children: '',
 };
 
 Transition.propTypes = {
   children: PropTypes.node,
   transitionType: PropTypes.oneOf(['transform', 'opacity']).isRequired,
-  reverted: PropTypes.bool,
+  transitionDirection: PropTypes.oneOf(['', 'right', 'left', 'bottom']),
   duration: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
 };
