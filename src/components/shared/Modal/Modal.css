@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: color-mix(in srgb, var(--dark-background-color) 50%, transparent);
+  background: color-mix(in srgb, var(--high-contrast-color) 70%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;

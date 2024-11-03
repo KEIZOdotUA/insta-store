@@ -4,7 +4,7 @@ This project is created for learning purposes and may not follow best practices.
 
 ## Project Idea
 
-This project was developed as a sample website for small jewelry stores that primarily operate on Instagram. The goal is to provide these stores with a simple and functional website to showcase their products and expand their online presence.
+This project was developed as a sample website for small stores that primarily operate on Instagram. The goal is to provide these stores with a simple and functional website to showcase their products and expand their online presence.
 
 ## Tools and Libraries
 
