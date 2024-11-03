@@ -12,7 +12,9 @@
 
   --error-color: rgba(220, 32, 32, 1);
 
-  --shadow: color-mix(in srgb, var(--dark-background-color) 30%, transparent);
+  --shadow: color-mix(in srgb, var(--high-contrast-color) 30%, transparent);
+  --overlay-color: color-mix(in srgb, var(--high-contrast-color) 70%, transparent);
+
   --button-color: var(--main-accent-color);
   --text-color: var(--high-contrast-color);
 }
@@ -43,11 +45,4 @@ input:focus {
 
 textarea:focus {
   outline: none;
-}
-
-h1 {
-  padding-left: 15px;
-  margin-top: 5px;
-  color: var(--main-accent-color);
-  font-weight: 500;
 }

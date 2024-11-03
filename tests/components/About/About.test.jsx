@@ -1,10 +1,10 @@
+import { render } from '@testing-library/react';
 import {
+  vi,
   describe,
   it,
   expect,
-  vi,
 } from 'vitest';
-import { render } from '@testing-library/react';
 import About from '@components/About/About';
 import useAppContext from '@contexts/App/useAppContext';
 
@@ -12,27 +12,26 @@ vi.mock('@contexts/App/useAppContext', () => ({
   __esModule: true,
   default: vi.fn(),
 }));
-
-vi.mock('html-react-parser', () => ({
+vi.mock('@components/shared/Heading/Heading', () => ({
   __esModule: true,
-  default: vi.fn((html) => html),
+  default: vi.fn(({ children }) => <h1>{children}</h1>),
 }));
 
 describe('About', () => {
-  it('default', () => {
+  it('renders the heading and parsed about content', () => {
     const mockWhitelabelData = {
       whitelabel: {
         shop: {
-          about: 'This is the about section',
+          about: '<p>Інформація ро нас</p>',
         },
       },
     };
 
     useAppContext.mockReturnValue(mockWhitelabelData);
 
-    const { getByText } = render(<About />);
+    const { getByText, container } = render(<About />);
 
     expect(getByText('ПРО НАС')).toBeInTheDocument();
-    expect(getByText('This is the about section')).toBeInTheDocument();
+    expect(container.querySelector('p').textContent).toBe('Інформація ро нас');
   });
 });
