@@ -1,9 +1,9 @@
-import './About.css';
+import './AboutPage.css';
 import useAppContext from '@contexts/App/useAppContext';
 import Heading from '@components/shared/Heading/Heading';
 import parse from 'html-react-parser';
 
-function About() {
+function AboutPage() {
   const { whitelabel } = useAppContext();
 
   return (
@@ -14,4 +14,4 @@ function About() {
   );
 }
 
-export default About;
+export default AboutPage;

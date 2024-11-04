@@ -10,9 +10,9 @@ import AppContextProvider from '@contexts/App/AppContextProvider';
 import ShoppingContextProvider from '@contexts/Shopping/ShoppingContextProvider';
 import App from '../src/App';
 
-vi.mock('../src/AppRouter', () => ({
+vi.mock('@pages/Router', () => ({
   __esModule: true,
-  default: () => <div>Mocked AppRouter</div>,
+  default: () => <div>Mocked Router</div>,
 }));
 
 vi.mock('@contexts/App/AppContextProvider', () => ({
@@ -47,6 +47,6 @@ describe('App', () => {
       </AppContextProvider>,
     );
 
-    await waitFor(() => expect(getByText('Mocked AppRouter')).toBeInTheDocument());
+    await waitFor(() => expect(getByText('Mocked Router')).toBeInTheDocument());
   });
 });

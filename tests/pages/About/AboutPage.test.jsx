@@ -5,7 +5,7 @@ import {
   it,
   expect,
 } from 'vitest';
-import About from '@components/About/About';
+import AboutPage from '@pages/About/AboutPage';
 import useAppContext from '@contexts/App/useAppContext';
 
 vi.mock('@contexts/App/useAppContext', () => ({
@@ -29,7 +29,7 @@ describe('About', () => {
 
     useAppContext.mockReturnValue(mockWhitelabelData);
 
-    const { getByText, container } = render(<About />);
+    const { getByText, container } = render(<AboutPage />);
 
     expect(getByText('ПРО НАС')).toBeInTheDocument();
     expect(container.querySelector('p').textContent).toBe('Інформація ро нас');

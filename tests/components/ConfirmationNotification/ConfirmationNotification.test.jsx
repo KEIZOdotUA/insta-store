@@ -23,7 +23,7 @@ describe('ConfirmationNotification', () => {
   it('default', () => {
     const { getByText } = render(<ConfirmationNotification />);
 
-    expect(getByText('Ми прийняли Ваше замовлення №1')).toBeTruthy();
+    expect(getByText('Ми прийняли Ваше замовлення № 1')).toBeTruthy();
     expect(getByText('Contact Us')).toBeTruthy();
   });
 });

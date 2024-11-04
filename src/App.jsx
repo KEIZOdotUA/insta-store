@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import AppContextProvider from '@contexts/App/AppContextProvider';
 import ShoppingContextProvider from '@contexts/Shopping/ShoppingContextProvider';
-import AppRouter from './AppRouter';
+import AppRouter from '@pages/Router';
 
 function App() {
   return (

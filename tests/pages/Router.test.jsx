@@ -6,14 +6,14 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import { MemoryRouter, Outlet } from 'react-router-dom';
-import AppRouter from '../src/AppRouter';
+import Router from '@pages/Router';
 
 vi.mock('@components/Home/Home', () => ({
   __esModule: true,
   default: () => <div>Home Page</div>,
 }));
 
-vi.mock('@components/About/About', () => ({
+vi.mock('@pages/About/AboutPage', () => ({
   __esModule: true,
   default: () => <div>About Page</div>,
 }));
@@ -33,11 +33,11 @@ vi.mock('@components/Product/List/ProductsList', () => ({
   default: () => <div>Products List</div>,
 }));
 
-describe('AppRouter', () => {
+describe('Router', () => {
   it('default', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/']}>
-        <AppRouter />
+        <Router />
       </MemoryRouter>,
     );
 
@@ -48,7 +48,7 @@ describe('AppRouter', () => {
   it('/about', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/about']}>
-        <AppRouter />
+        <Router />
       </MemoryRouter>,
     );
 
@@ -59,7 +59,7 @@ describe('AppRouter', () => {
   it('/:categorySlug', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/some-category']}>
-        <AppRouter />
+        <Router />
       </MemoryRouter>,
     );
 
@@ -70,7 +70,7 @@ describe('AppRouter', () => {
   it('/:categorySlug/:productId', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/some-category/123']}>
-        <AppRouter />
+        <Router />
       </MemoryRouter>,
     );
 
@@ -81,7 +81,7 @@ describe('AppRouter', () => {
   it('/products', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/products']}>
-        <AppRouter />
+        <Router />
       </MemoryRouter>,
     );
 
@@ -92,7 +92,7 @@ describe('AppRouter', () => {
   it('/:products/:productId', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/products/123']}>
-        <AppRouter />
+        <Router />
       </MemoryRouter>,
     );
 

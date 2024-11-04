@@ -6,7 +6,7 @@ function ShoppingContextProvider({ children }) {
   const [cartId, setCartId] = useState(
     localStorage.getItem('cart')
       ? JSON.parse(localStorage.getItem('cart')).id
-      : Date.now(),
+      : Date.now().toString().slice(-5),
   );
 
   const [cartItems, setCartItems] = useState(
@@ -39,7 +39,7 @@ function ShoppingContextProvider({ children }) {
     const addCartItem = (item) => {
       const isItemInCart = findCartItem(item.id);
       if (!isItemInCart) {
-        setCartId(Date.now());
+        setCartId(Date.now().toString().slice(-5));
         setCartItems([...cartItems, { ...item, quantity: 1 }]);
       }
     };

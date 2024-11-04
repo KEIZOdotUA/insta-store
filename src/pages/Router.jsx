@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import About from '@components/About/About';
+import AboutPage from '@pages/About/AboutPage';
 import Home from '@components/Home/Home';
 import Layout from '@components/Layout/Layout';
 import ProductsList from '@components/Product/List/ProductsList';
 
-function AppRouter() {
+function Router() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -13,10 +13,10 @@ function AppRouter() {
         <Route path="/:categorySlug" element={<ProductsList />} />
         <Route path="/products/:productId" element={<Home />} />
         <Route path="/:categorySlug/:productId" element={<ProductsList />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<AboutPage />} />
       </Route>
     </Routes>
   );
 }
 
-export default AppRouter;
+export default Router;
