@@ -6,23 +6,26 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter, useParams, useNavigate } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import AdditionalPackaging from '@components/AdditionalPackaging/AdditionalPackaging';
 import useAppContext from '@contexts/App/useAppContext';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
+import useProductNavigation from '@helpers/useProductNavigation';
 
 vi.mock('@contexts/App/useAppContext');
 vi.mock('@contexts/Shopping/useShoppingContext');
-vi.mock('@helpers/dispatchTrackingEvent');
-vi.mock('react-router-dom', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useParams: vi.fn(),
-    useNavigate: vi.fn(),
-  };
-});
+vi.mock('@helpers/googleAnalyticsGA4');
+vi.mock('@helpers/useProductNavigation');
+
+vi.mock('@components/shared/Button/Button', () => ({
+  __esModule: true,
+  default: vi.fn(({ children, onClick, className }) => (
+    <button type="button" className={className} onClick={onClick}>
+      {children}
+    </button>
+  )),
+}));
 
 describe('AdditionalPackaging', () => {
   const mockPackaging = {
@@ -34,7 +37,8 @@ describe('AdditionalPackaging', () => {
   const mockFindCartItem = vi.fn();
   const mockAddCartItem = vi.fn();
   const mockRemoveCartItem = vi.fn();
-  const mockNavigate = vi.fn();
+  const mockGetProductLink = vi.fn();
+  const mockTrackViewItemEvent = vi.fn();
 
   beforeEach(() => {
     useAppContext.mockReturnValue({
@@ -47,8 +51,9 @@ describe('AdditionalPackaging', () => {
       removeCartItem: mockRemoveCartItem,
     });
 
-    useParams.mockReturnValue({ categorySlug: 'gifts' });
-    useNavigate.mockReturnValue(mockNavigate);
+    useProductNavigation.mockReturnValue(mockGetProductLink);
+    trackViewItemEvent.mockImplementation(mockTrackViewItemEvent);
+    mockGetProductLink.mockReturnValue(`/products/${mockPackaging.id}`);
   });
 
   it('default', () => {
@@ -58,7 +63,20 @@ describe('AdditionalPackaging', () => {
       </MemoryRouter>,
     );
 
-    expect(getByText('Gift Box')).toBeInTheDocument();
+    expect(getByText('Gift Box (100 грн)')).toBeInTheDocument();
+  });
+
+  it('tracks view item event on link click', () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <AdditionalPackaging />
+      </MemoryRouter>,
+    );
+
+    const packagingLink = getByText('Gift Box (100 грн)');
+    fireEvent.click(packagingLink);
+
+    expect(mockTrackViewItemEvent).toHaveBeenCalledWith(mockPackaging);
   });
 
   it('adds packaging', () => {
@@ -85,36 +103,6 @@ describe('AdditionalPackaging', () => {
     fireEvent.click(removeButton);
 
     expect(mockRemoveCartItem).toHaveBeenCalledWith(mockPackaging.id);
-  });
-
-  it('packaging detail', () => {
-    const { getByText } = render(
-      <MemoryRouter>
-        <AdditionalPackaging />
-      </MemoryRouter>,
-    );
-
-    const packagingName = getByText('Gift Box');
-    fireEvent.click(packagingName);
-
-    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
-      event: 'view_item',
-      ecommerce: {
-        currency: 'UAH',
-        value: mockPackaging.price,
-        items: [
-          {
-            item_id: mockPackaging.id,
-            item_name: mockPackaging.name,
-            index: 0,
-            price: mockPackaging.price,
-            quantity: 1,
-          },
-        ],
-      },
-    });
-
-    expect(mockNavigate).toHaveBeenCalledWith('/gifts/1');
   });
 
   it('packaging is in the cart', () => {

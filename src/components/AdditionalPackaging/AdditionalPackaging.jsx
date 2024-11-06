@@ -1,8 +1,10 @@
 import './AdditionalPackaging.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Button from '@components/shared/Button/Button';
 import useAppContext from '@contexts/App/useAppContext';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
+import useProductNavigation from '@helpers/useProductNavigation';
 
 function AdditionalPackaging() {
   const { packaging } = useAppContext();
@@ -11,66 +13,32 @@ function AdditionalPackaging() {
     addCartItem: addPackagingToCart,
     removeCartItem: removePackagingFromCart,
   } = useShoppingContext();
-  const { categorySlug } = useParams();
-  const navigate = useNavigate();
+  const getProductLink = useProductNavigation();
 
   const itemInCart = packaging && findCartItem(packaging.id);
 
-  const openModal = () => {
-    dispatchTrackingEvent({
-      event: 'view_item',
-      ecommerce: {
-        currency: 'UAH',
-        value: packaging.price,
-        items: [
-          {
-            item_id: packaging.id,
-            item_name: packaging.name,
-            index: 0,
-            price: packaging.price,
-            quantity: 1,
-          },
-        ],
-      },
-    });
-
-    navigate(`/${categorySlug || 'products'}/${packaging.id}`);
-  };
-
   return (
     packaging && (
-      <div id="additional-packaging">
-        <div id="additional-packaging__option">
+      <div className="additional-packaging">
+        <div className="additional-packaging__option">
           {'+ '}
-          <span
-            onClick={() => openModal(packaging)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={() => openModal(packaging)}
-          >
-            {`${packaging.name}`}
-          </span>
-          {` (${packaging.price} грн)`}
+          <Link to={getProductLink(packaging.id)} onClick={trackViewItemEvent(packaging)}>
+            {`${packaging.name} (${packaging.price} грн)`}
+          </Link>
         </div>
-        <div id="additional-packaging__action">
-          <div
+        <div className="additional-packaging__action">
+          <Button
             className={itemInCart ? 'selected-action' : ''}
-            role="button"
-            tabIndex={0}
             onClick={() => addPackagingToCart(packaging)}
-            onKeyDown={() => addPackagingToCart(packaging)}
           >
             так
-          </div>
-          <div
+          </Button>
+          <Button
             className={!itemInCart ? 'selected-action' : ''}
-            role="button"
-            tabIndex={0}
             onClick={() => removePackagingFromCart(packaging.id)}
-            onKeyDown={() => removePackagingFromCart(packaging.id)}
           >
             ні
-          </div>
+          </Button>
         </div>
       </div>
     )
