@@ -120,4 +120,21 @@ describe('Search', () => {
     expect(screen.getByTestId('search-results').children.length).toBe(1);
     expect(screen.getByText('Product 1')).toBeInTheDocument();
   });
+
+  it('displays "нічого не знайдено" when no results match the search query', () => {
+    filterProductsByQuery.mockReturnValue([]);
+
+    render(
+      <MemoryRouter>
+        <Search visible searchToggler={mockSearchToggler} />
+      </MemoryRouter>,
+    );
+
+    const input = screen.getByTestId('search-input');
+    fireEvent.change(input, { target: { value: 'Nonexistent' } });
+
+    expect(input).toHaveValue('Nonexistent');
+    expect(screen.queryByTestId('search-results').children.length).toBe(0);
+    expect(screen.getByText('нічого не знайдено')).toBeInTheDocument();
+  });
 });

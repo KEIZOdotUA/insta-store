@@ -69,6 +69,11 @@ function Search({ visible, searchToggler }) {
             </Button>
           </div>
           <SearchResults items={searchResults} />
+          {searchResults.length === 0 && searchQuery.length > 0 && (
+            <div className="search__not-found">
+              <center>нічого не знайдено</center>
+            </div>
+          )}
           {searchResults.length > 0 && (
             <div className="search__link">
               <center>
