@@ -10,7 +10,7 @@ describe('filterProductsByQuery', () => {
     { id: 5, name: 'Third Product', available: true },
   ];
 
-  it('returns only available products that match the query (case insensitive)', () => {
+  it('returns only available products whose name matches the query (case insensitive)', () => {
     const result = filterProductsByQuery(products, 'product');
     expect(result).toEqual([
       { id: 1, name: 'Product One', available: true },
@@ -19,7 +19,14 @@ describe('filterProductsByQuery', () => {
     ]);
   });
 
-  it('returns an empty array if no products match the query', () => {
+  it('returns only available products whose ID matches the query', () => {
+    const result = filterProductsByQuery(products, '3');
+    expect(result).toEqual([
+      { id: 3, name: 'product two', available: true },
+    ]);
+  });
+
+  it('returns an empty array if no products match the query by name or ID', () => {
     const result = filterProductsByQuery(products, 'nonexistent');
     expect(result).toEqual([]);
   });
