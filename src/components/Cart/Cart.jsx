@@ -1,7 +1,7 @@
 import './Cart.css';
 import PropTypes from 'prop-types';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
-import AdditionalPackaging from '@components/AdditionalPackaging/AdditionalPackaging';
+import AdditionalPackaging from '@components/Cart/AdditionalPackaging/AdditionalPackaging';
 import Button from '@components/shared/Button/Button';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 import CartItem from './Item/CartItem';

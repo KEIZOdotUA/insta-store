@@ -6,7 +6,7 @@ function Bio() {
   const { whitelabel } = useAppContext();
 
   return (
-    <div id="bio">
+    <div className="bio">
       <p>{parse(whitelabel.shop.bio)}</p>
     </div>
   );

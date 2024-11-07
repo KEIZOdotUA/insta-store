@@ -12,7 +12,7 @@ import CartItem from '@components/Cart/Item/CartItem';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 vi.mock('@contexts/Shopping/useShoppingContext');
-vi.mock('@components/AdditionalPackaging/AdditionalPackaging', () => ({
+vi.mock('@components/Cart/AdditionalPackaging/AdditionalPackaging', () => ({
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
 }));
