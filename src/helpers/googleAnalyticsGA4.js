@@ -19,19 +19,19 @@ export const trackViewItemEvent = (item) => {
   });
 };
 
-export const beginCheckout = () => {
+export const trackBeginCheckoutEvent = (value, items) => {
   dispatchTrackingEvent({
     event: 'begin_checkout',
     ecommerce: {
       currency: 'UAH',
-      // value: getCartTotal(),
-      // items: (getCartItems()).map((item, index) => ({
-      //   item_id: item.id,
-      //   item_name: item.name,
-      //   index,
-      //   price: item.price,
-      //   quantity: item.quantity,
-      // })),
+      value,
+      items: items.map((item, index) => ({
+        item_id: item.id,
+        item_name: item.name,
+        index,
+        price: item.price,
+        quantity: item.quantity,
+      })),
     },
   });
 };

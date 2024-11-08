@@ -9,7 +9,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Cart from '@components/Cart/Cart';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import CartItem from '@components/Cart/Item/CartItem';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@contexts/Shopping/useShoppingContext');
 vi.mock('@components/Cart/AdditionalPackaging/AdditionalPackaging', () => ({
@@ -28,7 +28,9 @@ vi.mock('@components/Cart/Item/CartItem', () => ({
   __esModule: true,
   default: vi.fn(({ item }) => <div>{item.name}</div>),
 }));
-vi.mock('@helpers/dispatchTrackingEvent');
+vi.mock('@helpers/googleAnalyticsGA4', () => ({
+  trackBeginCheckoutEvent: vi.fn(),
+}));
 
 describe('Cart', () => {
   const mockOnOrder = vi.fn();
@@ -61,7 +63,6 @@ describe('Cart', () => {
   it('default', () => {
     const { getByText } = render(<Cart onOrder={mockOnOrder} />);
 
-    expect(getByText('Кошик')).toBeTruthy();
     expect(CartItem).toHaveBeenCalledTimes(2);
     expect(getByText('Item 1')).toBeTruthy();
     expect(getByText('Item 2')).toBeTruthy();
@@ -86,29 +87,20 @@ describe('Cart', () => {
     const orderButton = getByText('оформити замовлення');
     fireEvent.click(orderButton);
 
-    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
-      event: 'begin_checkout',
-      ecommerce: {
-        currency: 'UAH',
-        value: 500,
-        items: [
-          {
-            item_id: 1,
-            item_name: 'Item 1',
-            index: 0,
-            price: 100,
-            quantity: 1,
-          },
-          {
-            item_id: 2,
-            item_name: 'Item 2',
-            index: 1,
-            price: 200,
-            quantity: 2,
-          },
-        ],
+    expect(trackBeginCheckoutEvent).toHaveBeenCalledWith(500, [
+      {
+        id: 1,
+        name: 'Item 1',
+        price: 100,
+        quantity: 1,
       },
-    });
+      {
+        id: 2,
+        name: 'Item 2',
+        price: 200,
+        quantity: 2,
+      },
+    ]);
 
     expect(mockOnOrder).toHaveBeenCalled();
   });

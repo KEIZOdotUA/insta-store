@@ -1,0 +1,8 @@
+.purchase__step-name {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 20px 0 20px 0px;
+  color: var(--main-accent-color);
+  border-bottom: 1px solid var(--border-color);
+}

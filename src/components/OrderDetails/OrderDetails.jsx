@@ -107,7 +107,6 @@ function OrderDetails({ onOrder }) {
 
   return (
     <>
-      <div id="order-title">Замовлення</div>
       <div id="order-form">
         <TextInput
           id="city"

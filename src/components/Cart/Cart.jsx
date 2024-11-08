@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import AdditionalPackaging from '@components/Cart/AdditionalPackaging/AdditionalPackaging';
 import Button from '@components/shared/Button/Button';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 import CartItem from './Item/CartItem';
 
 function Cart({ onOrder }) {
@@ -13,28 +13,14 @@ function Cart({ onOrder }) {
   const total = getCartTotal();
 
   const beginCheckout = () => {
-    dispatchTrackingEvent({
-      event: 'begin_checkout',
-      ecommerce: {
-        currency: 'UAH',
-        value: getCartTotal(),
-        items: (getCartItems()).map((item, index) => ({
-          item_id: item.id,
-          item_name: item.name,
-          index,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-      },
-    });
+    trackBeginCheckoutEvent(getCartTotal(), getCartItems());
 
     onOrder();
   };
 
   return (
     <>
-      <div id="cart-title">Кошик</div>
-      <div id="cart-items">
+      <div className="cart-items">
         {items.map((item) => (
           <CartItem key={item.id} item={item} />
         ))}

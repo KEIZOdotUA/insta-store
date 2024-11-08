@@ -1,10 +1,4 @@
-#cart-title {
-  display: block;
-  font-size: 27px;
-  padding-bottom: 20px;
-}
-
-#cart-items {
+.cart-items {
   min-height: calc(100vh - 400px);
   overflow-x: hidden;
   margin-bottom: 20px;

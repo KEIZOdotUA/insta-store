@@ -8,11 +8,24 @@ import OrderDetails from '@components/OrderDetails/OrderDetails';
 import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
+import StepName from '@components/Purchase/StepName/StepName';
+import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 
 function Purchase({ visible, purchaseToggler }) {
+  const { getCartId } = useShoppingContext();
+
   const [orderStep, setOrderStep] = useState(0);
 
   useHiddenOverflow({ active: visible });
+
+  const getStepName = () => {
+    switch (orderStep) {
+      case 0: return 'Кошик';
+      case 1: return 'Замовлення';
+      case 2: return `Ми прийняли Ваше замовлення № ${getCartId()}`;
+      default: return null;
+    }
+  };
 
   const getSteppedComponent = () => {
     switch (orderStep) {
@@ -43,6 +56,7 @@ function Purchase({ visible, purchaseToggler }) {
           <Button className="purchase__open-close" onClick={onClose}>
             <CloseSvg />
           </Button>
+          <StepName>{getStepName()}</StepName>
           {getSteppedComponent()}
           <Button className="purchase__close" onClick={onClose} light>
             продовжити покупки
