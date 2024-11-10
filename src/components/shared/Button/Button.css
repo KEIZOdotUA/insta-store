@@ -3,6 +3,8 @@ button {
   cursor: pointer;
   background-color: var(--light-background-color);
   text-transform: uppercase;
+  font-family: inherit;
+  padding: 0;
 }
 
 .dark-button {

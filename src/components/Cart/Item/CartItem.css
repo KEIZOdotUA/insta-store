@@ -31,7 +31,6 @@
   font-weight: 500;
   width: 100%;
   margin-bottom: 10px;
-  cursor: pointer;
 }
 
 .cart-item__price {
@@ -48,7 +47,6 @@
   font-size: 12px;
   font-weight: 500;
   color: var(--error-color);
-  cursor: pointer;
 }
 
 .cart-item__quantity {

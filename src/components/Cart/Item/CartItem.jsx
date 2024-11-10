@@ -1,9 +1,11 @@
 import './CartItem.css';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
 import ProductImage from '@components/Product/Image/ProductImage';
+import useProductNavigation from '@helpers/useProductNavigation';
+import Button from '@components/shared/Button/Button';
 
 function CartItem({ item }) {
   const {
@@ -12,51 +14,25 @@ function CartItem({ item }) {
     decrementCartItemQuantity,
   } = useShoppingContext();
 
-  const { categorySlug } = useParams();
-  const navigate = useNavigate();
-
-  const [searchParams] = useSearchParams();
-  const onItemClick = (itemId) => {
-    const searchParam = searchParams.get('q');
-    const param = searchParam
-      ? `?q=${searchParam}`
-      : '';
-
-    navigate(`/${categorySlug || 'products'}/${itemId}${param}`);
-  };
+  const getProductLink = useProductNavigation();
 
   return (
     <div className="cart-item">
-      <div
-        className="cart-item__img-container"
-        onClick={() => onItemClick(item.id)}
-        onKeyDown={() => onItemClick(item.id)}
-        role="link"
-        tabIndex={0}
-      >
-        <ProductImage id={item.id} name={item.name} size="s" className="cart-img" />
+      <div className="cart-item__img-container">
+        <Link to={getProductLink(item.id)}>
+          <ProductImage id={item.id} name={item.name} size="s" className="cart-img" />
+        </Link>
       </div>
       <div className="cart-item__description-container">
-        <div
-          className="cart-item__title"
-          onClick={() => onItemClick(item.id)}
-          onKeyDown={() => onItemClick(item.id)}
-          role="link"
-          tabIndex={0}
-        >
-          {item.name}
-          {item.selectedSize > 0 && `, ${item.selectedSize} розмір`}
+        <div className="cart-item__title">
+          <Link to={getProductLink(item.id)}>
+            {`${item.name}${item.selectedSize ? `, ${item.selectedSize} розмір` : ''}`}
+          </Link>
         </div>
         <div className="cart-item__price">{`${item.price} грн`}</div>
-        <div
-          className="cart-item__delete"
-          role="button"
-          tabIndex={0}
-          onClick={() => removeCartItem(item.id)}
-          onKeyDown={() => removeCartItem(item.id)}
-        >
+        <Button className="cart-item__delete" onClick={() => removeCartItem(item.id)}>
           видалити
-        </div>
+        </Button>
         <div className="cart-item__quantity">
           <QuantityInput
             quantity={item.quantity}
