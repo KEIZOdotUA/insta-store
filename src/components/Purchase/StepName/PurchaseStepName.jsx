@@ -1,7 +1,7 @@
-import './StepName.css';
+import './PurchaseStepName.css';
 import PropTypes from 'prop-types';
 
-function StepName({ children }) {
+function PurchaseStepName({ children }) {
   return (
     <div className="purchase__step-name">
       {children}
@@ -9,8 +9,8 @@ function StepName({ children }) {
   );
 }
 
-StepName.propTypes = {
+PurchaseStepName.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default StepName;
+export default PurchaseStepName;

@@ -4,7 +4,7 @@ import Logo from '@components/Logo/Logo';
 import MenuIcon from '@components/Menu/Icon/MenuIcon';
 import SearchIcon from '@components/Search/Icon/SearchIcon';
 import WishListIcon from '@components/WishList/Icon/WishListIcon';
-import CartIcon from '@components/Cart/Icon/CartIcon';
+import PurchaseIcon from '@components/Purchase/Icon/PurchaseIcon';
 
 function Header({
   menuToggler,
@@ -21,7 +21,7 @@ function Header({
       <Logo />
       <div className="grouped-buttons">
         <WishListIcon onClick={wishListToggler} />
-        <CartIcon onClick={purchaseToggler} />
+        <PurchaseIcon onClick={purchaseToggler} />
       </div>
     </div>
   );

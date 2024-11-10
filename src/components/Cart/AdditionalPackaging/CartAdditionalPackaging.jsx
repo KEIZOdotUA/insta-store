@@ -1,4 +1,4 @@
-import './AdditionalPackaging.css';
+import './CartAdditionalPackaging.css';
 import { Link } from 'react-router-dom';
 import Button from '@components/shared/Button/Button';
 import useAppContext from '@contexts/App/useAppContext';

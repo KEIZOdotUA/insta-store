@@ -5,7 +5,11 @@ import {
   vi,
   beforeEach,
 } from 'vitest';
-import { trackViewItemEvent, trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
+import {
+  trackViewItemEvent,
+  trackBeginCheckoutEvent,
+  trackViewCartEvent,
+} from '@helpers/googleAnalyticsGA4';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
 vi.mock('@helpers/dispatchTrackingEvent');
@@ -88,6 +92,59 @@ describe('Tracking Events', () => {
 
       expect(dispatchTrackingEvent).toHaveBeenCalledWith({
         event: 'begin_checkout',
+        ecommerce: {
+          currency: 'UAH',
+          value: totalValue,
+          items: [],
+        },
+      });
+    });
+  });
+
+  describe('trackViewCartEvent', () => {
+    it('dispatches the correct event for viewing cart', () => {
+      const items = [
+        {
+          id: '123',
+          name: 'Item 1',
+          price: 50,
+          quantity: 2,
+        },
+        {
+          id: '456',
+          name: 'Item 2',
+          price: 75,
+          quantity: 1,
+        },
+      ];
+      const totalValue = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+      trackViewCartEvent(totalValue, items);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'view_cart',
+        ecommerce: {
+          currency: 'UAH',
+          value: totalValue,
+          items: items.map((item, index) => ({
+            item_id: item.id,
+            item_name: item.name,
+            index,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
+    });
+
+    it('handles an empty cart', () => {
+      const items = [];
+      const totalValue = 0;
+
+      trackViewCartEvent(totalValue, items);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'view_cart',
         ecommerce: {
           currency: 'UAH',
           value: totalValue,

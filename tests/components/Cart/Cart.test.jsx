@@ -12,7 +12,7 @@ import CartItem from '@components/Cart/Item/CartItem';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@contexts/Shopping/useShoppingContext');
-vi.mock('@components/Cart/AdditionalPackaging/AdditionalPackaging', () => ({
+vi.mock('@components/Cart/AdditionalPackaging/CartAdditionalPackaging', () => ({
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
 }));

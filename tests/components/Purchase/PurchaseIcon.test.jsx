@@ -5,32 +5,32 @@ import {
   vi,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import CartIcon from '@components/Cart/Icon/CartIcon';
+import PurchaseIcon from '@components/Purchase/Icon/PurchaseIcon';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import { trackViewCartEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@contexts/Shopping/useShoppingContext');
-vi.mock('@helpers/dispatchTrackingEvent');
+vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@assets/cart.svg', () => ({
   __esModule: true,
   default: () => <div>cart</div>,
 }));
 
-describe('CartIcon', () => {
+describe('PurchaseIcon', () => {
   const mockOnClick = vi.fn();
 
-  it('default', () => {
+  it('renders with correct cart count', () => {
     useShoppingContext.mockReturnValue({
       getCartItems: () => [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }],
       getCartTotal: () => 100,
     });
 
-    const { getByText } = render(<CartIcon onClick={mockOnClick} />);
+    const { getByText } = render(<PurchaseIcon onClick={mockOnClick} />);
 
     expect(getByText('2')).toBeTruthy();
   });
 
-  it('onClick', () => {
+  it('calls onClick and tracking event on click', () => {
     const mockItems = [
       {
         id: '1',
@@ -52,23 +52,10 @@ describe('CartIcon', () => {
       getCartTotal: () => mockTotal,
     });
 
-    const { getByText } = render(<CartIcon onClick={mockOnClick} />);
+    const { getByText } = render(<PurchaseIcon onClick={mockOnClick} />);
     fireEvent.click(getByText('cart'));
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
-    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
-      event: 'view_cart',
-      ecommerce: {
-        currency: 'UAH',
-        value: mockTotal,
-        items: mockItems.map((item, index) => ({
-          item_id: item.id,
-          item_name: item.name,
-          index,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-      },
-    });
+    expect(trackViewCartEvent).toHaveBeenCalledWith(mockTotal, mockItems);
   });
 });

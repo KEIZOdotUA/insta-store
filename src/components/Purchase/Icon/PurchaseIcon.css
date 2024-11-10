@@ -1,18 +1,24 @@
-#cart-icon {
+.purchase__icon {
   width: auto;
   position: relative;
   height: 48px;
   width: 48px;
   cursor: pointer;
+  padding: 0px;
 }
 
-#cart-icon > svg {
+.purchase__icon > svg {
   position: absolute;
   top: 13px;
   right: 13px;
 }
 
-#cart-count {
+.purchase__icon > svg > path {
+  fill: var(--dark-background-color);
+  stroke: var(--dark-background-color);
+}
+
+.purchase__count {
   width: 15px;
   display: flex;
   align-items: center;
@@ -23,7 +29,8 @@
   border-radius: 100%;
   color: var(--button-text-color);
   background: var(--dark-background-color);
-  line-height: 9px;
+  line-height: 10px;
   position: absolute;
   font-size: 9px;
+  font-weight: 700;
 }

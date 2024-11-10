@@ -8,7 +8,7 @@ import OrderDetails from '@components/OrderDetails/OrderDetails';
 import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
-import StepName from '@components/Purchase/StepName/StepName';
+import PurchaseStepName from '@components/Purchase/StepName/PurchaseStepName';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 
 function Purchase({ visible, purchaseToggler }) {
@@ -56,7 +56,7 @@ function Purchase({ visible, purchaseToggler }) {
           <Button className="purchase__open-close" onClick={onClose}>
             <CloseSvg />
           </Button>
-          <StepName>{getStepName()}</StepName>
+          <PurchaseStepName>{getStepName()}</PurchaseStepName>
           {getSteppedComponent()}
           <Button className="purchase__close" onClick={onClose} light>
             продовжити покупки

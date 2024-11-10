@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import AdditionalPackaging from '@components/Cart/AdditionalPackaging/AdditionalPackaging';
+import CartAdditionalPackaging from '@components/Cart/AdditionalPackaging/CartAdditionalPackaging';
 import useAppContext from '@contexts/App/useAppContext';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
@@ -59,7 +59,7 @@ describe('AdditionalPackaging', () => {
   it('default', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <AdditionalPackaging />
+        <CartAdditionalPackaging />
       </MemoryRouter>,
     );
 
@@ -69,7 +69,7 @@ describe('AdditionalPackaging', () => {
   it('tracks view item event on link click', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <AdditionalPackaging />
+        <CartAdditionalPackaging />
       </MemoryRouter>,
     );
 
@@ -82,7 +82,7 @@ describe('AdditionalPackaging', () => {
   it('adds packaging', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <AdditionalPackaging />
+        <CartAdditionalPackaging />
       </MemoryRouter>,
     );
 
@@ -95,7 +95,7 @@ describe('AdditionalPackaging', () => {
   it('removes packaging', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <AdditionalPackaging />
+        <CartAdditionalPackaging />
       </MemoryRouter>,
     );
 
@@ -110,7 +110,7 @@ describe('AdditionalPackaging', () => {
 
     const { getByText } = render(
       <MemoryRouter>
-        <AdditionalPackaging />
+        <CartAdditionalPackaging />
       </MemoryRouter>,
     );
 
@@ -122,7 +122,7 @@ describe('AdditionalPackaging', () => {
 
     const { getByText } = render(
       <MemoryRouter>
-        <AdditionalPackaging />
+        <CartAdditionalPackaging />
       </MemoryRouter>,
     );
 

@@ -12,11 +12,11 @@ vi.mock('@components/Logo/Logo', () => ({
   default: () => <div>Logo</div>,
 }));
 
-vi.mock('@components/Cart/Icon/CartIcon', () => ({
+vi.mock('@components/Purchase/Icon/PurchaseIcon', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>
-      CartIcon
+      PurchaseIcon
     </div>
   ),
 }));
@@ -65,13 +65,13 @@ describe('Header', () => {
     );
 
     expect(screen.getByText('Logo')).toBeInTheDocument();
-    expect(screen.getByText('CartIcon')).toBeInTheDocument();
+    expect(screen.getByText('PurchaseIcon')).toBeInTheDocument();
     expect(screen.getByText('WishListIcon')).toBeInTheDocument();
     expect(screen.getByText('MenuIcon')).toBeInTheDocument();
     expect(screen.getByText('SearchIcon')).toBeInTheDocument();
   });
 
-  it('calls purchaseToggler on CartIcon click', () => {
+  it('calls purchaseToggler on PurchaseIcon click', () => {
     render(
       <Header
         menuToggler={mockMenuToggler}
@@ -81,7 +81,7 @@ describe('Header', () => {
       />,
     );
 
-    fireEvent.click(screen.getByText('CartIcon'));
+    fireEvent.click(screen.getByText('PurchaseIcon'));
 
     expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
   });

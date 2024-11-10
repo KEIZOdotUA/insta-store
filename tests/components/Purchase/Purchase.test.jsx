@@ -11,7 +11,7 @@ import useShoppingContext from '@contexts/Shopping/useShoppingContext';
 
 vi.mock('@components/ConfirmationNotification/ConfirmationNotification');
 vi.mock('@contexts/Shopping/useShoppingContext');
-vi.mock('@components/Purchase/StepName/StepName', () => ({
+vi.mock('@components/Purchase/StepName/PurchaseStepName', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <h1>{children}</h1>),
 }));

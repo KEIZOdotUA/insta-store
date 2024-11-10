@@ -1,7 +1,7 @@
 import './Cart.css';
 import PropTypes from 'prop-types';
 import useShoppingContext from '@contexts/Shopping/useShoppingContext';
-import AdditionalPackaging from '@components/Cart/AdditionalPackaging/AdditionalPackaging';
+import CartAdditionalPackaging from '@components/Cart/AdditionalPackaging/CartAdditionalPackaging';
 import Button from '@components/shared/Button/Button';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 import CartItem from './Item/CartItem';
@@ -25,7 +25,7 @@ function Cart({ onOrder }) {
           <CartItem key={item.id} item={item} />
         ))}
       </div>
-      {total > 0 && <AdditionalPackaging />}
+      {total > 0 && <CartAdditionalPackaging />}
       <div className="price">Разом без доставки:</div>
       <div className="price price-number">{`${total} грн`}</div>
       {total > 0 && (
