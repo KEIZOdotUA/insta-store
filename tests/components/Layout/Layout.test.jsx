@@ -13,7 +13,6 @@ vi.mock('@components/Header/Header', () => ({
     menuToggler,
     searchToggler,
     wishListToggler,
-    purchaseToggler,
   }) => (
     <div>
       <div
@@ -40,14 +39,6 @@ vi.mock('@components/Header/Header', () => ({
       >
         Mock WishList Toggler
       </div>
-      <div
-        role="button"
-        onClick={purchaseToggler}
-        onKeyDown={purchaseToggler}
-        tabIndex={0}
-      >
-        Mock Purchase Toggler
-      </div>
     </div>
   )),
 }));
@@ -72,11 +63,7 @@ vi.mock('@components/Search/Search', () => ({
 
 vi.mock('@components/Purchase/Purchase', () => ({
   __esModule: true,
-  default: vi.fn(({ visible, purchaseToggler }) => (
-    <div role="button" onClick={purchaseToggler} onKeyDown={purchaseToggler} tabIndex={0}>
-      {visible ? 'Mock Purchase Visible' : 'Mock Purchase Hidden'}
-    </div>
-  )),
+  default: vi.fn(() => <div>Mock Purchase</div>),
 }));
 
 vi.mock('@components/WishList/WishList', () => ({
@@ -105,9 +92,9 @@ describe('Layout', () => {
     expect(getByText('Mock Header')).toBeInTheDocument();
     expect(getByText('Mock Menu Hidden')).toBeInTheDocument();
     expect(getByText('Mock Search Hidden')).toBeInTheDocument();
-    expect(getByText('Mock Purchase Hidden')).toBeInTheDocument();
     expect(getByText('Mock WishList Hidden')).toBeInTheDocument();
     expect(getByText('Mock Product Modal')).toBeInTheDocument();
+    expect(getByText('Mock Purchase')).toBeInTheDocument();
     expect(getByText('Mock Outlet')).toBeInTheDocument();
   });
 
@@ -123,13 +110,6 @@ describe('Layout', () => {
 
     fireEvent.click(getByText('Mock Search Toggler'));
     expect(getByText('Mock Search Visible')).toBeInTheDocument();
-  });
-
-  it('toggles purchase visibility when purchaseToggler is clicked', () => {
-    const { getByText } = render(<Layout />);
-
-    fireEvent.click(getByText('Mock Purchase Hidden'));
-    expect(getByText('Mock Purchase Visible')).toBeInTheDocument();
   });
 
   it('toggles wishlist visibility when wishListToggler is clicked', () => {

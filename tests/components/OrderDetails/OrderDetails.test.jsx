@@ -7,11 +7,11 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import OrderDetails from '@components/OrderDetails/OrderDetails';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import sendOrder from '@services/orderService';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@components/shared/TextInput/TextInput', () => ({
   __esModule: true,
   default: vi.fn(({
@@ -101,7 +101,7 @@ describe('OrderDetails', () => {
     ]);
     mockGetCartTotal.mockReturnValue(500);
 
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getCartId: mockGetCartId,
       getCartItems: mockGetCartItems,
       clearCart: mockClearCart,

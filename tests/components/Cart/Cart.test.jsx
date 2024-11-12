@@ -7,11 +7,11 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import Cart from '@components/Cart/Cart';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import CartItem from '@components/Cart/Item/CartItem';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@components/Cart/AdditionalPackaging/CartAdditionalPackaging', () => ({
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
@@ -54,7 +54,7 @@ describe('Cart', () => {
     ]);
     mockGetCartTotal.mockReturnValue(500);
 
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getCartItems: mockGetCartItems,
       getCartTotal: mockGetCartTotal,
     });

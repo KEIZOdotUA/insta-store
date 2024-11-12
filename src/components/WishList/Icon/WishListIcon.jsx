@@ -1,11 +1,11 @@
 import './WishListIcon.css';
 import PropTypes from 'prop-types';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import HeartSvg from '@assets/heart.svg';
 import HeartFillSvg from '@assets/heart-fill.svg';
 
 function WishListIcon({ onClick }) {
-  const { getWishList } = useShoppingContext();
+  const { getWishList } = usePurchaseContext();
 
   const items = getWishList();
 

@@ -11,7 +11,6 @@ function Layout() {
   const [visibleMenu, setVisibleMenu] = useState(false);
   const [visibleSearch, setVisibleSearch] = useState(false);
   const [visibleWishList, setVisibleWishList] = useState(false);
-  const [visiblePurchase, setVisiblePurchase] = useState(false);
 
   return (
     <>
@@ -19,26 +18,22 @@ function Layout() {
         menuToggler={() => setVisibleMenu(!visibleMenu)}
         searchToggler={() => setVisibleSearch(!visibleSearch)}
         wishListToggler={() => setVisibleWishList(!visibleWishList)}
-        purchaseToggler={() => setVisiblePurchase(!visiblePurchase)}
-      />
-      <Menu
-        visible={visibleMenu}
-        menuToggler={() => setVisibleMenu(!visibleMenu)}
       />
       <Search
         visible={visibleSearch}
         searchToggler={() => setVisibleSearch(!visibleSearch)}
       />
       <Outlet />
-      <Purchase
-        visible={visiblePurchase}
-        purchaseToggler={() => setVisiblePurchase(!visiblePurchase)}
-      />
       <WishList
         visible={visibleWishList}
         onClose={() => setVisibleWishList(!visibleWishList)}
       />
       <ProductModal />
+      <Menu
+        visible={visibleMenu}
+        menuToggler={() => setVisibleMenu(!visibleMenu)}
+      />
+      <Purchase />
     </>
   );
 }

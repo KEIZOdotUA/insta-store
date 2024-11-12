@@ -5,13 +5,14 @@ import MenuIcon from '@components/Menu/Icon/MenuIcon';
 import SearchIcon from '@components/Search/Icon/SearchIcon';
 import WishListIcon from '@components/WishList/Icon/WishListIcon';
 import PurchaseIcon from '@components/Purchase/Icon/PurchaseIcon';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 function Header({
   menuToggler,
   searchToggler,
   wishListToggler,
-  purchaseToggler,
 }) {
+  const { visiblePurchase, showPurchase, hidePurchase } = usePurchaseContext();
   return (
     <div id="header">
       <div className="grouped-buttons">
@@ -21,7 +22,7 @@ function Header({
       <Logo />
       <div className="grouped-buttons">
         <WishListIcon onClick={wishListToggler} />
-        <PurchaseIcon onClick={purchaseToggler} />
+        <PurchaseIcon onClick={visiblePurchase ? hidePurchase : showPurchase} />
       </div>
     </div>
   );
@@ -31,7 +32,6 @@ Header.propTypes = {
   menuToggler: PropTypes.func.isRequired,
   searchToggler: PropTypes.func.isRequired,
   wishListToggler: PropTypes.func.isRequired,
-  purchaseToggler: PropTypes.func.isRequired,
 };
 
 export default Header;

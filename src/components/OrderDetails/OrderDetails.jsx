@@ -1,7 +1,7 @@
 import './OrderDetails.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import TextInput from '@components/shared/TextInput/TextInput';
 import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
@@ -16,7 +16,7 @@ function OrderDetails({ onOrder }) {
     getCartItems,
     clearCart,
     getCartTotal,
-  } = useShoppingContext();
+  } = usePurchaseContext();
 
   const [orderDetails, setOrderDetails] = useState({
     city: '',

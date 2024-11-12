@@ -6,8 +6,8 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ShoppingContext from '@contexts/Shopping/ShoppingContext';
-import ShoppingContextProvider from '@contexts/Shopping/ShoppingContextProvider';
+import PurchaseContext from '@contexts/Purchase/PurchaseContext';
+import PurchaseContextProvider from '@contexts/Purchase/PurchaseContextProvider';
 
 function TestComponent() {
   const {
@@ -22,7 +22,7 @@ function TestComponent() {
     getWishList,
     addWishListItem,
     removeWishListItem,
-  } = React.useContext(ShoppingContext);
+  } = React.useContext(PurchaseContext);
 
   return (
     <div>
@@ -56,16 +56,16 @@ function TestComponent() {
   );
 }
 
-describe('ShoppingContextProvider', () => {
+describe('PurchaseContextProvider', () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
   it('adds an item to the cart', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Cart'));
@@ -75,9 +75,9 @@ describe('ShoppingContextProvider', () => {
 
   it('increments cart item quantity', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Cart'));
@@ -89,9 +89,9 @@ describe('ShoppingContextProvider', () => {
 
   it('decrements cart item quantity', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Cart'));
@@ -104,9 +104,9 @@ describe('ShoppingContextProvider', () => {
 
   it('removes an item from the cart', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Cart'));
@@ -118,9 +118,9 @@ describe('ShoppingContextProvider', () => {
 
   it('clears the cart', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Cart'));
@@ -132,9 +132,9 @@ describe('ShoppingContextProvider', () => {
 
   it('gets cart id', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     expect(screen.getByTestId('cart-id').textContent).not.toBe('');
@@ -142,9 +142,9 @@ describe('ShoppingContextProvider', () => {
 
   it('adds an item to the wishlist', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Wishlist'));
@@ -154,9 +154,9 @@ describe('ShoppingContextProvider', () => {
 
   it('removes an item from the wishlist', () => {
     render(
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <TestComponent />
-      </ShoppingContextProvider>,
+      </PurchaseContextProvider>,
     );
 
     fireEvent.click(screen.getByText('Add Item 1 to Wishlist'));

@@ -1,11 +1,11 @@
 import './WishListItem.css';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import ProductImage from '@components/Product/Image/ProductImage';
 
 function WishListItem({ item }) {
-  const { findCartItem, removeWishListItem } = useShoppingContext();
+  const { findCartItem, removeWishListItem } = usePurchaseContext();
 
   const itemInCart = findCartItem(item.id);
 

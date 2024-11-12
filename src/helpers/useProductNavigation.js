@@ -4,13 +4,16 @@ export default function useProductNavigation() {
   const { categorySlug } = useParams();
   const [searchParams] = useSearchParams();
 
-  const getProductLink = (productId) => {
-    const searchParam = searchParams.get('q');
-    const param = searchParam
-      ? `?q=${searchParam}`
-      : '';
+  const getProductLink = (productId, size) => {
+    const queryParam = searchParams.get('q');
+    const params = new URLSearchParams();
 
-    return `/${categorySlug || 'products'}/${productId}${param}`;
+    if (queryParam) params.set('q', queryParam);
+    if (size) params.set('size', size);
+
+    const paramString = params.toString() ? `?${params.toString()}` : '';
+
+    return `/${categorySlug || 'products'}/${productId}${paramString}`;
   };
 
   return getProductLink;

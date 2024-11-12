@@ -7,12 +7,12 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import CartItem from '@components/Cart/Item/CartItem';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
 import ProductImage from '@components/Product/Image/ProductImage';
 import useProductNavigation from '@helpers/useProductNavigation';
 
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@components/shared/QuantityInput/QuantityInput', () => ({
   __esModule: true,
   default: vi.fn(() => <div>QuantityInput</div>),
@@ -35,17 +35,23 @@ vi.mock('@components/shared/Button/Button', () => ({
 }));
 vi.mock('react-router-dom', () => ({
   __esModule: true,
-  Link: vi.fn(({ to, children }) => <a href={to}>{children}</a>),
+  Link: vi.fn(({ to, children, onClick }) => (
+    <a href={to} onClick={onClick}>
+      {children}
+    </a>
+  )),
 }));
 
 describe('CartItem', () => {
+  const mockHidePurchase = vi.fn();
   const mockRemoveCartItem = vi.fn();
   const mockIncrementCartItemQuantity = vi.fn();
   const mockDecrementCartItemQuantity = vi.fn();
   const mockGetProductLink = vi.fn();
 
   beforeEach(() => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
+      hidePurchase: mockHidePurchase,
       removeCartItem: mockRemoveCartItem,
       incrementCartItemQuantity: mockIncrementCartItemQuantity,
       decrementCartItemQuantity: mockDecrementCartItemQuantity,
@@ -94,25 +100,27 @@ describe('CartItem', () => {
     );
   });
 
-  it('navigates to product link on image and title click', () => {
+  it('navigates to product link on image and title click, and calls hidePurchase', () => {
     const { getByText } = render(<CartItem item={item} />);
 
     const imageLink = getByText('ProductImage').closest('a');
-    expect(imageLink.getAttribute('href')).toBe('/test-category/1');
+    fireEvent.click(imageLink);
+    expect(mockHidePurchase).toHaveBeenCalled();
 
     const titleLink = getByText('Test Product, 42 розмір');
-    expect(titleLink.closest('a').getAttribute('href')).toBe('/test-category/1');
+    fireEvent.click(titleLink);
+    expect(mockHidePurchase).toHaveBeenCalledTimes(2);
   });
 
-  it('calls removeCartItem on delete button click', () => {
+  it('calls removeCartItem with selectedSize on delete button click', () => {
     const { getByText } = render(<CartItem item={item} />);
     const deleteButton = getByText('видалити');
 
     fireEvent.click(deleteButton);
-    expect(mockRemoveCartItem).toHaveBeenCalledWith(item.id);
+    expect(mockRemoveCartItem).toHaveBeenCalledWith(item.id, item.selectedSize);
   });
 
-  it('calls increment and decrement functions from QuantityInput', () => {
+  it('calls increment and decrement functions from QuantityInput with selectedSize', () => {
     render(<CartItem item={item} />);
 
     expect(QuantityInput).toHaveBeenCalledWith(
@@ -126,9 +134,9 @@ describe('CartItem', () => {
 
     const { onIncrement, onDecrement } = QuantityInput.mock.calls[0][0];
     onIncrement();
-    expect(mockIncrementCartItemQuantity).toHaveBeenCalledWith(item.id);
+    expect(mockIncrementCartItemQuantity).toHaveBeenCalledWith(item.id, item.selectedSize);
 
     onDecrement();
-    expect(mockDecrementCartItemQuantity).toHaveBeenCalledWith(item.id);
+    expect(mockDecrementCartItemQuantity).toHaveBeenCalledWith(item.id, item.selectedSize);
   });
 });

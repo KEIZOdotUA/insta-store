@@ -1,6 +1,5 @@
 import './Purchase.css';
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
 import Cart from '@components/Cart/Cart';
@@ -9,14 +8,18 @@ import ConfirmationNotification from '@components/ConfirmationNotification/Confi
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
 import PurchaseStepName from '@components/Purchase/StepName/PurchaseStepName';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
-function Purchase({ visible, purchaseToggler }) {
-  const { getCartId } = useShoppingContext();
+function Purchase() {
+  const {
+    visiblePurchase,
+    hidePurchase,
+    getCartId,
+  } = usePurchaseContext();
 
   const [orderStep, setOrderStep] = useState(0);
 
-  useHiddenOverflow({ active: visible });
+  useHiddenOverflow({ active: visiblePurchase });
 
   const getStepName = () => {
     switch (orderStep) {
@@ -39,7 +42,7 @@ function Purchase({ visible, purchaseToggler }) {
   const animationDuration = 250;
 
   const onClose = () => {
-    purchaseToggler();
+    hidePurchase();
     setTimeout(() => setOrderStep(0), animationDuration);
   };
 
@@ -49,7 +52,7 @@ function Purchase({ visible, purchaseToggler }) {
         key="Purchase"
         transitionType="transform"
         transitionDirection="right"
-        visible={visible}
+        visible={visiblePurchase}
         duration={animationDuration}
       >
         <div id="purchase__content">
@@ -66,10 +69,5 @@ function Purchase({ visible, purchaseToggler }) {
     </div>
   );
 }
-
-Purchase.propTypes = {
-  visible: PropTypes.bool.isRequired,
-  purchaseToggler: PropTypes.func.isRequired,
-};
 
 export default Purchase;

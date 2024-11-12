@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import WishListIcon from '@components/WishList/Icon/WishListIcon';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@assets/heart.svg', () => ({
   __esModule: true,
@@ -19,7 +19,7 @@ vi.mock('@assets/heart-fill.svg', () => ({
   default: () => <svg data-testid="heart-fill-icon" />,
 }));
 
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 
 describe('WishListIcon', () => {
   const mockOnClick = vi.fn();
@@ -29,7 +29,7 @@ describe('WishListIcon', () => {
   });
 
   it('wishlist is empty', () => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getWishList: () => [],
     });
 
@@ -39,7 +39,7 @@ describe('WishListIcon', () => {
   });
 
   it('wishlist has items', () => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getWishList: () => [{ id: 1, name: 'Sample Item' }],
     });
 
@@ -49,7 +49,7 @@ describe('WishListIcon', () => {
   });
 
   it('onClick', () => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getWishList: () => [],
     });
 
@@ -61,7 +61,7 @@ describe('WishListIcon', () => {
   });
 
   it('onKeyDown', () => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getWishList: () => [],
     });
 

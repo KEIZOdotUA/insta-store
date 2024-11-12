@@ -1,17 +1,17 @@
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import AppContextProvider from '@contexts/App/AppContextProvider';
-import ShoppingContextProvider from '@contexts/Shopping/ShoppingContextProvider';
+import PurchaseContextProvider from '@contexts/Purchase/PurchaseContextProvider';
 import AppRouter from '@pages/Router';
 
 function App() {
   return (
     <AppContextProvider>
-      <ShoppingContextProvider>
+      <PurchaseContextProvider>
         <BrowserRouter>
           <AppRouter />
         </BrowserRouter>
-      </ShoppingContextProvider>
+      </PurchaseContextProvider>
     </AppContextProvider>
   );
 }

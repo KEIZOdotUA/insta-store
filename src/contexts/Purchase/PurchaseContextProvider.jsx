@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import ShoppingContext from './ShoppingContext';
+import PurchaseContext from './PurchaseContext';
 
-function ShoppingContextProvider({ children }) {
+function PurchaseContextProvider({ children }) {
+  const [visiblePurchase, setVisiblePurchase] = useState(false);
+
   const [cartId, setCartId] = useState(
     localStorage.getItem('cart')
       ? JSON.parse(localStorage.getItem('cart')).id
@@ -29,47 +31,59 @@ function ShoppingContextProvider({ children }) {
     localStorage.setItem('wishlist', JSON.stringify(wishList));
   }, [wishList]);
 
+  const showPurchase = () => setVisiblePurchase(true);
+
+  const hidePurchase = () => setVisiblePurchase(false);
+
   const cartFunctions = useMemo(() => {
     const getCartId = () => cartId;
 
-    const findCartItem = (itemId) => cartItems.find((cartItem) => cartItem.id === itemId);
+    const findCartItem = (itemId, selectedSize) => (
+      cartItems.find((cartItem) => cartItem.id === itemId && cartItem.selectedSize === selectedSize)
+    );
 
     const getCartItems = () => cartItems;
 
-    const addCartItem = (item) => {
-      const isItemInCart = findCartItem(item.id);
-      if (!isItemInCart) {
-        setCartId(Date.now().toString().slice(-5));
-        setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      }
-    };
-
-    const incrementCartItemQuantity = (itemId) => {
-      const isItemInCart = findCartItem(itemId);
+    const incrementCartItemQuantity = (itemId, selectedSize) => {
+      const isItemInCart = findCartItem(itemId, selectedSize);
       if (isItemInCart) {
         setCartItems(
           cartItems.map((cartItem) => (
-            cartItem.id === itemId ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem)),
+            cartItem.id === itemId && cartItem.selectedSize === selectedSize
+              ? { ...cartItem, quantity: cartItem.quantity + 1 }
+              : cartItem)),
         );
       }
     };
 
-    const decrementCartItemQuantity = (itemId) => {
-      const isItemInCart = findCartItem(itemId);
+    const decrementCartItemQuantity = (itemId, selectedSize) => {
+      const isItemInCart = findCartItem(itemId, selectedSize);
       if (isItemInCart) {
         setCartItems(
           cartItems.map((cartItem) => (
-            cartItem.id === itemId
+            cartItem.id === itemId && cartItem.selectedSize === selectedSize
               ? { ...cartItem, quantity: cartItem.quantity > 1 ? cartItem.quantity - 1 : 1 }
               : cartItem)),
         );
       }
     };
 
-    const removeCartItem = (itemId) => {
-      const isItemInCart = findCartItem(itemId);
+    const addCartItem = (item) => {
+      const isItemInCart = findCartItem(item.id, item.selectedSize);
+      if (!isItemInCart) {
+        setCartId(Date.now().toString().slice(-5));
+        setCartItems([...cartItems, { ...item, quantity: 1 }]);
+      }
+    };
+
+    const removeCartItem = (itemId, selectedSize) => {
+      const isItemInCart = findCartItem(itemId, selectedSize);
       if (isItemInCart) {
-        setCartItems(cartItems.filter((cartItem) => cartItem.id !== itemId));
+        setCartItems(
+          cartItems.filter(
+            (cartItem) => !(cartItem.id === itemId && cartItem.selectedSize === selectedSize),
+          ),
+        );
       }
     };
 
@@ -118,20 +132,26 @@ function ShoppingContextProvider({ children }) {
     };
   }, [wishList]);
 
-  const shoppingFunctions = useMemo(
-    () => ({ ...cartFunctions, ...wishListFunctions }),
-    [cartFunctions, wishListFunctions],
+  const purchaseFunctions = useMemo(
+    () => ({
+      visiblePurchase,
+      showPurchase,
+      hidePurchase,
+      ...cartFunctions,
+      ...wishListFunctions,
+    }),
+    [visiblePurchase, cartFunctions, wishListFunctions],
   );
 
   return (
-    <ShoppingContext.Provider value={shoppingFunctions}>
+    <PurchaseContext.Provider value={purchaseFunctions}>
       {children}
-    </ShoppingContext.Provider>
+    </PurchaseContext.Provider>
   );
 }
 
-ShoppingContextProvider.propTypes = {
+PurchaseContextProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default ShoppingContextProvider;
+export default PurchaseContextProvider;

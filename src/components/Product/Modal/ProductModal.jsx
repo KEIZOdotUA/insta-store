@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './ProductModal.css';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import useAppContext from '@contexts/App/useAppContext';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import ProductImage from '@components/Product/Image/ProductImage';
 import Modal from '@components/shared/Modal/Modal';
 import Button from '@components/shared/Button/Button';
@@ -16,20 +16,33 @@ function ProductModal() {
   const { categorySlug, productId } = useParams();
   const { whitelabel, products } = useAppContext();
   const {
+    showPurchase,
     findCartItem,
     addCartItem,
     findWishListItem,
     addWishListItem,
     removeWishListItem,
-  } = useShoppingContext();
+  } = usePurchaseContext();
 
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState(0);
 
-  const itemInCart = product && findCartItem(product.id);
+  const itemInCart = product && findCartItem(product.id, selectedSize);
+
+  const [searchParams] = useSearchParams();
+  const onClose = () => {
+    setProduct(null);
+    const searchParam = searchParams.get('q');
+    const param = searchParam
+      ? `?q=${searchParam}`
+      : '';
+
+    navigate(`/${categorySlug || 'products'}${param}`);
+  };
 
   const onAddProductToCart = (item) => {
     addCartItem(item);
+    showPurchase();
     dispatchTrackingEvent({
       event: 'add_to_cart',
       ecommerce: {
@@ -48,32 +61,25 @@ function ProductModal() {
     });
   };
 
-  const [searchParams] = useSearchParams();
-  const onClose = () => {
-    setProduct(null);
-    const searchParam = searchParams.get('q');
-    const param = searchParam
-      ? `?q=${searchParam}`
-      : '';
-
-    navigate(`/${categorySlug || 'products'}${param}`);
-  };
-
   useEffect(() => {
-    if (productId) {
-      const selectedProduct = products.find((prod) => prod.id === Number(productId));
-      if (selectedProduct) {
-        setProduct(selectedProduct);
-        setSelectedSize(0);
-      }
-    }
-  }, [productId, products]);
+    if (!productId) return;
 
-  useEffect(() => {
-    if (itemInCart && product && product.sizes) {
-      setSelectedSize(itemInCart.selectedSize);
+    const selectedProduct = products.find((prod) => prod.id === Number(productId));
+    if (!selectedProduct) return;
+
+    setProduct(selectedProduct);
+
+    const sizeParam = searchParams.get('size');
+    if (!sizeParam) {
+      setSelectedSize(0);
+      return;
     }
-  }, [itemInCart, product]);
+
+    const availableSize = selectedProduct.sizes.find((size) => size === Number(sizeParam));
+    if (availableSize) {
+      setSelectedSize(availableSize);
+    }
+  }, [productId, products, searchParams]);
 
   useEffect(() => {
     if (product) {
@@ -135,7 +141,7 @@ function ProductModal() {
             sizes={product.sizes}
             setSize={setSelectedSize}
             selectedSize={selectedSize}
-            disabled={Boolean(itemInCart)}
+            disabled={false}
             sizeHint={product.sizeHint}
           />
         )}
@@ -145,11 +151,6 @@ function ProductModal() {
             немає в наявності
           </Button>
         )}
-        {product.available && itemInCart && (
-          <Button className="product-modal__btn" onClick={() => {}} disabled>
-            додано в кошик
-          </Button>
-        )}
         {product.available && !itemInCart && (
           <Button
             className="product-modal__btn"
@@ -157,6 +158,15 @@ function ProductModal() {
             dark
           >
             додати в кошик
+          </Button>
+        )}
+        {itemInCart && (
+          <Button
+            className="product-modal__btn"
+            onClick={() => onAddProductToCart({ ...product, selectedSize })}
+            light
+          >
+            додано в кошик
           </Button>
         )}
         <Button className="product-modal__btn" onClick={onClose} light>

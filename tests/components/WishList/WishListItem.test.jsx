@@ -8,9 +8,9 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter, useNavigate, useParams } from 'react-router-dom';
 import WishListItem from '@components/WishList/Item/WishListItem';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 
 vi.mock('@components/Product/Image/ProductImage', () => ({
   __esModule: true,
@@ -33,7 +33,7 @@ describe('WishListItem', () => {
   const mockFindCartItem = vi.fn();
 
   beforeEach(() => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       removeWishListItem: mockRemoveWishListItem,
       findCartItem: mockFindCartItem,
     });

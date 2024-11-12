@@ -7,10 +7,15 @@ import {
   expect,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter, useParams, useNavigate } from 'react-router-dom';
+import {
+  MemoryRouter,
+  useParams,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import ProductModal from '@components/Product/Modal/ProductModal';
 import useAppContext from '@contexts/App/useAppContext';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 import Modal from '@components/shared/Modal/Modal';
 import ProductImage from '@components/Product/Image/ProductImage';
@@ -20,7 +25,7 @@ import ShareButton from '@components/shared/ShareButton/ShareButton';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
 
 vi.mock('@contexts/App/useAppContext');
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@helpers/dispatchTrackingEvent');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
@@ -28,6 +33,7 @@ vi.mock('react-router-dom', async () => {
     ...actual,
     useParams: vi.fn(),
     useNavigate: vi.fn(),
+    useSearchParams: vi.fn(),
   };
 });
 vi.mock('@components/shared/Modal/Modal');
@@ -43,7 +49,7 @@ describe('ProductModal', () => {
     name: 'Test Product',
     price: 100,
     available: true,
-    sizes: ['S', 'M', 'L'],
+    sizes: [0, 1, 2],
     sizeHint: 'Choose your size',
     description: 'Test description',
   };
@@ -54,7 +60,8 @@ describe('ProductModal', () => {
       products: [mockProduct],
     });
 
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
+      showPurchase: vi.fn(),
       findCartItem: vi.fn().mockReturnValue(null),
       addCartItem: vi.fn(),
       findWishListItem: vi.fn().mockReturnValue(null),
@@ -62,8 +69,9 @@ describe('ProductModal', () => {
       removeWishListItem: vi.fn(),
     });
 
-    useParams.mockReturnValue({ productId: '1' });
+    useParams.mockReturnValue({ productId: '1', categorySlug: 'products' });
     useNavigate.mockReturnValue(vi.fn());
+    useSearchParams.mockReturnValue([new URLSearchParams()]);
 
     Modal.mockImplementation(({ children }) => <div>{children}</div>);
     ProductImage.mockImplementation(() => <img alt="product" />);
@@ -77,7 +85,7 @@ describe('ProductModal', () => {
     vi.clearAllMocks();
   });
 
-  it('default', () => {
+  it('renders with default values', () => {
     const { getByText } = render(
       <MemoryRouter>
         <ProductModal />
@@ -93,7 +101,7 @@ describe('ProductModal', () => {
     expect(getByText('Share')).toBeInTheDocument();
   });
 
-  it('немає в наявності', () => {
+  it('renders "немає в наявності" when product is unavailable', () => {
     useAppContext.mockReturnValue({
       whitelabel: { shop: { name: 'Test Shop' } },
       products: [{ ...mockProduct, available: false }],
@@ -108,13 +116,8 @@ describe('ProductModal', () => {
     expect(getByText('немає в наявності')).toBeInTheDocument();
   });
 
-  it('додано в кошик', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: { shop: { name: 'Test Shop' } },
-      products: [{ ...mockProduct, available: true }],
-    });
-
-    useShoppingContext.mockReturnValue({
+  it('renders "додано в кошик" when product is already in the cart', () => {
+    usePurchaseContext.mockReturnValue({
       findCartItem: vi.fn().mockReturnValue(mockProduct),
       addCartItem: vi.fn(),
       findWishListItem: vi.fn().mockReturnValue(null),
@@ -131,7 +134,7 @@ describe('ProductModal', () => {
     expect(getByText('додано в кошик')).toBeInTheDocument();
   });
 
-  it('add the product to the cart', async () => {
+  it('adds the product to the cart and triggers tracking event', async () => {
     const { getByText } = render(
       <MemoryRouter>
         <ProductModal />
@@ -141,7 +144,7 @@ describe('ProductModal', () => {
     const addToCartButton = getByText('додати в кошик');
     fireEvent.click(addToCartButton);
 
-    expect(useShoppingContext().addCartItem).toHaveBeenCalledWith({
+    expect(usePurchaseContext().addCartItem).toHaveBeenCalledWith({
       ...mockProduct,
       selectedSize: 0,
     });
@@ -163,9 +166,9 @@ describe('ProductModal', () => {
     });
   });
 
-  it('Like', () => {
+  it('toggles "Like" button to add product to wishlist', () => {
     const addWishListItem = vi.fn();
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       findCartItem: vi.fn().mockReturnValue(null),
       findWishListItem: vi.fn().mockReturnValue(null),
       addWishListItem,
@@ -184,9 +187,9 @@ describe('ProductModal', () => {
     expect(addWishListItem).toHaveBeenCalledWith(mockProduct);
   });
 
-  it('Unlike', () => {
+  it('toggles "Unlike" button to remove product from wishlist', () => {
     const removeWishListItem = vi.fn();
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       findCartItem: vi.fn().mockReturnValue(null),
       findWishListItem: vi.fn().mockReturnValue(mockProduct),
       addWishListItem: vi.fn(),
@@ -205,7 +208,7 @@ describe('ProductModal', () => {
     expect(removeWishListItem).toHaveBeenCalledWith(mockProduct.id);
   });
 
-  it('navigates back', () => {
+  it('navigates back to product list on "продовжити покупки" click', () => {
     const navigate = useNavigate();
     const { getByText } = render(
       <MemoryRouter>
@@ -213,8 +216,8 @@ describe('ProductModal', () => {
       </MemoryRouter>,
     );
 
-    const continueShoppingButton = getByText('продовжити покупки');
-    fireEvent.click(continueShoppingButton);
+    const continuePurchaseButton = getByText('продовжити покупки');
+    fireEvent.click(continuePurchaseButton);
 
     expect(navigate).toHaveBeenCalledWith('/products');
   });

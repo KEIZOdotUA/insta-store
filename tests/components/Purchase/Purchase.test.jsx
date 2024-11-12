@@ -7,21 +7,21 @@ import {
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import Purchase from '@components/Purchase/Purchase';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@components/ConfirmationNotification/ConfirmationNotification');
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@components/Purchase/StepName/PurchaseStepName', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <h1>{children}</h1>),
 }));
 
 describe('Purchase', () => {
-  const mockPurchaseToggler = vi.fn();
+  const mockHidePurchase = vi.fn();
   const mockGetCartId = vi.fn().mockReturnValue('12345');
 
   beforeEach(() => {
-    mockPurchaseToggler.mockClear();
+    mockHidePurchase.mockClear();
     vi.mock('@components/shared/Transition/Transition', () => ({
       __esModule: true,
       default: vi.fn(({ children }) => <div>{children}</div>),
@@ -43,23 +43,23 @@ describe('Purchase', () => {
       default: vi.fn(() => <p>close</p>),
     }));
 
-    // Mock the shopping context with getCartId
-    useShoppingContext.mockReturnValue({ getCartId: mockGetCartId });
+    // Mock the purchase context
+    usePurchaseContext.mockReturnValue({
+      visiblePurchase: true,
+      hidePurchase: mockHidePurchase,
+      getCartId: mockGetCartId,
+    });
   });
 
   it('default state shows Cart and StepName as "Кошик"', () => {
-    const { getByText } = render(
-      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
-    );
+    const { getByText } = render(<Purchase />);
 
     expect(getByText('Mocked Cart')).toBeInTheDocument();
     expect(getByText('Кошик')).toBeInTheDocument();
   });
 
   it('moves to OrderDetails step with StepName as "Замовлення"', () => {
-    const { getByText } = render(
-      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
-    );
+    const { getByText } = render(<Purchase />);
 
     fireEvent.click(getByText('Mocked Cart'));
     expect(getByText('Mocked OrderDetails')).toBeInTheDocument();
@@ -67,9 +67,7 @@ describe('Purchase', () => {
   });
 
   it('moves to ConfirmationNotification step with StepName showing order number', () => {
-    const { getByText } = render(
-      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
-    );
+    const { getByText } = render(<Purchase />);
 
     fireEvent.click(getByText('Mocked Cart'));
     fireEvent.click(getByText('Mocked OrderDetails'));
@@ -78,44 +76,38 @@ describe('Purchase', () => {
   });
 
   it('resets to Cart when close is clicked', async () => {
-    const { getByText } = render(
-      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
-    );
+    const { getByText } = render(<Purchase />);
 
     fireEvent.click(getByText('Mocked Cart'));
     fireEvent.click(getByText('Mocked OrderDetails'));
     fireEvent.click(getByText('close'));
 
     await waitFor(() => {
-      expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
+      expect(mockHidePurchase).toHaveBeenCalledTimes(1);
       expect(getByText('Кошик')).toBeInTheDocument();
       expect(getByText('Mocked Cart')).toBeInTheDocument();
     });
   });
 
-  it('calls purchaseToggler on clicking close button', async () => {
-    const { getByText } = render(
-      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
-    );
+  it('calls hidePurchase on clicking close button', async () => {
+    const { getByText } = render(<Purchase />);
 
     fireEvent.click(getByText('close'));
 
     await waitFor(() => {
-      expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
+      expect(mockHidePurchase).toHaveBeenCalledTimes(1);
     });
   });
 
   it('resets to Cart when "продовжити покупки" button is clicked', async () => {
-    const { getByText } = render(
-      <Purchase visible purchaseToggler={mockPurchaseToggler} />,
-    );
+    const { getByText } = render(<Purchase />);
 
     fireEvent.click(getByText('Mocked Cart'));
     fireEvent.click(getByText('Mocked OrderDetails'));
     fireEvent.click(getByText('продовжити покупки'));
 
     await waitFor(() => {
-      expect(mockPurchaseToggler).toHaveBeenCalledTimes(1);
+      expect(mockHidePurchase).toHaveBeenCalledTimes(1);
       expect(getByText('Кошик')).toBeInTheDocument();
       expect(getByText('Mocked Cart')).toBeInTheDocument();
     });

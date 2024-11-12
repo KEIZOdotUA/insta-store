@@ -7,7 +7,7 @@ import {
 import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import AppContextProvider from '@contexts/App/AppContextProvider';
-import ShoppingContextProvider from '@contexts/Shopping/ShoppingContextProvider';
+import PurchaseContextProvider from '@contexts/Purchase/PurchaseContextProvider';
 import App from '../src/App';
 
 vi.mock('@pages/Router', () => ({
@@ -19,7 +19,7 @@ vi.mock('@contexts/App/AppContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-vi.mock('@contexts/Shopping/ShoppingContextProvider', () => ({
+vi.mock('@contexts/Purchase/PurchaseContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
@@ -27,7 +27,7 @@ vi.mock('@contexts/App/AppContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-vi.mock('@contexts/Shopping/ShoppingContextProvider', () => ({
+vi.mock('@contexts/Purchase/PurchaseContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
@@ -39,11 +39,11 @@ describe('App', () => {
   it('default', async () => {
     const { getByText } = render(
       <AppContextProvider>
-        <ShoppingContextProvider>
+        <PurchaseContextProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </ShoppingContextProvider>
+        </PurchaseContextProvider>
       </AppContextProvider>,
     );
 

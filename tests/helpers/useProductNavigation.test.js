@@ -27,7 +27,7 @@ describe('useProductNavigation', () => {
     useSearchParams.mockReturnValue([mockSearchParams]);
   });
 
-  it('returns link without search param if not present', () => {
+  it('returns link without search or size params if not present', () => {
     const { result } = renderHook(() => useProductNavigation());
     const getProductLink = result.current;
 
@@ -44,6 +44,23 @@ describe('useProductNavigation', () => {
     expect(link).toBe('/accessories/123?q=gift');
   });
 
+  it('returns link with size param if provided', () => {
+    const { result } = renderHook(() => useProductNavigation());
+    const getProductLink = result.current;
+
+    const link = getProductLink('123', 42);
+    expect(link).toBe('/accessories/123?size=42');
+  });
+
+  it('returns link with both search and size params if present', () => {
+    mockSearchParams.set('q', 'gift');
+    const { result } = renderHook(() => useProductNavigation());
+    const getProductLink = result.current;
+
+    const link = getProductLink('123', 42);
+    expect(link).toBe('/accessories/123?q=gift&size=42');
+  });
+
   it('falls back to "products" if categorySlug is undefined', () => {
     useParams.mockReturnValue({ categorySlug: undefined });
     const { result } = renderHook(() => useProductNavigation());
@@ -51,5 +68,15 @@ describe('useProductNavigation', () => {
 
     const link = getProductLink('123');
     expect(link).toBe('/products/123');
+  });
+
+  it('falls back to "products" with search and size params if categorySlug is undefined', () => {
+    useParams.mockReturnValue({ categorySlug: undefined });
+    mockSearchParams.set('q', 'gift');
+    const { result } = renderHook(() => useProductNavigation());
+    const getProductLink = result.current;
+
+    const link = getProductLink('123', 42);
+    expect(link).toBe('/products/123?q=gift&size=42');
   });
 });

@@ -6,10 +6,10 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import PurchaseIcon from '@components/Purchase/Icon/PurchaseIcon';
-import useShoppingContext from '@contexts/Shopping/useShoppingContext';
+import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewCartEvent } from '@helpers/googleAnalyticsGA4';
 
-vi.mock('@contexts/Shopping/useShoppingContext');
+vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@assets/cart.svg', () => ({
   __esModule: true,
@@ -20,7 +20,7 @@ describe('PurchaseIcon', () => {
   const mockOnClick = vi.fn();
 
   it('renders with correct cart count', () => {
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getCartItems: () => [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }],
       getCartTotal: () => 100,
     });
@@ -47,7 +47,7 @@ describe('PurchaseIcon', () => {
     ];
     const mockTotal = 100;
 
-    useShoppingContext.mockReturnValue({
+    usePurchaseContext.mockReturnValue({
       getCartItems: () => mockItems,
       getCartTotal: () => mockTotal,
     });
