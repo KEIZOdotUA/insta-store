@@ -2,12 +2,12 @@
   "shop": {
     "name": "blue-river-09b0c6103.5",
     "logo": "blob-stub/logo.png",
-    "bio": "Коротка інформація про <b>blue-river-09b0c6103.5</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "about": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "bio": "<b>blue-river-09b0c6103.5</b> — сучасний онлайн-магазин, що пропонує вишуканий вибір прикрас. Ми прагнемо дарувати нашим клієнтам якість, стиль та комфорт у кожному виробі, підкреслюючи унікальність і особливість кожного. Від класичних речей до останніх трендів — знайдіть красу в деталях разом з нами!",
+    "about": "Ласкаво просимо до blue-river-09b0c6103.5 — простору, де стиль і якість зливаються у досконалий тандем. Наша місія — створювати незабутній досвід покупок, пропонуючи лише найкращі колекції, що відповідають актуальним модним трендам і вашим вподобанням. Ми віримо, що кожна деталь має значення, тому ретельно відбираємо кожен товар, щоб забезпечити нашим клієнтам комфорт та впевненість у собі.<br><br>Наша команда прагне надихати на індивідуальність, допомагаючи вам віднайти власний стиль, що підкреслить вашу унікальність. blue-river-09b0c6103.5 — це не просто магазин, а місце, де кожен знаходить щось особливе.",
     "contacts": {
-      "instagram": { "name": "instagram", "link": "https://www.instagram.com" },
-      "mail": "mail@mail.com",
-      "facebook": { "name": "facebook", "link": "https://www.facebook.com/" },
+      "instagram": { "name": "blue-river-09b0c6103.5", "link": "https://www.instagram.com" },
+      "mail": "mail@example.com",
+      "facebook": { "name": "blue-river-09b0c6103.5", "link": "https://www.facebook.com/" },
       "phone": "+01234567891"
     }
   },
