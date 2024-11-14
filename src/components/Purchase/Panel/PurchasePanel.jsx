@@ -1,16 +1,16 @@
-import './Purchase.css';
+import './PurchasePanel.css';
 import { useState } from 'react';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
-import Cart from '@components/Cart/Cart';
+import Cart from '@components/Purchase/Cart/Cart';
 import OrderDetails from '@components/OrderDetails/OrderDetails';
-import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
+import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
-import PurchaseStepName from '@components/Purchase/StepName/PurchaseStepName';
+import PurchaseStepName from '@components/Purchase/Panel/StepName/StepName';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
-function Purchase() {
+function PurchasePanel() {
   const {
     visiblePurchase,
     hidePurchase,
@@ -34,7 +34,7 @@ function Purchase() {
     switch (orderStep) {
       case 0: return <Cart onOrder={() => setOrderStep(1)} />;
       case 1: return <OrderDetails onOrder={() => setOrderStep(2)} />;
-      case 2: return <ConfirmationNotification />;
+      case 2: return <OrderConfirmed />;
       default: return null;
     }
   };
@@ -70,4 +70,4 @@ function Purchase() {
   );
 }
 
-export default Purchase;
+export default PurchasePanel;

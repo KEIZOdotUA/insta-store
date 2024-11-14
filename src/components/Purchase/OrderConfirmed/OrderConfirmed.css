@@ -1,4 +1,4 @@
-#confirmation-notification {
+.order-confirmed {
   min-height: calc(100vh - 220px);
   overflow-x: hidden;
   margin-bottom: 20px;

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import PurchaseStepName from '@components/Purchase/StepName/PurchaseStepName';
+import PurchaseStepName from '@components/Purchase/Panel/StepName/StepName';
 
 describe('StepName', () => {
   it('renders without crashing', () => {

@@ -6,12 +6,11 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import Purchase from '@components/Purchase/Purchase';
+import Purchase from '@components/Purchase/Panel/PurchasePanel';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
-vi.mock('@components/ConfirmationNotification/ConfirmationNotification');
 vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@components/Purchase/StepName/PurchaseStepName', () => ({
+vi.mock('@components/Purchase/Panel/StepName/StepName', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <h1>{children}</h1>),
 }));
@@ -26,7 +25,7 @@ describe('Purchase', () => {
       __esModule: true,
       default: vi.fn(({ children }) => <div>{children}</div>),
     }));
-    vi.mock('@components/Cart/Cart', () => ({
+    vi.mock('@components/Purchase/Cart/Cart', () => ({
       __esModule: true,
       default: vi.fn(({ onOrder }) => <div role="button" tabIndex="0" onClick={onOrder} onKeyDown={onOrder}>Mocked Cart</div>),
     }));
@@ -34,9 +33,9 @@ describe('Purchase', () => {
       __esModule: true,
       default: vi.fn(({ onOrder }) => <div role="button" tabIndex="0" onClick={onOrder} onKeyDown={onOrder}>Mocked OrderDetails</div>),
     }));
-    vi.mock('@components/ConfirmationNotification/ConfirmationNotification', () => ({
+    vi.mock('@components/Purchase/OrderConfirmed/OrderConfirmed', () => ({
       __esModule: true,
-      default: vi.fn(() => <div>Mocked ConfirmationNotification</div>),
+      default: vi.fn(() => <div>Mocked OrderConfirmed</div>),
     }));
     vi.mock('@assets/close.svg', () => ({
       __esModule: true,
@@ -66,12 +65,12 @@ describe('Purchase', () => {
     expect(getByText('Замовлення')).toBeInTheDocument();
   });
 
-  it('moves to ConfirmationNotification step with StepName showing order number', () => {
+  it('moves to OrderConfirmed step with StepName showing order number', () => {
     const { getByText } = render(<Purchase />);
 
     fireEvent.click(getByText('Mocked Cart'));
     fireEvent.click(getByText('Mocked OrderDetails'));
-    expect(getByText('Mocked ConfirmationNotification')).toBeInTheDocument();
+    expect(getByText('Mocked OrderConfirmed')).toBeInTheDocument();
     expect(getByText(`Ми прийняли Ваше замовлення № ${mockGetCartId()}`)).toBeInTheDocument();
   });
 

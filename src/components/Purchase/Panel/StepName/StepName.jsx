@@ -1,4 +1,4 @@
-import './PurchaseStepName.css';
+import './StepName.css';
 import PropTypes from 'prop-types';
 
 function PurchaseStepName({ children }) {

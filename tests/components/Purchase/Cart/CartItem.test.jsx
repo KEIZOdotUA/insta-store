@@ -6,7 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import CartItem from '@components/Cart/Item/CartItem';
+import CartItem from '@components/Purchase/Cart/Item/CartItem';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
 import ProductImage from '@components/Product/Image/ProductImage';

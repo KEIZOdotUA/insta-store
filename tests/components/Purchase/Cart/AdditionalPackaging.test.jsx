@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import CartAdditionalPackaging from '@components/Cart/AdditionalPackaging/CartAdditionalPackaging';
+import CartAdditionalPackaging from '@components/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
 import useAppContext from '@contexts/App/useAppContext';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';

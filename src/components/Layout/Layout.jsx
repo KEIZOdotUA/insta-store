@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Header from '@components/Header/Header';
 import Search from '@components/Search/Search';
 import Menu from '@components/Menu/Menu';
-import Purchase from '@components/Purchase/Purchase';
+import PurchasePanel from '@components/Purchase/Panel/PurchasePanel';
 import ProductModal from '@components/Product/Modal/ProductModal';
 import WishList from '@components/WishList/WishList';
 
@@ -33,7 +33,7 @@ function Layout() {
         visible={visibleMenu}
         menuToggler={() => setVisibleMenu(!visibleMenu)}
       />
-      <Purchase />
+      <PurchasePanel />
     </>
   );
 }

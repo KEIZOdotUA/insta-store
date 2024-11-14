@@ -6,13 +6,13 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import Cart from '@components/Cart/Cart';
+import Cart from '@components/Purchase/Cart/Cart';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import CartItem from '@components/Cart/Item/CartItem';
+import CartItem from '@components/Purchase/Cart/Item/CartItem';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@components/Cart/AdditionalPackaging/CartAdditionalPackaging', () => ({
+vi.mock('@components/Purchase/Cart/AdditionalPackaging/AdditionalPackaging', () => ({
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
 }));
@@ -24,7 +24,7 @@ vi.mock('@components/shared/Button/Button', () => ({
     </button>
   )),
 }));
-vi.mock('@components/Cart/Item/CartItem', () => ({
+vi.mock('@components/Purchase/Cart/Item/CartItem', () => ({
   __esModule: true,
   default: vi.fn(({ item }) => <div>{item.name}</div>),
 }));

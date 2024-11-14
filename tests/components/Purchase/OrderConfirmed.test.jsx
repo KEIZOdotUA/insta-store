@@ -5,16 +5,16 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import ConfirmationNotification from '@components/ConfirmationNotification/ConfirmationNotification';
+import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
 
 vi.mock('@components/ContactUs/ContactUs', () => ({
   __esModule: true,
   default: () => <div>Contact Us</div>,
 }));
 
-describe('ConfirmationNotification', () => {
+describe('OrderConfirmed', () => {
   it('default', () => {
-    const { getByText } = render(<ConfirmationNotification />);
+    const { getByText } = render(<OrderConfirmed />);
 
     expect(getByText('Contact Us')).toBeTruthy();
   });

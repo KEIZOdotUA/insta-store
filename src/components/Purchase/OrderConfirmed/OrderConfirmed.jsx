@@ -1,9 +1,9 @@
-import './ConfirmationNotification.css';
+import './OrderConfirmed.css';
 import ContactUs from '@components/ContactUs/ContactUs';
 
-function ConfirmationNotification() {
+function OrderConfirmed() {
   return (
-    <div id="confirmation-notification">
+    <div className="order-confirmed">
       <p>
         Ваше замовлення буде оброблене найближчим часом. У разі потреби наші менеджери
         зв&apos;яжуться з Вами для підтвердження деталей.
@@ -13,4 +13,4 @@ function ConfirmationNotification() {
   );
 }
 
-export default ConfirmationNotification;
+export default OrderConfirmed;
