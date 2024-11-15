@@ -14,7 +14,7 @@ function Header({
 }) {
   const { visiblePurchase, showPurchase, hidePurchase } = usePurchaseContext();
   return (
-    <div id="header">
+    <header>
       <div className="grouped-buttons">
         <MenuIcon onClick={menuToggler} />
         <SearchIcon onClick={searchToggler} />
@@ -24,7 +24,7 @@ function Header({
         <WishListIcon onClick={wishListToggler} />
         <PurchaseIcon onClick={visiblePurchase ? hidePurchase : showPurchase} />
       </div>
-    </div>
+    </header>
   );
 }
 

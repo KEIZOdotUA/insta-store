@@ -8,7 +8,7 @@ import { render } from '@testing-library/react';
 import { MemoryRouter, Outlet } from 'react-router-dom';
 import Router from '@features/Router/Router';
 
-vi.mock('@components/Home/Home', () => ({
+vi.mock('@pages/Home/HomePage', () => ({
   __esModule: true,
   default: () => <div>Home Page</div>,
 }));

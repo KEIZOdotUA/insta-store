@@ -1,7 +1,7 @@
 import Bio from '@components/Bio/Bio';
 import ProductsList from '@components/Product/List/ProductsList';
 
-function Home() {
+function HomePage() {
   return (
     <>
       <Bio />
@@ -10,4 +10,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
