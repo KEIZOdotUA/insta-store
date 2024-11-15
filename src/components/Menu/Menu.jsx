@@ -51,7 +51,7 @@ function Menu({ visible, menuToggler }) {
               </Link>
             </li>
           </ul>
-          <ContactUs title="Зв'язок з нами" separated />
+          <ContactUs title="Зв'язок з нами" />
         </div>
       </Transition>
     </div>

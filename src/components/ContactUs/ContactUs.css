@@ -2,27 +2,29 @@
   font-size: 17px;
 }
 
-.separated {
-  padding: 10px;
-  border-top: 1px solid var(--border-color);
-}
-
-.contact-us > p {
-  display: flex;
+.contact-us > ul {
+  list-style-type: none;
   text-transform: none;
+  padding: 0;
   font-weight: 400;
 }
 
-.contact-us > p > a {
-  display: flex;
-  text-transform: none;
-  font-weight: 400;
+.contact-us > ul > li {
+  margin: 17px 0px 17px 0px;
 }
 
-.contact-us > p > svg {
+.contact-us > ul > li > a > svg {
+  position: relative;
+  top: 4px;
   margin-right: 5px;
+  height: 22px;
+  width: 22px;
 }
 
-.contact-us > p > a > svg {
-  margin-right: 5px;
+.contact-us > ul > li > a > svg > path[fill] {
+  fill: var(--dark-background-color);
+}
+
+.contact-us > ul > li > a > svg > path[stroke] {
+  stroke: var(--dark-background-color);
 }

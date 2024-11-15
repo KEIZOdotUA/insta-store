@@ -56,3 +56,8 @@
 #menu__content > ul > li:last-child {
   border-top: 1px solid var(--border-color);
 }
+
+#menu__content > div:last-child {
+  padding: 10px;
+  border-top: 1px solid var(--border-color);
+}
