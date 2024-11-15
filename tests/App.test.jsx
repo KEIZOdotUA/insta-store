@@ -10,7 +10,7 @@ import AppContextProvider from '@contexts/App/AppContextProvider';
 import PurchaseContextProvider from '@contexts/Purchase/PurchaseContextProvider';
 import App from '../src/App';
 
-vi.mock('@pages/Router', () => ({
+vi.mock('@features/Router/Router', () => ({
   __esModule: true,
   default: () => <div>Mocked Router</div>,
 }));

@@ -20,6 +20,7 @@ module.exports = {
           ['@assets', './src/assets'],
           ['@components', './src/components'],
           ['@contexts', './src/contexts'],
+          ['@features', './src/features'],
           ['@pages', './src/pages'],
           ['@services', './src/services'],
           ['@helpers', './src/helpers'],

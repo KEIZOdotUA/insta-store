@@ -6,7 +6,7 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import { MemoryRouter, Outlet } from 'react-router-dom';
-import Router from '@pages/Router';
+import Router from '@features/Router/Router';
 
 vi.mock('@components/Home/Home', () => ({
   __esModule: true,
