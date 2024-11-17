@@ -7,10 +7,10 @@ function AboutPage() {
   const { whitelabel } = useAppContext();
 
   return (
-    <main className="about">
+    <div className="about">
       <center><Heading>ПРО НАС</Heading></center>
       {parse(whitelabel.shop.about)}
-    </main>
+    </div>
   );
 }
 

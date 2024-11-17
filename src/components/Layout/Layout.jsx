@@ -23,12 +23,14 @@ function Layout() {
         visible={visibleSearch}
         searchToggler={() => setVisibleSearch(!visibleSearch)}
       />
-      <Outlet />
-      <WishList
-        visible={visibleWishList}
-        onClose={() => setVisibleWishList(!visibleWishList)}
-      />
-      <ProductModal />
+      <main>
+        <Outlet />
+        <WishList
+          visible={visibleWishList}
+          onClose={() => setVisibleWishList(!visibleWishList)}
+        />
+        <ProductModal />
+      </main>
       <Menu
         visible={visibleMenu}
         menuToggler={() => setVisibleMenu(!visibleMenu)}
