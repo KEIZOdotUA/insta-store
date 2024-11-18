@@ -1,4 +1,4 @@
-.menu__open-close {
+.menu__close {
   background: none;
   position: fixed;
   top: 0;
@@ -6,7 +6,7 @@
   margin: 15px;
 }
 
-#menu__placeholder {
+.menu__placeholder {
   top: 0;
   left: 0;
   position: fixed;
@@ -16,7 +16,7 @@
   pointer-events: none;
 }
 
-#menu__content {
+.menu {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: visible;
@@ -29,7 +29,7 @@
   text-transform: uppercase;
 }
 
-#menu__content > ul {
+nav > ol {
   font-weight: 300;
   font-size: 20px;
   list-style: none;
@@ -37,7 +37,7 @@
   padding: 0;
 }
 
-#menu__content > ul > li {
+nav > ol > li {
   display: flex;
   width: calc(100%-20px);
   height: 48px;
@@ -45,19 +45,19 @@
   padding-left: 20px;
 }
 
-#menu__content > ul > li > a {
+nav > ol > li > a {
   font-weight: 700;
 }
 
-#menu__content > ul > li:first-child {
+nav > ol > li:first-child {
   border-bottom: 1px solid var(--border-color);
 }
 
-#menu__content > ul > li:last-child {
+nav > ol > li:last-child {
   border-top: 1px solid var(--border-color);
 }
 
-#menu__content > div:last-child {
+.menu > div:last-child {
   padding: 10px;
   border-top: 1px solid var(--border-color);
 }

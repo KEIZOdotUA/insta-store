@@ -10,7 +10,7 @@ import useAppContext from '@contexts/App/useAppContext';
 import Menu from '@components/Menu/Menu';
 
 vi.mock('@contexts/App/useAppContext');
-vi.mock('@components/shared/Button/Button', () => ({
+vi.mock('@components/shared/CloseButton/CloseButton', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <button type="button" onClick={onClick}>
