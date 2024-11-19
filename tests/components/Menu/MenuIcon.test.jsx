@@ -12,6 +12,15 @@ vi.mock('@assets/menu.svg', () => ({
   default: vi.fn(() => <span>menu</span>),
 }));
 
+vi.mock('@components/shared/Button/Button', () => ({
+  __esModule: true,
+  default: vi.fn(({ children, onClick }) => (
+    <button type="button" onClick={onClick}>
+      {children}
+    </button>
+  )),
+}));
+
 describe('MenuIcon', () => {
   it('default', () => {
     const mockOnClick = vi.fn();
@@ -27,16 +36,6 @@ describe('MenuIcon', () => {
 
     const button = getByRole('button');
     fireEvent.click(button);
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('onKeyDown', () => {
-    const mockOnClick = vi.fn();
-    const { getByRole } = render(<MenuIcon onClick={mockOnClick} />);
-
-    const button = getByRole('button');
-    fireEvent.keyDown(button, { key: 'Enter', code: 'Enter' });
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
   });

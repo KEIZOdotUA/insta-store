@@ -1,12 +1,13 @@
 import './MenuIcon.css';
 import PropTypes from 'prop-types';
 import MenuSvg from '@assets/menu.svg';
+import Button from '@components/shared/Button/Button';
 
 function MenuIcon({ onClick }) {
   return (
-    <div id="menu-icon" onClick={onClick} role="button" tabIndex={0} onKeyDown={onClick}>
+    <Button className="menu-icon" onClick={onClick}>
       <MenuSvg />
-    </div>
+    </Button>
   );
 }
 

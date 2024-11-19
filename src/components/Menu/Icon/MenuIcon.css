@@ -1,13 +1,17 @@
-#menu-icon {
+.menu-icon {
   width: auto;
   position: relative;
   height: 48px;
   width: 48px;
-  cursor: pointer;
 }
 
-#menu-icon > svg {
+.menu-icon > svg {
   position: absolute;
   top: 13px;
   right: 13px;
+}
+
+.menu-icon > svg > path {
+  fill: var(--dark-background-color);
+  stroke: var(--dark-background-color);
 }
