@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import ContactUs from '@components/ContactUs/ContactUs';
+import ContactUs from '@features/ContactUs/ContactUs';
 import useAppContext from '@contexts/App/useAppContext';
 
 vi.mock('@contexts/App/useAppContext');

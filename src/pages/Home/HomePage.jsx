@@ -1,4 +1,4 @@
-import Bio from '@components/Bio/Bio';
+import Bio from '@features/Bio/Bio';
 import ProductsList from '@components/Product/List/ProductsList';
 
 function HomePage() {

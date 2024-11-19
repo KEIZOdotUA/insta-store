@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import Bio from '@components/Bio/Bio';
+import Bio from '@features/Bio/Bio';
 import useAppContext from '@contexts/App/useAppContext';
 
 vi.mock('@contexts/App/useAppContext');

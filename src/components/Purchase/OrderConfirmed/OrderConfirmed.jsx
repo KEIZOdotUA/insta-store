@@ -1,5 +1,5 @@
 import './OrderConfirmed.css';
-import ContactUs from '@components/ContactUs/ContactUs';
+import ContactUs from '@features/ContactUs/ContactUs';
 
 function OrderConfirmed() {
   return (

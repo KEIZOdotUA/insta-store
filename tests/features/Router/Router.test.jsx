@@ -18,7 +18,7 @@ vi.mock('@pages/About/AboutPage', () => ({
   default: () => <div>About Page</div>,
 }));
 
-vi.mock('@components/Layout/Layout', () => ({
+vi.mock('@features/Layout/Layout', () => ({
   __esModule: true,
   default: () => (
     <div>

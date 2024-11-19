@@ -76,7 +76,8 @@ function OrderDetails({ onOrder }) {
   );
 
   const checkErrors = (validationResult) => (
-    Object.values(validationResult).some((errorMessage) => Boolean(errorMessage.length)));
+    Object.values(validationResult).some((errorMessage) => Boolean(errorMessage.length))
+  );
 
   const createOrder = () => {
     const validationResult = validateAllFields();

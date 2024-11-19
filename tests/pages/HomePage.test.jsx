@@ -7,7 +7,7 @@ import {
 import { render } from '@testing-library/react';
 import HomePage from '@pages/Home/HomePage';
 
-vi.mock('@components/Bio/Bio', () => ({
+vi.mock('@features/Bio/Bio', () => ({
   __esModule: true,
   default: () => <div>Bio</div>,
 }));

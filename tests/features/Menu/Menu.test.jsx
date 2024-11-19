@@ -7,7 +7,7 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import useAppContext from '@contexts/App/useAppContext';
-import Menu from '@components/Menu/Menu';
+import Menu from '@features/Menu/Menu';
 
 vi.mock('@contexts/App/useAppContext');
 vi.mock('@components/shared/CloseButton/CloseButton', () => ({
@@ -24,7 +24,7 @@ vi.mock('@components/shared/Transition/Transition', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-vi.mock('@components/ContactUs/ContactUs', () => ({
+vi.mock('@features/ContactUs/ContactUs', () => ({
   __esModule: true,
   default: () => <div>Contact Us</div>,
 }));

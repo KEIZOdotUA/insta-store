@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useAppContext from '@contexts/App/useAppContext';
 import CloseButton from '@components/shared/CloseButton/CloseButton';
 import Transition from '@components/shared/Transition/Transition';
-import ContactUs from '@components/ContactUs/ContactUs';
+import ContactUs from '@features/ContactUs/ContactUs';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
 
 function Menu({ visible, menuToggler }) {

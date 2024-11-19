@@ -7,7 +7,7 @@ import {
 import { render } from '@testing-library/react';
 import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
 
-vi.mock('@components/ContactUs/ContactUs', () => ({
+vi.mock('@features/ContactUs/ContactUs', () => ({
   __esModule: true,
   default: () => <div>Contact Us</div>,
 }));

@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import MenuIcon from '@components/Menu/Icon/MenuIcon';
+import MenuIcon from '@features/Menu/Icon/MenuIcon';
 
 vi.mock('@assets/menu.svg', () => ({
   __esModule: true,

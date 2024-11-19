@@ -5,9 +5,9 @@ import {
   vi,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import Layout from '@components/Layout/Layout';
+import Layout from '@features/Layout/Layout';
 
-vi.mock('@components/Header/Header', () => ({
+vi.mock('@features/Header/Header', () => ({
   __esModule: true,
   default: vi.fn(({
     menuToggler,
@@ -43,7 +43,7 @@ vi.mock('@components/Header/Header', () => ({
   )),
 }));
 
-vi.mock('@components/Menu/Menu', () => ({
+vi.mock('@features/Menu/Menu', () => ({
   __esModule: true,
   default: vi.fn(({ visible, menuToggler }) => (
     <div role="button" onClick={menuToggler} onKeyDown={menuToggler} tabIndex={0}>

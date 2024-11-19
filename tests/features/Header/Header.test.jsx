@@ -6,10 +6,10 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Header from '@components/Header/Header';
+import Header from '@features/Header/Header';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
-vi.mock('@components/Logo/Logo', () => ({
+vi.mock('@features/Logo/Logo', () => ({
   __esModule: true,
   default: () => <div>Logo</div>,
 }));
@@ -23,7 +23,7 @@ vi.mock('@components/Purchase/Icon/PurchaseIcon', () => ({
   ),
 }));
 
-vi.mock('@components/Menu/Icon/MenuIcon', () => ({
+vi.mock('@features/Menu/Icon/MenuIcon', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>

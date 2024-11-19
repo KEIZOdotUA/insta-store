@@ -1,7 +1,7 @@
 import './Header.css';
 import PropTypes from 'prop-types';
-import Logo from '@components/Logo/Logo';
-import MenuIcon from '@components/Menu/Icon/MenuIcon';
+import Logo from '@features/Logo/Logo';
+import MenuIcon from '@features/Menu/Icon/MenuIcon';
 import SearchIcon from '@components/Search/Icon/SearchIcon';
 import WishListIcon from '@components/WishList/Icon/WishListIcon';
 import PurchaseIcon from '@components/Purchase/Icon/PurchaseIcon';

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '@components/Header/Header';
+import Header from '@features/Header/Header';
 import Search from '@components/Search/Search';
-import Menu from '@components/Menu/Menu';
+import Menu from '@features/Menu/Menu';
 import PurchasePanel from '@components/Purchase/Panel/PurchasePanel';
 import ProductModal from '@components/Product/Modal/ProductModal';
 import WishList from '@components/WishList/WishList';
