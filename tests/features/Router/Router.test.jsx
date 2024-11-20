@@ -18,6 +18,11 @@ vi.mock('@pages/About/AboutPage', () => ({
   default: () => <div>About Page</div>,
 }));
 
+vi.mock('@pages/Products/ProductsPage', () => ({
+  __esModule: true,
+  default: () => <div>Products Page</div>,
+}));
+
 vi.mock('@features/Layout/Layout', () => ({
   __esModule: true,
   default: () => (
@@ -26,11 +31,6 @@ vi.mock('@features/Layout/Layout', () => ({
       <Outlet />
     </div>
   ),
-}));
-
-vi.mock('@components/Product/List/ProductsList', () => ({
-  __esModule: true,
-  default: () => <div>Products List</div>,
 }));
 
 describe('Router', () => {
@@ -64,7 +64,7 @@ describe('Router', () => {
     );
 
     expect(getByText('Layout')).toBeInTheDocument();
-    expect(getByText('Products List')).toBeInTheDocument();
+    expect(getByText('Products Page')).toBeInTheDocument();
   });
 
   it('/:categorySlug/:productId', () => {
@@ -75,7 +75,7 @@ describe('Router', () => {
     );
 
     expect(getByText('Layout')).toBeInTheDocument();
-    expect(getByText('Products List')).toBeInTheDocument();
+    expect(getByText('Products Page')).toBeInTheDocument();
   });
 
   it('/products', () => {
