@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
 import Cart from '@components/Purchase/Cart/Cart';
-import OrderDetails from '@components/OrderDetails/OrderDetails';
+import OrderDetails from '@components/Purchase/OrderDetails/OrderDetails';
 import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';

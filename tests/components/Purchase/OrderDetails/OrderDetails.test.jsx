@@ -6,12 +6,26 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import OrderDetails from '@components/OrderDetails/OrderDetails';
+import OrderDetails from '@components/Purchase/OrderDetails/OrderDetails';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import sendOrder from '@services/orderService';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import useApiCall from '@helpers/useApiCall';
+import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
+import {
+  validateField,
+  validateAllFields,
+  hasErrors,
+} from '@helpers/orderValidation';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@helpers/useApiCall');
+vi.mock('@helpers/googleAnalyticsGA4', () => ({
+  trackPurchaseEvent: vi.fn(),
+}));
+vi.mock('@helpers/orderValidation', () => ({
+  validateField: vi.fn(),
+  validateAllFields: vi.fn(),
+  hasErrors: vi.fn(),
+}));
 vi.mock('@components/shared/TextInput/TextInput', () => ({
   __esModule: true,
   default: vi.fn(({
@@ -53,8 +67,8 @@ vi.mock('@components/shared/TextArea/TextArea', () => ({
 }));
 vi.mock('@components/shared/Button/Button', () => ({
   __esModule: true,
-  default: vi.fn(({ children, onClick }) => (
-    <button type="button" onClick={onClick}>
+  default: vi.fn(({ children, onClick, submit }) => (
+    <button type={submit ? 'submit' : 'button'} onClick={onClick}>
       {children}
     </button>
   )),
@@ -70,12 +84,6 @@ vi.mock('@components/shared/Checkbox/Checkbox', () => ({
     </div>
   )),
 }));
-vi.mock('@services/orderService', () => ({
-  __esModule: true,
-  default: vi.fn(),
-}));
-// vi.mock('@services/orderService');
-vi.mock('@helpers/dispatchTrackingEvent');
 
 describe('OrderDetails', () => {
   const mockOnOrder = vi.fn();
@@ -83,6 +91,7 @@ describe('OrderDetails', () => {
   const mockClearCart = vi.fn();
   const mockGetCartTotal = vi.fn();
   const mockGetCartId = vi.fn(() => 1);
+  const mockApiCall = vi.fn();
 
   beforeEach(() => {
     mockGetCartItems.mockReturnValue([
@@ -100,16 +109,25 @@ describe('OrderDetails', () => {
       },
     ]);
     mockGetCartTotal.mockReturnValue(500);
-
     usePurchaseContext.mockReturnValue({
       getCartId: mockGetCartId,
       getCartItems: mockGetCartItems,
       clearCart: mockClearCart,
       getCartTotal: mockGetCartTotal,
     });
+    useApiCall.mockReturnValue(mockApiCall);
+    validateField.mockImplementation((value) => (value ? '' : 'Error'));
+    validateAllFields.mockImplementation((details) => {
+      const errors = {};
+      Object.keys(details).forEach((key) => {
+        errors[key] = validateField(details[key], key);
+      });
+      return errors;
+    });
+    hasErrors.mockImplementation((errors) => Object.values(errors).some((error) => error));
   });
 
-  it('default', () => {
+  it('renders all input fields', () => {
     const { getByLabelText } = render(<OrderDetails onOrder={mockOnOrder} />);
 
     expect(getByLabelText('Населений пункт')).toBeTruthy();
@@ -121,16 +139,18 @@ describe('OrderDetails', () => {
     expect(getByLabelText('Коментар')).toBeTruthy();
   });
 
-  it('validation', async () => {
+  it('shows validation errors when fields are empty', () => {
     const { getByText, findAllByText } = render(<OrderDetails onOrder={mockOnOrder} />);
 
     const orderButton = getByText('замовити');
     fireEvent.click(orderButton);
 
-    expect(findAllByText('Перевірте правильність введених даних')).toBeTruthy();
+    expect(validateAllFields).toHaveBeenCalled();
+    expect(hasErrors).toHaveBeenCalled();
+    expect(findAllByText('Error')).toBeTruthy();
   });
 
-  it('createOrder', () => {
+  it('creates an order when fields are valid', () => {
     const { getByLabelText, getByText } = render(<OrderDetails onOrder={mockOnOrder} />);
 
     fireEvent.change(getByLabelText('Населений пункт'), { target: { value: 'Kyiv' } });
@@ -138,11 +158,13 @@ describe('OrderDetails', () => {
     fireEvent.change(getByLabelText('Номер телефону одержувача'), { target: { value: '123456789' } });
     fireEvent.change(getByLabelText('Прізвище'), { target: { value: 'Doe' } });
     fireEvent.change(getByLabelText('Ім\'я'), { target: { value: 'John' } });
+    fireEvent.click(getByLabelText('Мені не потрібно телефонувати'));
+    fireEvent.change(getByLabelText('Коментар'), { target: { value: 'some text' } });
 
     const orderButton = getByText('замовити');
     fireEvent.click(orderButton);
 
-    expect(sendOrder).toHaveBeenCalledWith(
+    expect(mockApiCall).toHaveBeenCalledWith(
       mockGetCartId(),
       mockGetCartItems(),
       {
@@ -151,35 +173,16 @@ describe('OrderDetails', () => {
         phoneNumber: '123456789',
         lastName: 'Doe',
         firstName: 'John',
-        doNotCallBack: false,
-        comment: '',
+        doNotCallBack: true,
+        comment: 'some text',
       },
     );
 
-    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
-      event: 'purchase',
-      ecommerce: {
-        transaction_id: expect.any(String),
-        value: 500,
-        currency: 'UAH',
-        items: [
-          {
-            item_id: 1,
-            item_name: 'Item 1',
-            index: 0,
-            price: 100,
-            quantity: 1,
-          },
-          {
-            item_id: 2,
-            item_name: 'Item 2',
-            index: 1,
-            price: 200,
-            quantity: 2,
-          },
-        ],
-      },
-    });
+    expect(trackPurchaseEvent).toHaveBeenCalledWith(
+      mockGetCartId(),
+      mockGetCartTotal(),
+      mockGetCartItems(),
+    );
 
     expect(mockClearCart).toHaveBeenCalled();
     expect(mockOnOrder).toHaveBeenCalled();

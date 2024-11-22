@@ -1,4 +1,4 @@
-#order-form {
+.order-inputs {
   min-height: calc(100vh - 297px);
   overflow-x: hidden;
   margin-bottom: 20px;

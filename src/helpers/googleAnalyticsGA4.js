@@ -52,3 +52,21 @@ export const trackViewCartEvent = (value, items) => {
     },
   });
 };
+
+export const trackPurchaseEvent = (transactionId, value, cartItems) => {
+  dispatchTrackingEvent({
+    event: 'purchase',
+    ecommerce: {
+      transaction_id: transactionId,
+      value,
+      currency: 'UAH',
+      items: cartItems.map((item, index) => ({
+        item_id: item.id,
+        item_name: item.name,
+        index,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+    },
+  });
+};

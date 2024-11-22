@@ -9,6 +9,7 @@ import {
   trackViewItemEvent,
   trackBeginCheckoutEvent,
   trackViewCartEvent,
+  trackPurchaseEvent,
 } from '@helpers/googleAnalyticsGA4';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
@@ -148,6 +149,63 @@ describe('Tracking Events', () => {
         ecommerce: {
           currency: 'UAH',
           value: totalValue,
+          items: [],
+        },
+      });
+    });
+  });
+
+  describe('trackPurchaseEvent', () => {
+    it('dispatches the correct event for a purchase', () => {
+      const transactionId = 'txn123';
+      const cartItems = [
+        {
+          id: '123',
+          name: 'Item 1',
+          price: 50,
+          quantity: 2,
+        },
+        {
+          id: '456',
+          name: 'Item 2',
+          price: 75,
+          quantity: 1,
+        },
+      ];
+      const totalValue = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+      trackPurchaseEvent(transactionId, totalValue, cartItems);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'purchase',
+        ecommerce: {
+          transaction_id: transactionId,
+          value: totalValue,
+          currency: 'UAH',
+          items: cartItems.map((item, index) => ({
+            item_id: item.id,
+            item_name: item.name,
+            index,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
+    });
+
+    it('handles an empty cart for a purchase', () => {
+      const transactionId = 'txn123';
+      const cartItems = [];
+      const totalValue = 0;
+
+      trackPurchaseEvent(transactionId, totalValue, cartItems);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'purchase',
+        ecommerce: {
+          transaction_id: transactionId,
+          value: totalValue,
+          currency: 'UAH',
           items: [],
         },
       });

@@ -8,12 +8,13 @@ function Button({
   light,
   disabled,
   className,
+  submit,
 }) {
   return (
     <button
       className={`${className} ${dark ? 'dark-button' : ''} ${light ? 'light-button' : ''} ${disabled ? 'disabled-button' : ''}`}
       onClick={onClick}
-      type="button"
+      type={submit ? 'submit' : 'button'}
     >
       {children}
     </button>
@@ -21,7 +22,9 @@ function Button({
 }
 
 Button.defaultProps = {
+  onClick: () => {},
   className: '',
+  submit: false,
   dark: false,
   light: false,
   disabled: false,
@@ -29,8 +32,9 @@ Button.defaultProps = {
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   className: PropTypes.string,
+  submit: PropTypes.bool,
   dark: PropTypes.bool,
   light: PropTypes.bool,
   disabled: PropTypes.bool,

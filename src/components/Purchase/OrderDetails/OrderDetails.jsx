@@ -7,8 +7,13 @@ import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
 import Button from '@components/shared/Button/Button';
 import Checkbox from '@components/shared/Checkbox/Checkbox';
-import sendOrder from '@services/orderService';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
+import useApiCall from '@helpers/useApiCall';
+import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
+import {
+  validateField,
+  validateAllFields,
+  hasErrors,
+} from '@helpers/orderValidation';
 
 function OrderDetails({ onOrder }) {
   const {
@@ -38,77 +43,29 @@ function OrderDetails({ onOrder }) {
     comment: '',
   });
 
-  const validateField = (value, field) => {
-    const skipValidationFor = ['comment', 'doNotCallBack'];
-    if (skipValidationFor.includes(field)) {
-      return '';
-    }
-
-    if (field === 'department' && value.length > 0) {
-      return '';
-    }
-
-    const errorMessage = 'Перевірте правильність введених даних';
-
-    if (field === 'phoneNumber' && value.length !== 9) {
-      return errorMessage;
-    }
-
-    if (value.length > 2) {
-      return '';
-    }
-
-    return errorMessage;
-  };
-
   const onChange = (field) => (event) => {
     const { target: { value } } = event;
     setOrderDetails({ ...orderDetails, [field]: value });
     setErrors({ ...errors, [field]: validateField(value, field) });
   };
 
-  const validateAllFields = () => Object.keys(orderDetails).reduce(
-    (validationErrors, field) => ({
-      ...validationErrors,
-      [field]: validateField(orderDetails[field], field),
-    }),
-    {},
-  );
-
-  const checkErrors = (validationResult) => (
-    Object.values(validationResult).some((errorMessage) => Boolean(errorMessage.length))
-  );
-
-  const createOrder = () => {
-    const validationResult = validateAllFields();
-    if (checkErrors(validationResult)) {
+  const sendOrder = useApiCall();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationResult = validateAllFields(orderDetails);
+    if (hasErrors(validationResult)) {
       setErrors(validationResult);
       return;
     }
     sendOrder(getCartId(), getCartItems(), orderDetails);
-
-    dispatchTrackingEvent({
-      event: 'purchase',
-      ecommerce: {
-        transaction_id: new Date().toISOString(),
-        value: getCartTotal(),
-        currency: 'UAH',
-        items: (getCartItems()).map((item, index) => ({
-          item_id: item.id,
-          item_name: item.name,
-          index,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-      },
-    });
+    trackPurchaseEvent(getCartId(), getCartTotal(), getCartItems());
     clearCart();
     onOrder();
   };
 
   return (
-    <>
-      <div id="order-form">
+    <form onSubmit={handleSubmit}>
+      <div className="order-inputs">
         <TextInput
           id="city"
           className="order-input"
@@ -167,10 +124,10 @@ function OrderDetails({ onOrder }) {
           placeholder="Промокод чи інші побажання щодо замовлення"
         />
       </div>
-      <Button className="order-btn" onClick={createOrder} dark>
+      <Button className="order-btn" submit dark>
         замовити
       </Button>
-    </>
+    </form>
   );
 }
 

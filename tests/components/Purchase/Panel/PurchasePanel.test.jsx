@@ -29,7 +29,7 @@ describe('Purchase', () => {
       __esModule: true,
       default: vi.fn(({ onOrder }) => <div role="button" tabIndex="0" onClick={onOrder} onKeyDown={onOrder}>Mocked Cart</div>),
     }));
-    vi.mock('@components/OrderDetails/OrderDetails', () => ({
+    vi.mock('@components/Purchase/OrderDetails/OrderDetails', () => ({
       __esModule: true,
       default: vi.fn(({ onOrder }) => <div role="button" tabIndex="0" onClick={onOrder} onKeyDown={onOrder}>Mocked OrderDetails</div>),
     }));
