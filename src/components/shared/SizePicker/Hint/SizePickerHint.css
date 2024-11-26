@@ -1,7 +1,14 @@
 .size-picker-hint {
-  margin: 10px 0px 10px 0px;
-  width: 100%;
-  text-align: center;
   text-decoration: underline;
   cursor: pointer;
+  font-size: 12px;
+  display: flex;
+}
+
+.size-picker__title > span {
+  display: inline-block;
+}
+
+.size-picker__title > div {
+  float: right;
 }

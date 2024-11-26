@@ -29,9 +29,9 @@
 }
 
 .error {
-  border-color: var(--error-color) !important;
+  border-color: var(--attention-color) !important;
 }
 
 .error-message {
-  color: var(--error-color);
+  color: var(--attention-color);
 }

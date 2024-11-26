@@ -16,7 +16,7 @@ button {
   align-items: center;
   justify-content: center;
   background-color: var(--button-color);
-  color: var(--button-text-color);
+  color: var(--light-text-color);
   border-radius: 8px;
 }
 
@@ -42,6 +42,6 @@ button {
   align-items: center;
   justify-content: center;
   background-color: var(--disabled-background-color);
-  color: var(--button-text-color);
+  color: var(--light-text-color);
   border-radius: 8px;
 }

@@ -27,7 +27,7 @@
   height: 15px;
   bottom: 7px;
   border-radius: 100%;
-  color: var(--button-text-color);
+  color: var(--light-text-color);
   background: var(--dark-background-color);
   line-height: 10px;
   position: absolute;

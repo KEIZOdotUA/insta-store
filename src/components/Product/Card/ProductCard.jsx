@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ProductImage from '@components/Product/Image/ProductImage';
 
 function ProductCard({ product, link }) {
+  const discounted = product.oldPrice > 0 && product.oldPrice !== product.price;
+
   return (
     <div className="product-card">
       <Link to={link}>
@@ -12,24 +14,23 @@ function ProductCard({ product, link }) {
           name={product.name}
           size="m"
           className="product-card__img"
-          role="button"
-          tabIndex="0"
         />
-        <div
-          className="product-card__name"
-          role="button"
-          tabIndex="0"
-        >
+        {product.feature && (
+          <span className="product-card__featured">
+            {product.feature}
+          </span>
+        )}
+        <div className="product-card__name">
           {product.name}
         </div>
-        <div className="product-card__price">
-          {'Ціна: '}
-          {product.oldPrice > 0 && product.oldPrice !== product.price && (
-            <s>{`${product.oldPrice}`}</s>
+        <span className={`product-card__price${discounted ? ' discounted' : ''}`}>
+          {` ${product.price} грн `}
+        </span>
+        <span className="product-card__price">
+          {discounted && (
+            <s>{`${product.oldPrice} грн`}</s>
           )}
-          {` ${product.price} `}
-          грн
-        </div>
+        </span>
       </Link>
     </div>
   );
@@ -41,6 +42,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     oldPrice: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
+    feature: PropTypes.string,
   }).isRequired,
   link: PropTypes.string.isRequired,
 };

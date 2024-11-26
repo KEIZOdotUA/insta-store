@@ -56,6 +56,6 @@
 }
 
 .wishlist-item__delete {
-  color: var(--error-color);
+  color: var(--attention-color);
   margin-left: 70px;
 }

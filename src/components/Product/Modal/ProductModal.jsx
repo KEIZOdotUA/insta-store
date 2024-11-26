@@ -124,6 +124,17 @@ function ProductModal() {
             size="l"
             className="product-modal__img"
           />
+        </div>
+        <div className="product-modal__header">
+          <div className="product-modal__info">
+            {product.feature && (
+              <div className="product-modal__featured">
+                <span>{product.feature}</span>
+              </div>
+            )}
+            {product.name}
+            <span>{`${product.price} грн`}</span>
+          </div>
           <div className="product-modal__buttons">
             <LikeButton liked={Boolean(itemInWIshList)} onLike={() => toggleLike(product)} />
             <ShareButton
@@ -133,9 +144,6 @@ function ProductModal() {
             />
           </div>
         </div>
-        <h2>{product.name}</h2>
-        <span className="article">{`Артикул: ${product.id}`}</span>
-        <h2>{`${product.price} грн`}</h2>
         {product.sizes.length > 0 && (
           <SizePicker
             sizes={product.sizes}
@@ -145,15 +153,14 @@ function ProductModal() {
             sizeHint={product.sizeHint}
           />
         )}
-        <p>{product.description}</p>
         {!product.available && (
-          <Button className="product-modal__btn" onClick={() => {}} disabled>
+          <Button className="product-modal__action" onClick={() => {}} disabled>
             немає в наявності
           </Button>
         )}
         {product.available && !itemInCart && (
           <Button
-            className="product-modal__btn"
+            className="product-modal__action"
             onClick={() => onAddProductToCart({ ...product, selectedSize })}
             dark
           >
@@ -162,16 +169,17 @@ function ProductModal() {
         )}
         {itemInCart && (
           <Button
-            className="product-modal__btn"
+            className="product-modal__action"
             onClick={() => onAddProductToCart({ ...product, selectedSize })}
             light
           >
             додано в кошик
           </Button>
         )}
-        <Button className="product-modal__btn" onClick={onClose} light>
-          продовжити покупки
-        </Button>
+        <div className="product-modal__description">
+          <span className="article">{`Артикул: ${product.id}`}</span>
+          <p>{product.description}</p>
+        </div>
       </Modal>
     )
   );

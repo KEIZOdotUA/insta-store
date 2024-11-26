@@ -6,7 +6,7 @@ import {
   afterEach,
   expect,
 } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import {
   MemoryRouter,
   useParams,
@@ -52,9 +52,13 @@ describe('ProductModal', () => {
     sizes: [0, 1, 2],
     sizeHint: 'Choose your size',
     description: 'Test description',
+    feature: 'Sale',
   };
 
+  let mockNavigate;
+
   beforeEach(() => {
+    mockNavigate = vi.fn();
     useAppContext.mockReturnValue({
       whitelabel: { shop: { name: 'Test Shop' } },
       products: [mockProduct],
@@ -70,13 +74,21 @@ describe('ProductModal', () => {
     });
 
     useParams.mockReturnValue({ productId: '1', categorySlug: 'products' });
-    useNavigate.mockReturnValue(vi.fn());
+    useNavigate.mockReturnValue(mockNavigate);
     useSearchParams.mockReturnValue([new URLSearchParams()]);
 
     Modal.mockImplementation(({ children }) => <div>{children}</div>);
     ProductImage.mockImplementation(() => <img alt="product" />);
-    Button.mockImplementation(({ children, onClick }) => <button type="button" onClick={onClick}>{children}</button>);
-    LikeButton.mockImplementation(({ liked, onLike }) => <button type="button" onClick={onLike}>{liked ? 'Unlike' : 'Like'}</button>);
+    Button.mockImplementation(({ children, onClick }) => (
+      <button type="button" onClick={onClick}>
+        {children}
+      </button>
+    ));
+    LikeButton.mockImplementation(({ liked, onLike }) => (
+      <button type="button" onClick={onLike}>
+        {liked ? 'Unlike' : 'Like'}
+      </button>
+    ));
     ShareButton.mockImplementation(() => <button type="button">Share</button>);
     SizePicker.mockImplementation(() => <div>Size Picker</div>);
   });
@@ -85,7 +97,7 @@ describe('ProductModal', () => {
     vi.clearAllMocks();
   });
 
-  it('renders with default values', () => {
+  it('renders product details correctly', () => {
     const { getByText } = render(
       <MemoryRouter>
         <ProductModal />
@@ -99,42 +111,10 @@ describe('ProductModal', () => {
     expect(getByText('Size Picker')).toBeInTheDocument();
     expect(getByText('Like')).toBeInTheDocument();
     expect(getByText('Share')).toBeInTheDocument();
+    expect(getByText('Sale')).toBeInTheDocument();
   });
 
-  it('renders "немає в наявності" when product is unavailable', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: { shop: { name: 'Test Shop' } },
-      products: [{ ...mockProduct, available: false }],
-    });
-
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    expect(getByText('немає в наявності')).toBeInTheDocument();
-  });
-
-  it('renders "додано в кошик" when product is already in the cart', () => {
-    usePurchaseContext.mockReturnValue({
-      findCartItem: vi.fn().mockReturnValue(mockProduct),
-      addCartItem: vi.fn(),
-      findWishListItem: vi.fn().mockReturnValue(null),
-      addWishListItem: vi.fn(),
-      removeWishListItem: vi.fn(),
-    });
-
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    expect(getByText('додано в кошик')).toBeInTheDocument();
-  });
-
-  it('adds the product to the cart and triggers tracking event', async () => {
+  it('adds product to cart when "додати в кошик" is clicked', async () => {
     const { getByText } = render(
       <MemoryRouter>
         <ProductModal />
@@ -142,7 +122,7 @@ describe('ProductModal', () => {
     );
 
     const addToCartButton = getByText('додати в кошик');
-    fireEvent.click(addToCartButton);
+    await act(() => fireEvent.click(addToCartButton));
 
     expect(usePurchaseContext().addCartItem).toHaveBeenCalledWith({
       ...mockProduct,
@@ -166,12 +146,87 @@ describe('ProductModal', () => {
     });
   });
 
-  it('toggles "Like" button to add product to wishlist', () => {
+  it('displays "немає в наявності" when product is unavailable', () => {
+    useAppContext.mockReturnValue({
+      whitelabel: { shop: { name: 'Test Shop' } },
+      products: [{ ...mockProduct, available: false }],
+    });
+
+    const { getByText } = render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('немає в наявності')).toBeInTheDocument();
+  });
+
+  it('toggles product in wishlist when "Like" button is clicked', () => {
     const addWishListItem = vi.fn();
-    usePurchaseContext.mockReturnValue({
-      findCartItem: vi.fn().mockReturnValue(null),
+    const removeWishListItem = vi.fn();
+    const mockContext = {
+      ...usePurchaseContext(),
       findWishListItem: vi.fn().mockReturnValue(null),
       addWishListItem,
+      removeWishListItem,
+    };
+
+    usePurchaseContext.mockReturnValue(mockContext);
+
+    const { getByText, rerender } = render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    const likeButton = getByText('Like');
+    fireEvent.click(likeButton);
+    expect(addWishListItem).toHaveBeenCalledWith(mockProduct);
+
+    mockContext.findWishListItem.mockReturnValue(mockProduct);
+    usePurchaseContext.mockReturnValue(mockContext);
+
+    rerender(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    fireEvent.click(getByText('Unlike'));
+    expect(removeWishListItem).toHaveBeenCalledWith(mockProduct.id);
+  });
+
+  it('dispatches "view_item" event when product is displayed', () => {
+    render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+      event: 'view_item',
+      ecommerce: {
+        currency: 'UAH',
+        value: mockProduct.price,
+        items: [
+          {
+            item_id: mockProduct.id,
+            item_name: mockProduct.name,
+            index: 0,
+            price: mockProduct.price,
+            quantity: 1,
+          },
+        ],
+      },
+    });
+  });
+
+  it('renders "додано в кошик" when product is already in the cart', () => {
+    usePurchaseContext.mockReturnValue({
+      findCartItem: vi.fn().mockReturnValue(mockProduct),
+      addCartItem: vi.fn(),
+      findWishListItem: vi.fn().mockReturnValue(null),
+      addWishListItem: vi.fn(),
       removeWishListItem: vi.fn(),
     });
 
@@ -181,44 +236,6 @@ describe('ProductModal', () => {
       </MemoryRouter>,
     );
 
-    const likeButton = getByText('Like');
-    fireEvent.click(likeButton);
-
-    expect(addWishListItem).toHaveBeenCalledWith(mockProduct);
-  });
-
-  it('toggles "Unlike" button to remove product from wishlist', () => {
-    const removeWishListItem = vi.fn();
-    usePurchaseContext.mockReturnValue({
-      findCartItem: vi.fn().mockReturnValue(null),
-      findWishListItem: vi.fn().mockReturnValue(mockProduct),
-      addWishListItem: vi.fn(),
-      removeWishListItem,
-    });
-
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    const unlikeButton = getByText('Unlike');
-    fireEvent.click(unlikeButton);
-
-    expect(removeWishListItem).toHaveBeenCalledWith(mockProduct.id);
-  });
-
-  it('navigates back to product list on "продовжити покупки" click', () => {
-    const navigate = useNavigate();
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    const continuePurchaseButton = getByText('продовжити покупки');
-    fireEvent.click(continuePurchaseButton);
-
-    expect(navigate).toHaveBeenCalledWith('/products');
+    expect(getByText('додано в кошик')).toBeInTheDocument();
   });
 });

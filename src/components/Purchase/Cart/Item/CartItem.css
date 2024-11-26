@@ -46,7 +46,7 @@
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 500;
-  color: var(--error-color);
+  color: var(--attention-color);
 }
 
 .cart-item__quantity {

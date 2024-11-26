@@ -27,7 +27,8 @@ function SizePicker({
   return (
     <>
       <div className="size-picker__title">
-        <strong>Pозмір:</strong>
+        <span>Pозмір</span>
+        {sizeHint.length > 0 && <SizePickerHint hint={sizeHint} />}
       </div>
       <div>
         {sizes.map((size) => (
@@ -40,7 +41,6 @@ function SizePicker({
           />
         ))}
       </div>
-      {sizeHint.length > 0 && <SizePickerHint hint={sizeHint} />}
     </>
   );
 }
