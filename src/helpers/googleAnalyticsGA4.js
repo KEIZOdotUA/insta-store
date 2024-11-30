@@ -70,3 +70,20 @@ export const trackPurchaseEvent = (transactionId, value, cartItems) => {
     },
   });
 };
+
+export const trackViewItemListEvent = (listName, items) => {
+  dispatchTrackingEvent({
+    event: 'view_item_list',
+    ecommerce: {
+      currency: 'UAH',
+      item_list_id: listName,
+      item_list_name: listName,
+      items: items.map((product, index) => ({
+        item_id: product.id,
+        item_name: product.name,
+        index,
+        price: product.price,
+      })),
+    },
+  });
+};

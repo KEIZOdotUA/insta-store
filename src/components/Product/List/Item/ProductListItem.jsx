@@ -1,9 +1,9 @@
-import './ProductCard.css';
+import './ProductListItem.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProductImage from '@components/Product/Image/ProductImage';
 
-function ProductCard({ product, link }) {
+function ProductListItem({ product, link }) {
   const discounted = product.oldPrice > 0 && product.oldPrice !== product.price;
 
   return (
@@ -36,7 +36,7 @@ function ProductCard({ product, link }) {
   );
 }
 
-ProductCard.propTypes = {
+ProductListItem.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -47,4 +47,4 @@ ProductCard.propTypes = {
   link: PropTypes.string.isRequired,
 };
 
-export default ProductCard;
+export default ProductListItem;

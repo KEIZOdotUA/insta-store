@@ -10,6 +10,7 @@ import {
   trackBeginCheckoutEvent,
   trackViewCartEvent,
   trackPurchaseEvent,
+  trackViewItemListEvent,
 } from '@helpers/googleAnalyticsGA4';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
@@ -206,6 +207,58 @@ describe('Tracking Events', () => {
           transaction_id: transactionId,
           value: totalValue,
           currency: 'UAH',
+          items: [],
+        },
+      });
+    });
+  });
+
+  describe('trackViewItemListEvent', () => {
+    it('dispatches the correct event for a product list', () => {
+      const listName = 'Featured Products';
+      const items = [
+        {
+          id: '123',
+          name: 'Item 1',
+          price: 50,
+        },
+        {
+          id: '456',
+          name: 'Item 2',
+          price: 75,
+        },
+      ];
+
+      trackViewItemListEvent(listName, items);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'view_item_list',
+        ecommerce: {
+          currency: 'UAH',
+          item_list_id: listName,
+          item_list_name: listName,
+          items: items.map((product, index) => ({
+            item_id: product.id,
+            item_name: product.name,
+            index,
+            price: product.price,
+          })),
+        },
+      });
+    });
+
+    it('handles an empty product list', () => {
+      const listName = 'Empty List';
+      const items = [];
+
+      trackViewItemListEvent(listName, items);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'view_item_list',
+        ecommerce: {
+          currency: 'UAH',
+          item_list_id: listName,
+          item_list_name: listName,
           items: [],
         },
       });
