@@ -15,7 +15,7 @@ function CartItem({ item }) {
     decrementCartItemQuantity,
   } = usePurchaseContext();
 
-  const getProductLink = useProductNavigation();
+  const { getProductLink } = useProductNavigation();
 
   return (
     <div className="cart-item">

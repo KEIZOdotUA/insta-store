@@ -53,7 +53,7 @@ describe('AdditionalPackaging', () => {
       removeCartItem: mockRemoveCartItem,
     });
 
-    useProductNavigation.mockReturnValue(mockGetProductLink);
+    useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
     trackViewItemEvent.mockImplementation(mockTrackViewItemEvent);
     mockGetProductLink.mockReturnValue(`/products/${mockPackaging.id}`);
   });

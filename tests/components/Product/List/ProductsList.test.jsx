@@ -30,12 +30,12 @@ describe('ProductsList', () => {
     ],
   };
 
-  const mockProductLink = (id) => `/products/${id}`;
+  const mockGetProductLink = (id) => `/products/${id}`;
   const mockTrackViewItemListEvent = vi.fn();
 
   beforeEach(() => {
     useProductList.mockReturnValue(mockProductList);
-    useProductNavigation.mockReturnValue(mockProductLink);
+    useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
     trackViewItemListEvent.mockImplementation(mockTrackViewItemListEvent);
 
     ProductCard.mockImplementation(({ product, link }) => (

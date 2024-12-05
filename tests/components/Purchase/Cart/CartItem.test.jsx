@@ -36,9 +36,9 @@ vi.mock('@components/shared/Button/Button', () => ({
 vi.mock('react-router-dom', () => ({
   __esModule: true,
   Link: vi.fn(({ to, children, onClick }) => (
-    <a href={to} onClick={onClick}>
+    <span onClick={onClick} onKeyDown={onClick} role="link" tabIndex={0} data-to={to}>
       {children}
-    </a>
+    </span>
   )),
 }));
 
@@ -56,7 +56,7 @@ describe('CartItem', () => {
       incrementCartItemQuantity: mockIncrementCartItemQuantity,
       decrementCartItemQuantity: mockDecrementCartItemQuantity,
     });
-    useProductNavigation.mockReturnValue(mockGetProductLink);
+    useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
     mockGetProductLink.mockReturnValue('/test-category/1');
   });
 
@@ -101,13 +101,13 @@ describe('CartItem', () => {
   });
 
   it('navigates to product link on image and title click, and calls hidePurchase', () => {
-    const { getByText } = render(<CartItem item={item} />);
+    const { getByRole, getByText } = render(<CartItem item={item} />);
 
-    const imageLink = getByText('ProductImage').closest('a');
+    const imageLink = getByRole('link', { name: 'ProductImage' });
     fireEvent.click(imageLink);
     expect(mockHidePurchase).toHaveBeenCalled();
 
-    const titleLink = getByText('Test Product, 42 розмір');
+    const titleLink = getByText('Test Product, 42 розмір').closest('[role="link"]');
     fireEvent.click(titleLink);
     expect(mockHidePurchase).toHaveBeenCalledTimes(2);
   });

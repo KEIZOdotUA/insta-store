@@ -14,7 +14,7 @@ function AdditionalPackaging() {
     addCartItem: addPackagingToCart,
     removeCartItem: removePackagingFromCart,
   } = usePurchaseContext();
-  const getProductLink = useProductNavigation();
+  const { getProductLink } = useProductNavigation();
 
   const itemInCart = packaging && findCartItem(packaging.id, 0);
 

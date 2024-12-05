@@ -6,42 +6,40 @@ import {
   afterEach,
   expect,
 } from 'vitest';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import ProductModal from '@components/Product/Modal/ProductModal';
+import useAppContext from '@contexts/App/useAppContext';
 import {
   MemoryRouter,
   useParams,
-  useNavigate,
   useSearchParams,
+  useNavigate,
 } from 'react-router-dom';
-import ProductModal from '@components/Product/Modal/ProductModal';
-import useAppContext from '@contexts/App/useAppContext';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 import Modal from '@components/shared/Modal/Modal';
 import ProductImage from '@components/Product/Image/ProductImage';
-import Button from '@components/shared/Button/Button';
-import LikeButton from '@components/shared/LikeButton/LikeButton';
-import ShareButton from '@components/shared/ShareButton/ShareButton';
+import InfoHeader from '@components/Product/Modal/InfoHeader/InfoHeader';
+import ActionButton from '@components/Product/Modal/ActionButton/ActionButton';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
+import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
+import useProductNavigation from '@helpers/useProductNavigation';
 
 vi.mock('@contexts/App/useAppContext');
-vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@helpers/dispatchTrackingEvent');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
     useParams: vi.fn(),
-    useNavigate: vi.fn(),
     useSearchParams: vi.fn(),
+    useNavigate: vi.fn(),
   };
 });
 vi.mock('@components/shared/Modal/Modal');
 vi.mock('@components/Product/Image/ProductImage');
-vi.mock('@components/shared/Button/Button');
-vi.mock('@components/shared/LikeButton/LikeButton');
-vi.mock('@components/shared/ShareButton/ShareButton');
+vi.mock('@components/Product/Modal/InfoHeader/InfoHeader');
+vi.mock('@components/Product/Modal/ActionButton/ActionButton');
 vi.mock('@components/shared/SizePicker/SizePicker');
+vi.mock('@helpers/googleAnalyticsGA4');
+vi.mock('@helpers/useProductNavigation');
 
 describe('ProductModal', () => {
   const mockProduct = {
@@ -55,42 +53,28 @@ describe('ProductModal', () => {
     feature: 'Sale',
   };
 
-  let mockNavigate;
+  const mockGetProductListLink = vi.fn().mockReturnValue('/products');
+  const mockNavigate = vi.fn();
 
   beforeEach(() => {
-    mockNavigate = vi.fn();
     useAppContext.mockReturnValue({
-      whitelabel: { shop: { name: 'Test Shop' } },
       products: [mockProduct],
     });
 
-    usePurchaseContext.mockReturnValue({
-      showPurchase: vi.fn(),
-      findCartItem: vi.fn().mockReturnValue(null),
-      addCartItem: vi.fn(),
-      findWishListItem: vi.fn().mockReturnValue(null),
-      addWishListItem: vi.fn(),
-      removeWishListItem: vi.fn(),
-    });
-
-    useParams.mockReturnValue({ productId: '1', categorySlug: 'products' });
-    useNavigate.mockReturnValue(mockNavigate);
+    useParams.mockReturnValue({ productId: '1' });
     useSearchParams.mockReturnValue([new URLSearchParams()]);
-
-    Modal.mockImplementation(({ children }) => <div>{children}</div>);
-    ProductImage.mockImplementation(() => <img alt="product" />);
-    Button.mockImplementation(({ children, onClick }) => (
-      <button type="button" onClick={onClick}>
+    Modal.mockImplementation(({ children, onClose }) => (
+      <div>
+        <button onClick={onClose} type="button">Close</button>
         {children}
-      </button>
+      </div>
     ));
-    LikeButton.mockImplementation(({ liked, onLike }) => (
-      <button type="button" onClick={onLike}>
-        {liked ? 'Unlike' : 'Like'}
-      </button>
-    ));
-    ShareButton.mockImplementation(() => <button type="button">Share</button>);
+    ProductImage.mockImplementation(() => <img alt="product" />);
+    InfoHeader.mockImplementation(() => <div>Info Header</div>);
+    ActionButton.mockImplementation(() => <div>Action Button</div>);
     SizePicker.mockImplementation(() => <div>Size Picker</div>);
+    useProductNavigation.mockReturnValue({ getProductListLink: mockGetProductListLink });
+    useNavigate.mockReturnValue(mockNavigate);
   });
 
   afterEach(() => {
@@ -104,96 +88,9 @@ describe('ProductModal', () => {
       </MemoryRouter>,
     );
 
-    expect(getByText(mockProduct.name)).toBeInTheDocument();
-    expect(getByText('Артикул: 1')).toBeInTheDocument();
-    expect(getByText(`${mockProduct.price} грн`)).toBeInTheDocument();
-    expect(getByText(mockProduct.description)).toBeInTheDocument();
+    expect(getByText('Info Header')).toBeInTheDocument();
+    expect(getByText('Action Button')).toBeInTheDocument();
     expect(getByText('Size Picker')).toBeInTheDocument();
-    expect(getByText('Like')).toBeInTheDocument();
-    expect(getByText('Share')).toBeInTheDocument();
-    expect(getByText('Sale')).toBeInTheDocument();
-  });
-
-  it('adds product to cart when "додати в кошик" is clicked', async () => {
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    const addToCartButton = getByText('додати в кошик');
-    await act(() => fireEvent.click(addToCartButton));
-
-    expect(usePurchaseContext().addCartItem).toHaveBeenCalledWith({
-      ...mockProduct,
-      selectedSize: 0,
-    });
-    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
-      event: 'add_to_cart',
-      ecommerce: {
-        currency: 'UAH',
-        value: mockProduct.price,
-        items: [
-          {
-            item_id: mockProduct.id,
-            item_name: mockProduct.name,
-            index: 0,
-            price: mockProduct.price,
-            quantity: 1,
-          },
-        ],
-      },
-    });
-  });
-
-  it('displays "немає в наявності" when product is unavailable', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: { shop: { name: 'Test Shop' } },
-      products: [{ ...mockProduct, available: false }],
-    });
-
-    const { getByText } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    expect(getByText('немає в наявності')).toBeInTheDocument();
-  });
-
-  it('toggles product in wishlist when "Like" button is clicked', () => {
-    const addWishListItem = vi.fn();
-    const removeWishListItem = vi.fn();
-    const mockContext = {
-      ...usePurchaseContext(),
-      findWishListItem: vi.fn().mockReturnValue(null),
-      addWishListItem,
-      removeWishListItem,
-    };
-
-    usePurchaseContext.mockReturnValue(mockContext);
-
-    const { getByText, rerender } = render(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    const likeButton = getByText('Like');
-    fireEvent.click(likeButton);
-    expect(addWishListItem).toHaveBeenCalledWith(mockProduct);
-
-    mockContext.findWishListItem.mockReturnValue(mockProduct);
-    usePurchaseContext.mockReturnValue(mockContext);
-
-    rerender(
-      <MemoryRouter>
-        <ProductModal />
-      </MemoryRouter>,
-    );
-
-    fireEvent.click(getByText('Unlike'));
-    expect(removeWishListItem).toHaveBeenCalledWith(mockProduct.id);
   });
 
   it('dispatches "view_item" event when product is displayed', () => {
@@ -203,39 +100,75 @@ describe('ProductModal', () => {
       </MemoryRouter>,
     );
 
-    expect(dispatchTrackingEvent).toHaveBeenCalledWith({
-      event: 'view_item',
-      ecommerce: {
-        currency: 'UAH',
-        value: mockProduct.price,
-        items: [
-          {
-            item_id: mockProduct.id,
-            item_name: mockProduct.name,
-            index: 0,
-            price: mockProduct.price,
-            quantity: 1,
-          },
-        ],
-      },
-    });
+    expect(trackViewItemEvent).toHaveBeenCalledWith(mockProduct);
   });
 
-  it('renders "додано в кошик" when product is already in the cart', () => {
-    usePurchaseContext.mockReturnValue({
-      findCartItem: vi.fn().mockReturnValue(mockProduct),
-      addCartItem: vi.fn(),
-      findWishListItem: vi.fn().mockReturnValue(null),
-      addWishListItem: vi.fn(),
-      removeWishListItem: vi.fn(),
-    });
-
+  it('calls onClose and navigates to the product list', async () => {
     const { getByText } = render(
       <MemoryRouter>
         <ProductModal />
       </MemoryRouter>,
     );
 
-    expect(getByText('додано в кошик')).toBeInTheDocument();
+    const closeButton = getByText('Close');
+    fireEvent.click(closeButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith('/products');
+  });
+
+  it('does not render if productId is not provided', () => {
+    useParams.mockReturnValue({});
+
+    const { queryByText } = render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    expect(queryByText('Info Header')).not.toBeInTheDocument();
+  });
+
+  it('does not render if product is not found', () => {
+    useParams.mockReturnValue({ productId: '999' });
+
+    const { queryByText } = render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    expect(queryByText('Info Header')).not.toBeInTheDocument();
+  });
+
+  it('does not set size if sizeParam is not in product sizes', () => {
+    useSearchParams.mockReturnValue([new URLSearchParams({ size: '3' })]);
+
+    const { queryByText } = render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    expect(queryByText('Size Picker')).toBeInTheDocument();
+    expect(SizePicker).toHaveBeenCalledWith(
+      expect.objectContaining({ selectedSize: 0 }),
+      {},
+    );
+  });
+
+  it('sets size if sizeParam is valid', () => {
+    useSearchParams.mockReturnValue([new URLSearchParams({ size: '1' })]);
+
+    const { queryByText } = render(
+      <MemoryRouter>
+        <ProductModal />
+      </MemoryRouter>,
+    );
+
+    expect(queryByText('Size Picker')).toBeInTheDocument();
+    expect(SizePicker).toHaveBeenCalledWith(
+      expect.objectContaining({ selectedSize: 1 }),
+      {},
+    );
   });
 });

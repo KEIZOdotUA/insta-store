@@ -9,53 +9,10 @@
   border-radius: 8px;
 }
 
-.product-modal__header {
-  display: flex;
-  margin-bottom: 40px;
-}
-
-.product-modal__info {
-  width: calc(100% - 48px);
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.product-modal__info > span {
-  display: flex;
-  margin-top: 15px;
-  font-size: 18px;
-}
-
-.product-modal__featured {
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.product-modal__buttons {
-  width: 48px;
-}
-
-.product-modal__featured > span {
-  padding: 0px 5px 0px 5px;
-  background: var(--dark-background-color);
-  color: var(--light-text-color);
-}
-
-.product-modal__buttons button {
-  height: 48px;
-  width: 48px;
-  padding: 0;
-}
-
-.product-modal__action {
-  margin: 35px 0px 50px 0px;
-  width: 100%;
-}
-
 .product-modal__description {
   font-size: 20px;
   font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .product-modal__description > p {

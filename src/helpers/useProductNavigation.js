@@ -16,5 +16,14 @@ export default function useProductNavigation() {
     return `/${categorySlug || 'products'}/${productId}${paramString}`;
   };
 
-  return getProductLink;
+  const getProductListLink = () => {
+    const searchParam = searchParams.get('q');
+    const param = searchParam
+      ? `?q=${searchParam}`
+      : '';
+
+    return `/${categorySlug || 'products'}${param}`;
+  };
+
+  return { getProductLink, getProductListLink };
 }

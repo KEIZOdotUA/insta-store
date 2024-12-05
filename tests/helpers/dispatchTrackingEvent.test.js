@@ -16,6 +16,19 @@ describe('dispatchTrackingEvent', () => {
     expect(global.window.dataLayer[1]).toEqual(mockData);
   });
 
+  it('should initialize dataLayer and push data if it is undefined', () => {
+    global.window = {};
+
+    const mockData = { event: 'purchase', ecommerce: { value: 100 } };
+
+    dispatchTrackingEvent(mockData);
+
+    expect(global.window.dataLayer).toBeDefined();
+    expect(global.window.dataLayer.length).toBe(2);
+    expect(global.window.dataLayer[0]).toEqual({ ecommerce: null });
+    expect(global.window.dataLayer[1]).toEqual(mockData);
+  });
+
   it('should not push data if window is undefined', () => {
     delete global.window;
 

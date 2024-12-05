@@ -15,7 +15,7 @@ function ProductsList() {
     }
   }, [name, items]);
 
-  const getProductLink = useProductNavigation();
+  const { getProductLink } = useProductNavigation();
 
   return (
     <>

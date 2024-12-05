@@ -11,6 +11,7 @@ import {
   trackViewCartEvent,
   trackPurchaseEvent,
   trackViewItemListEvent,
+  trackAddToCartEvent,
 } from '@helpers/googleAnalyticsGA4';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
@@ -260,6 +261,35 @@ describe('Tracking Events', () => {
           item_list_id: listName,
           item_list_name: listName,
           items: [],
+        },
+      });
+    });
+  });
+
+  describe('trackAddToCartEvent', () => {
+    it('dispatches the correct event for adding an item to the cart', () => {
+      const item = {
+        id: '789',
+        name: 'New Item',
+        price: 120,
+      };
+
+      trackAddToCartEvent(item);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'add_to_cart',
+        ecommerce: {
+          currency: 'UAH',
+          value: item.price,
+          items: [
+            {
+              item_id: item.id,
+              item_name: item.name,
+              index: 0,
+              price: item.price,
+              quantity: 1,
+            },
+          ],
         },
       });
     });
