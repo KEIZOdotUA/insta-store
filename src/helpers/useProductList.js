@@ -44,7 +44,7 @@ export default function useProductList() {
       return;
     }
 
-    if (categorySlug) {
+    if (categorySlug && categories.length > 0) {
       const category = categories.find((cat) => cat.slug === categorySlug);
       if (category) {
         setName(category.name.toUpperCase());
