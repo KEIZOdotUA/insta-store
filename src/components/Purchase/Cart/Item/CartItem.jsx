@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
-import ProductImage from '@components/Product/Image/ProductImage';
+import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@helpers/useProductNavigation';
 import Button from '@components/shared/Button/Button';
 

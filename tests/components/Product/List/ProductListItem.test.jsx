@@ -7,10 +7,10 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import ProductCard from '@components/Product/List/Item/ProductListItem';
-import ProductImage from '@components/Product/Image/ProductImage';
+import ProductCard from '@features/Product/List/Item/ProductListItem';
+import ProductImage from '@features/Product/Image/ProductImage';
 
-vi.mock('@components/Product/Image/ProductImage');
+vi.mock('@features/Product/Image/ProductImage');
 
 describe('ProductCard', () => {
   const product = {

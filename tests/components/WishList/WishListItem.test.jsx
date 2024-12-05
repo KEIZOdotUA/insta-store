@@ -12,7 +12,7 @@ import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
 
-vi.mock('@components/Product/Image/ProductImage', () => ({
+vi.mock('@features/Product/Image/ProductImage', () => ({
   __esModule: true,
   default: vi.fn(() => <div>ProductImage</div>),
 }));

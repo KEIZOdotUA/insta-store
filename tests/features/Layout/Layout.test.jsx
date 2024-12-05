@@ -75,7 +75,7 @@ vi.mock('@components/Purchase/Panel/PurchasePanel', () => ({
   default: vi.fn(() => <div>Mock Purchase</div>),
 }));
 
-vi.mock('@components/Product/Modal/ProductModal', () => ({
+vi.mock('@features/Product/Modal/ProductModal', () => ({
   __esModule: true,
   default: vi.fn(() => <div>Mock Product Modal</div>),
 }));

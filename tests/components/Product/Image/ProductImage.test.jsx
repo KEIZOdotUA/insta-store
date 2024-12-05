@@ -6,7 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import ProductImage from '@components/Product/Image/ProductImage';
+import ProductImage from '@features/Product/Image/ProductImage';
 import useAppContext from '@contexts/App/useAppContext';
 
 vi.mock('@contexts/App/useAppContext');

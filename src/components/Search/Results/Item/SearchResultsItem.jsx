@@ -1,7 +1,7 @@
 import './SearchResultsItem.css';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ProductImage from '@components/Product/Image/ProductImage';
+import ProductImage from '@features/Product/Image/ProductImage';
 
 function SearchResultsItem({ item }) {
   const { categorySlug } = useParams();

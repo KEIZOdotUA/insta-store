@@ -9,7 +9,7 @@ import { render, fireEvent } from '@testing-library/react';
 import CartItem from '@components/Purchase/Cart/Item/CartItem';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
-import ProductImage from '@components/Product/Image/ProductImage';
+import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@helpers/useProductNavigation';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
@@ -17,7 +17,7 @@ vi.mock('@components/shared/QuantityInput/QuantityInput', () => ({
   __esModule: true,
   default: vi.fn(() => <div>QuantityInput</div>),
 }));
-vi.mock('@components/Product/Image/ProductImage', () => ({
+vi.mock('@features/Product/Image/ProductImage', () => ({
   __esModule: true,
   default: vi.fn(() => <div>ProductImage</div>),
 }));

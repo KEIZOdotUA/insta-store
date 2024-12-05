@@ -7,8 +7,8 @@ import {
   afterEach,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import ProductsList from '@components/Product/List/ProductsList';
-import ProductCard from '@components/Product/List/Item/ProductListItem';
+import ProductsList from '@features/Product/List/ProductsList';
+import ProductCard from '@features/Product/List/Item/ProductListItem';
 import useProductList from '@helpers/useProductList';
 import useProductNavigation from '@helpers/useProductNavigation';
 import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
@@ -16,7 +16,7 @@ import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
 vi.mock('@components/shared/ScrollPaginator/ScrollPaginator', () => ({
   default: vi.fn(({ items }) => <div data-testid="scroll-paginator">{items}</div>),
 }));
-vi.mock('@components/Product/List/Item/ProductListItem');
+vi.mock('@features/Product/List/Item/ProductListItem');
 vi.mock('@helpers/useProductList');
 vi.mock('@helpers/useProductNavigation');
 vi.mock('@helpers/googleAnalyticsGA4');

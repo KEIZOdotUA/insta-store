@@ -7,7 +7,7 @@ import {
   expect,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import ProductModal from '@components/Product/Modal/ProductModal';
+import ProductModal from '@features/Product/Modal/ProductModal';
 import useAppContext from '@contexts/App/useAppContext';
 import {
   MemoryRouter,
@@ -16,9 +16,9 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import Modal from '@components/shared/Modal/Modal';
-import ProductImage from '@components/Product/Image/ProductImage';
-import InfoHeader from '@components/Product/Modal/InfoHeader/InfoHeader';
-import ActionButton from '@components/Product/Modal/ActionButton/ActionButton';
+import ProductImage from '@features/Product/Image/ProductImage';
+import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';
+import ActionButton from '@features/Product/Modal/ActionButton/ActionButton';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
 import useProductNavigation from '@helpers/useProductNavigation';
@@ -34,9 +34,9 @@ vi.mock('react-router-dom', async () => {
   };
 });
 vi.mock('@components/shared/Modal/Modal');
-vi.mock('@components/Product/Image/ProductImage');
-vi.mock('@components/Product/Modal/InfoHeader/InfoHeader');
-vi.mock('@components/Product/Modal/ActionButton/ActionButton');
+vi.mock('@features/Product/Image/ProductImage');
+vi.mock('@features/Product/Modal/InfoHeader/InfoHeader');
+vi.mock('@features/Product/Modal/ActionButton/ActionButton');
 vi.mock('@components/shared/SizePicker/SizePicker');
 vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@helpers/useProductNavigation');

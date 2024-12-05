@@ -1,7 +1,7 @@
 import './ProductListItem.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ProductImage from '@components/Product/Image/ProductImage';
+import ProductImage from '@features/Product/Image/ProductImage';
 
 function ProductListItem({ product, link }) {
   const discounted = product.oldPrice > 0 && product.oldPrice !== product.price;

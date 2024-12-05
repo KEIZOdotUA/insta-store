@@ -7,7 +7,7 @@ import {
 import { render } from '@testing-library/react';
 import ProductsPage from '@pages/Products/ProductsPage';
 
-vi.mock('@components/Product/List/ProductsList', () => ({
+vi.mock('@features/Product/List/ProductsList', () => ({
   __esModule: true,
   default: () => <div>ProductsList</div>,
 }));

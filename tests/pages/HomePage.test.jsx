@@ -12,7 +12,7 @@ vi.mock('@features/Bio/Bio', () => ({
   default: () => <div>Bio</div>,
 }));
 
-vi.mock('@components/Product/List/ProductsList', () => ({
+vi.mock('@features/Product/List/ProductsList', () => ({
   __esModule: true,
   default: () => <div>ProductsList</div>,
 }));

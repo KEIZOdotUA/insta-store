@@ -6,7 +6,7 @@ import {
   expect,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import ActionButton from '@components/Product/Modal/ActionButton/ActionButton';
+import ActionButton from '@features/Product/Modal/ActionButton/ActionButton';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackAddToCartEvent } from '@helpers/googleAnalyticsGA4';
 

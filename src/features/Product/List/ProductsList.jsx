@@ -1,7 +1,7 @@
 import './ProductsList.css';
 import { useEffect } from 'react';
 import ScrollPaginator from '@components/shared/ScrollPaginator/ScrollPaginator';
-import ProductCard from '@components/Product/List/Item/ProductListItem';
+import ProductCard from '@features/Product/List/Item/ProductListItem';
 import useProductList from '@helpers/useProductList';
 import useProductNavigation from '@helpers/useProductNavigation';
 import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
