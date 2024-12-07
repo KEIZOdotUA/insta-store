@@ -6,7 +6,7 @@ import {
   afterEach,
 } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import useHiddenOverflow from '@helpers/useHiddenOverflow';
+import useHiddenOverflow from '@hooks/useHiddenOverflow';
 
 describe('useHiddenOverflow', () => {
   const originalInnerWidth = window.innerWidth;

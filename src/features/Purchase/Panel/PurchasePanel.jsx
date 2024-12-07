@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
 import CloseSvg from '@assets/close.svg';
-import useHiddenOverflow from '@helpers/useHiddenOverflow';
+import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import animationDuration from '@helpers/constValues';
 import PurchaseStep from '@features/Purchase/Panel/PurchaseStep/PurchaseStep';

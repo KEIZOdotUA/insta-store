@@ -37,7 +37,7 @@ vi.mock('@components/shared/Button/Button', () => ({
   ),
 }));
 
-vi.mock('@helpers/useHiddenOverflow', () => ({
+vi.mock('@hooks/useHiddenOverflow', () => ({
   __esModule: true,
   default: vi.fn(),
 }));

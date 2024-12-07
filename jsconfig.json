@@ -10,6 +10,7 @@
       "@pages/*": ["src/pages/*"],
       "@services/*": ["src/services/*"],
       "@helpers/*": ["src/helpers/*"],
+      "@hooks/*": ["src/hooks/*"],
     }
   },
   "exclude": ["node_modules", "dist"]

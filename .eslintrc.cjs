@@ -24,6 +24,7 @@ module.exports = {
           ['@pages', './src/pages'],
           ['@services', './src/services'],
           ['@helpers', './src/helpers'],
+          ['@hooks', './src/hooks'],
         ],
         extensions: ['.js', '.jsx', '.json'],
       },

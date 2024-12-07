@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
 import CloseSvg from '@assets/close.svg';
-import useHiddenOverflow from '@helpers/useHiddenOverflow';
+import useHiddenOverflow from '@hooks/useHiddenOverflow';
 
 function Modal({ children, onClose, hiddenOverflow }) {
   const animationDuration = 250;

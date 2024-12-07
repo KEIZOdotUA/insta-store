@@ -7,14 +7,14 @@ import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
 import TextArea from '@components/shared/TextArea/TextArea';
 import Button from '@components/shared/Button/Button';
 import Checkbox from '@components/shared/Checkbox/Checkbox';
-import useApiCall from '@helpers/useApiCall';
+import useApiCall from '@hooks/useApiCall';
 import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
 import {
   validateField,
   validateAllFields,
   hasErrors,
 } from '@features/Purchase/OrderDetails/orderValidation';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 import { useNavigate } from 'react-router-dom';
 
 function OrderDetails({ onOrder }) {

@@ -7,7 +7,7 @@ import Modal from '@components/shared/Modal/Modal';
 import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';
 import ActionButton from '@features/Product/Modal/ActionButton/ActionButton';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
 
 function ProductModal() {

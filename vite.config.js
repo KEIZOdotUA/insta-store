@@ -20,6 +20,7 @@ export default defineConfig({
       { find: '@pages', replacement: path.resolve(__dirname, './src/pages') },
       { find: '@services', replacement: path.resolve(__dirname, './src/services') },
       { find: '@helpers', replacement: path.resolve(__dirname, './src/helpers') },
+      { find: '@hooks', replacement: path.resolve(__dirname, './src/hooks') },
     ],
   },
   test: {

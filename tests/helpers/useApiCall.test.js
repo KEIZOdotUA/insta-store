@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import axios from 'axios';
 import useAppContext from '@contexts/App/useAppContext';
-import useApiCall from '@helpers/useApiCall';
+import useApiCall from '@hooks/useApiCall';
 
 vi.mock('axios');
 vi.mock('@contexts/App/useAppContext');

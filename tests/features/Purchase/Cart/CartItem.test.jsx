@@ -10,7 +10,7 @@ import CartItem from '@features/Purchase/Cart/Item/CartItem';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
 import ProductImage from '@features/Product/Image/ProductImage';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@components/shared/QuantityInput/QuantityInput', () => ({
@@ -21,7 +21,7 @@ vi.mock('@features/Product/Image/ProductImage', () => ({
   __esModule: true,
   default: vi.fn(() => <div>ProductImage</div>),
 }));
-vi.mock('@helpers/useProductNavigation', () => ({
+vi.mock('@hooks/useProductNavigation', () => ({
   __esModule: true,
   default: vi.fn(),
 }));

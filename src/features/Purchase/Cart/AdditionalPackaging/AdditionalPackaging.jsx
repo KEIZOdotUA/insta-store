@@ -4,7 +4,7 @@ import Button from '@components/shared/Button/Button';
 import useAppContext from '@contexts/App/useAppContext';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 
 function AdditionalPackaging() {
   const { packaging } = useAppContext();

@@ -8,18 +8,18 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import OrderDetails from '@features/Purchase/OrderDetails/OrderDetails';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import useApiCall from '@helpers/useApiCall';
+import useApiCall from '@hooks/useApiCall';
 import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
 import {
   validateField,
   validateAllFields,
   hasErrors,
 } from '@features/Purchase/OrderDetails/orderValidation';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 import { useNavigate } from 'react-router-dom';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@helpers/useApiCall');
+vi.mock('@hooks/useApiCall');
 vi.mock('@helpers/googleAnalyticsGA4', () => ({
   trackPurchaseEvent: vi.fn(),
 }));
@@ -86,7 +86,7 @@ vi.mock('@components/shared/Checkbox/Checkbox', () => ({
     </div>
   )),
 }));
-vi.mock('@helpers/useProductNavigation', () => ({
+vi.mock('@hooks/useProductNavigation', () => ({
   __esModule: true,
   default: vi.fn(),
 }));

@@ -11,12 +11,12 @@ import CartAdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging
 import useAppContext from '@contexts/App/useAppContext';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 
 vi.mock('@contexts/App/useAppContext');
 vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@helpers/googleAnalyticsGA4');
-vi.mock('@helpers/useProductNavigation');
+vi.mock('@hooks/useProductNavigation');
 
 vi.mock('@components/shared/Button/Button', () => ({
   __esModule: true,

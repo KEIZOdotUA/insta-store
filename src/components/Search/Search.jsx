@@ -7,7 +7,7 @@ import TextInput from '@components/shared/TextInput/TextInput';
 import Button from '@components/shared/Button/Button';
 import Transition from '@components/shared/Transition/Transition';
 import CloseSvg from '@assets/close.svg';
-import useHiddenOverflow from '@helpers/useHiddenOverflow';
+import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import SearchResults from '@components/Search/Results/SearchResults';
 

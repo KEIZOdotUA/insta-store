@@ -21,7 +21,7 @@ import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';
 import ActionButton from '@features/Product/Modal/ActionButton/ActionButton';
 import SizePicker from '@components/shared/SizePicker/SizePicker';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 
 vi.mock('@contexts/App/useAppContext');
 vi.mock('react-router-dom', async () => {
@@ -39,7 +39,7 @@ vi.mock('@features/Product/Modal/InfoHeader/InfoHeader');
 vi.mock('@features/Product/Modal/ActionButton/ActionButton');
 vi.mock('@components/shared/SizePicker/SizePicker');
 vi.mock('@helpers/googleAnalyticsGA4');
-vi.mock('@helpers/useProductNavigation');
+vi.mock('@hooks/useProductNavigation');
 
 describe('ProductModal', () => {
   const mockProduct = {

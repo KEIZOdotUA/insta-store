@@ -5,7 +5,7 @@ import useAppContext from '@contexts/App/useAppContext';
 import CloseButton from '@components/shared/CloseButton/CloseButton';
 import Transition from '@components/shared/Transition/Transition';
 import ContactUs from '@features/ContactUs/ContactUs';
-import useHiddenOverflow from '@helpers/useHiddenOverflow';
+import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import animationDuration from '@helpers/constValues';
 
 function Menu({ visible, menuToggler }) {

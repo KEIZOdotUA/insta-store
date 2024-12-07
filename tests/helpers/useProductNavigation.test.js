@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import useProductNavigation from '@helpers/useProductNavigation';
+import useProductNavigation from '@hooks/useProductNavigation';
 
 vi.mock('react-router-dom', async (importOriginal) => {
   const actual = await importOriginal();
