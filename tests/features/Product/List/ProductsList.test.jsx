@@ -9,7 +9,7 @@ import {
 import { render } from '@testing-library/react';
 import ProductsList from '@features/Product/List/ProductsList';
 import ProductCard from '@features/Product/List/Item/ProductListItem';
-import useProductList from '@helpers/useProductList';
+import useProductList from '@features/Product/List/useProductList';
 import useProductNavigation from '@helpers/useProductNavigation';
 import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
 
@@ -17,7 +17,7 @@ vi.mock('@components/shared/ScrollPaginator/ScrollPaginator', () => ({
   default: vi.fn(({ items }) => <div data-testid="scroll-paginator">{items}</div>),
 }));
 vi.mock('@features/Product/List/Item/ProductListItem');
-vi.mock('@helpers/useProductList');
+vi.mock('@features/Product/List/useProductList');
 vi.mock('@helpers/useProductNavigation');
 vi.mock('@helpers/googleAnalyticsGA4');
 

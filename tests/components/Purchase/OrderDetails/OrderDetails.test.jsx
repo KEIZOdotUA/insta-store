@@ -14,14 +14,16 @@ import {
   validateField,
   validateAllFields,
   hasErrors,
-} from '@helpers/orderValidation';
+} from '@components/Purchase/OrderDetails/orderValidation';
+import useProductNavigation from '@helpers/useProductNavigation';
+import { useNavigate } from 'react-router-dom';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@helpers/useApiCall');
 vi.mock('@helpers/googleAnalyticsGA4', () => ({
   trackPurchaseEvent: vi.fn(),
 }));
-vi.mock('@helpers/orderValidation', () => ({
+vi.mock('@components/Purchase/OrderDetails/orderValidation', () => ({
   validateField: vi.fn(),
   validateAllFields: vi.fn(),
   hasErrors: vi.fn(),
@@ -84,6 +86,14 @@ vi.mock('@components/shared/Checkbox/Checkbox', () => ({
     </div>
   )),
 }));
+vi.mock('@helpers/useProductNavigation', () => ({
+  __esModule: true,
+  default: vi.fn(),
+}));
+vi.mock('react-router-dom', () => ({
+  __esModule: true,
+  useNavigate: vi.fn(),
+}));
 
 describe('OrderDetails', () => {
   const mockOnOrder = vi.fn();
@@ -92,6 +102,8 @@ describe('OrderDetails', () => {
   const mockGetCartTotal = vi.fn();
   const mockGetCartId = vi.fn(() => 1);
   const mockApiCall = vi.fn();
+  const mockNavigate = vi.fn();
+  const mockGetProductListLink = vi.fn(() => '/products');
 
   beforeEach(() => {
     mockGetCartItems.mockReturnValue([
@@ -125,6 +137,10 @@ describe('OrderDetails', () => {
       return errors;
     });
     hasErrors.mockImplementation((errors) => Object.values(errors).some((error) => error));
+    useNavigate.mockReturnValue(mockNavigate);
+    useProductNavigation.mockReturnValue({
+      getProductListLink: mockGetProductListLink,
+    });
   });
 
   it('renders all input fields', () => {
@@ -185,6 +201,7 @@ describe('OrderDetails', () => {
     );
 
     expect(mockClearCart).toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith(mockGetProductListLink());
     expect(mockOnOrder).toHaveBeenCalled();
   });
 });

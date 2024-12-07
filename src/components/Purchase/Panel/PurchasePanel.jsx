@@ -2,52 +2,25 @@ import './PurchasePanel.css';
 import { useState } from 'react';
 import Transition from '@components/shared/Transition/Transition';
 import Button from '@components/shared/Button/Button';
-import Cart from '@components/Purchase/Cart/Cart';
-import OrderDetails from '@components/Purchase/OrderDetails/OrderDetails';
-import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
-import PurchaseStepName from '@components/Purchase/Panel/StepName/StepName';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import animationDuration from '@helpers/constValues';
+import PurchaseStep from '@components/Purchase/Panel/PurchaseStep/PurchaseStep';
 
 function PurchasePanel() {
-  const {
-    visiblePurchase,
-    hidePurchase,
-    getCartId,
-  } = usePurchaseContext();
+  const { visiblePurchase, hidePurchase } = usePurchaseContext();
 
   const [orderStep, setOrderStep] = useState(0);
 
   useHiddenOverflow({ active: visiblePurchase });
-
-  const getStepName = () => {
-    switch (orderStep) {
-      case 0: return 'Кошик';
-      case 1: return 'Замовлення';
-      case 2: return `Ми прийняли Ваше замовлення № ${getCartId()}`;
-      default: return null;
-    }
-  };
-
-  const getSteppedComponent = () => {
-    switch (orderStep) {
-      case 0: return <Cart onOrder={() => setOrderStep(1)} />;
-      case 1: return <OrderDetails onOrder={() => setOrderStep(2)} />;
-      case 2: return <OrderConfirmed />;
-      default: return null;
-    }
-  };
-
-  const animationDuration = 250;
-
   const onClose = () => {
     hidePurchase();
     setTimeout(() => setOrderStep(0), animationDuration);
   };
 
   return (
-    <div id="purchase__placeholder">
+    <div className="purchase-panel__placeholder">
       <Transition
         key="Purchase"
         transitionType="transform"
@@ -55,13 +28,12 @@ function PurchasePanel() {
         visible={visiblePurchase}
         duration={animationDuration}
       >
-        <div id="purchase__content">
-          <Button className="purchase__open-close" onClick={onClose}>
+        <div className="purchase-panel">
+          <Button className="purchase-panel__close" onClick={onClose}>
             <CloseSvg />
           </Button>
-          <PurchaseStepName>{getStepName()}</PurchaseStepName>
-          {getSteppedComponent()}
-          <Button className="purchase__close" onClick={onClose} light>
+          <PurchaseStep step={orderStep} updateStep={setOrderStep} />
+          <Button className="purchase-panel__continue" onClick={onClose} light>
             продовжити покупки
           </Button>
         </div>

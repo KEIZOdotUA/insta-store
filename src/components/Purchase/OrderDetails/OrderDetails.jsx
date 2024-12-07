@@ -13,7 +13,9 @@ import {
   validateField,
   validateAllFields,
   hasErrors,
-} from '@helpers/orderValidation';
+} from '@components/Purchase/OrderDetails/orderValidation';
+import useProductNavigation from '@helpers/useProductNavigation';
+import { useNavigate } from 'react-router-dom';
 
 function OrderDetails({ onOrder }) {
   const {
@@ -50,6 +52,8 @@ function OrderDetails({ onOrder }) {
   };
 
   const sendOrder = useApiCall();
+  const { getProductListLink } = useProductNavigation();
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationResult = validateAllFields(orderDetails);
@@ -60,6 +64,7 @@ function OrderDetails({ onOrder }) {
     sendOrder(getCartId(), getCartItems(), orderDetails);
     trackPurchaseEvent(getCartId(), getCartTotal(), getCartItems());
     clearCart();
+    navigate(getProductListLink());
     onOrder();
   };
 

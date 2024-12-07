@@ -27,7 +27,10 @@ function ProductModal() {
   const { productId } = useParams();
   const [searchParams] = useSearchParams();
   useEffect(() => {
-    if (!productId) return;
+    if (!productId) {
+      setProduct(null);
+      return;
+    }
 
     const selectedProduct = products.find((prod) => prod.id === Number(productId));
     if (!selectedProduct) return;

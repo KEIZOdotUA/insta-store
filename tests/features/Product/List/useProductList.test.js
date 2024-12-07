@@ -5,7 +5,7 @@ import {
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
-import useProductList from '@helpers/useProductList';
+import useProductList from '@features/Product/List/useProductList';
 import useAppContext from '@contexts/App/useAppContext';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import {

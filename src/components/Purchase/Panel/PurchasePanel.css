@@ -1,12 +1,4 @@
-.purchase__open-close {
-  background: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 15px;
-}
-
-#purchase__placeholder {
+.purchase-panel__placeholder {
   top: 0;
   right: 0;
   position: fixed;
@@ -16,7 +8,7 @@
   pointer-events: none;
 }
 
-#purchase__content {
+.purchase-panel {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: visible;
@@ -29,7 +21,15 @@
   text-align: left;
 }
 
-.purchase__close {
+.purchase-panel__close {
+  background: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 15px;
+}
+
+.purchase-panel__continue {
   display: block;
   width: 100%;
   max-width: 390px;
