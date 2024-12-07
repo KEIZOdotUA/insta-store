@@ -1,8 +1,8 @@
 import './Cart.css';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import CartItem from '@components/Purchase/Cart/Item/CartItem';
-import AdditionalPackaging from '@components/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
+import CartItem from '@features/Purchase/Cart/Item/CartItem';
+import AdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
 import Button from '@components/shared/Button/Button';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 

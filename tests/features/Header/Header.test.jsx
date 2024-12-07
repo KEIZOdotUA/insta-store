@@ -14,7 +14,7 @@ vi.mock('@features/Logo/Logo', () => ({
   default: () => <div>Logo</div>,
 }));
 
-vi.mock('@components/Purchase/Icon/PurchaseIcon', () => ({
+vi.mock('@features/Purchase/Icon/PurchaseIcon', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>

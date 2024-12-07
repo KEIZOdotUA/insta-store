@@ -6,7 +6,7 @@ import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@helpers/useHiddenOverflow';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import animationDuration from '@helpers/constValues';
-import PurchaseStep from '@components/Purchase/Panel/PurchaseStep/PurchaseStep';
+import PurchaseStep from '@features/Purchase/Panel/PurchaseStep/PurchaseStep';
 
 function PurchasePanel() {
   const { visiblePurchase, hidePurchase } = usePurchaseContext();

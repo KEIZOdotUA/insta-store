@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { validateField, validateAllFields, hasErrors } from '@components/Purchase/OrderDetails/orderValidation';
+import { validateField, validateAllFields, hasErrors } from '@features/Purchase/OrderDetails/orderValidation';
 
 describe('Validation Functions', () => {
   describe('validateField', () => {

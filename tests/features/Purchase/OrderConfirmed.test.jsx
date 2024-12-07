@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
+import OrderConfirmed from '@features/Purchase/OrderConfirmed/OrderConfirmed';
 
 vi.mock('@features/ContactUs/ContactUs', () => ({
   __esModule: true,

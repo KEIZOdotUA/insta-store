@@ -6,11 +6,11 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import PurchaseStep from '@components/Purchase/Panel/PurchaseStep/PurchaseStep';
+import PurchaseStep from '@features/Purchase/Panel/PurchaseStep/PurchaseStep';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@components/Purchase/Cart/Cart', () => ({
+vi.mock('@features/Purchase/Cart/Cart', () => ({
   __esModule: true,
   default: vi.fn(({ onOrder }) => (
     <div
@@ -23,7 +23,7 @@ vi.mock('@components/Purchase/Cart/Cart', () => ({
     </div>
   )),
 }));
-vi.mock('@components/Purchase/OrderDetails/OrderDetails', () => ({
+vi.mock('@features/Purchase/OrderDetails/OrderDetails', () => ({
   __esModule: true,
   default: vi.fn(({ onOrder }) => (
     <div
@@ -36,7 +36,7 @@ vi.mock('@components/Purchase/OrderDetails/OrderDetails', () => ({
     </div>
   )),
 }));
-vi.mock('@components/Purchase/OrderConfirmed/OrderConfirmed', () => ({
+vi.mock('@features/Purchase/OrderConfirmed/OrderConfirmed', () => ({
   __esModule: true,
   default: vi.fn(() => <div>Mocked OrderConfirmed</div>),
 }));

@@ -13,7 +13,7 @@ import {
   validateField,
   validateAllFields,
   hasErrors,
-} from '@components/Purchase/OrderDetails/orderValidation';
+} from '@features/Purchase/OrderDetails/orderValidation';
 import useProductNavigation from '@helpers/useProductNavigation';
 import { useNavigate } from 'react-router-dom';
 

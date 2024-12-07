@@ -70,7 +70,7 @@ vi.mock('@components/Search/Search', () => ({
   )),
 }));
 
-vi.mock('@components/Purchase/Panel/PurchasePanel', () => ({
+vi.mock('@features/Purchase/Panel/PurchasePanel', () => ({
   __esModule: true,
   default: vi.fn(() => <div>Mock Purchase</div>),
 }));

@@ -1,8 +1,8 @@
 import './PurchaseStep.css';
 import PropTypes from 'prop-types';
-import Cart from '@components/Purchase/Cart/Cart';
-import OrderDetails from '@components/Purchase/OrderDetails/OrderDetails';
-import OrderConfirmed from '@components/Purchase/OrderConfirmed/OrderConfirmed';
+import Cart from '@features/Purchase/Cart/Cart';
+import OrderDetails from '@features/Purchase/OrderDetails/OrderDetails';
+import OrderConfirmed from '@features/Purchase/OrderConfirmed/OrderConfirmed';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 function PurchaseStep({ step, updateStep }) {

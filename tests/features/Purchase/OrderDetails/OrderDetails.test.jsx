@@ -6,7 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import OrderDetails from '@components/Purchase/OrderDetails/OrderDetails';
+import OrderDetails from '@features/Purchase/OrderDetails/OrderDetails';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import useApiCall from '@helpers/useApiCall';
 import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
@@ -14,7 +14,7 @@ import {
   validateField,
   validateAllFields,
   hasErrors,
-} from '@components/Purchase/OrderDetails/orderValidation';
+} from '@features/Purchase/OrderDetails/orderValidation';
 import useProductNavigation from '@helpers/useProductNavigation';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ vi.mock('@helpers/useApiCall');
 vi.mock('@helpers/googleAnalyticsGA4', () => ({
   trackPurchaseEvent: vi.fn(),
 }));
-vi.mock('@components/Purchase/OrderDetails/orderValidation', () => ({
+vi.mock('@features/Purchase/OrderDetails/orderValidation', () => ({
   validateField: vi.fn(),
   validateAllFields: vi.fn(),
   hasErrors: vi.fn(),

@@ -6,7 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import PurchasePanel from '@components/Purchase/Panel/PurchasePanel';
+import PurchasePanel from '@features/Purchase/Panel/PurchasePanel';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
@@ -18,7 +18,7 @@ vi.mock('@assets/close.svg', () => ({
   __esModule: true,
   default: vi.fn(() => <p>close</p>),
 }));
-vi.mock('@components/Purchase/Panel/PurchaseStep/PurchaseStep', () => ({
+vi.mock('@features/Purchase/Panel/PurchaseStep/PurchaseStep', () => ({
   __esModule: true,
   default: vi.fn(({ step, updateStep }) => (
     <div>

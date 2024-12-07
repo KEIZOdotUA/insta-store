@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import PurchaseIcon from '@components/Purchase/Icon/PurchaseIcon';
+import PurchaseIcon from '@features/Purchase/Icon/PurchaseIcon';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewCartEvent } from '@helpers/googleAnalyticsGA4';
 
