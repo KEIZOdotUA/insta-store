@@ -1,25 +1,26 @@
 import './SearchResultsItem.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProductImage from '@features/Product/Image/ProductImage';
+import useProductNavigation from '@hooks/useProductNavigation';
 
 function SearchResultsItem({ item }) {
-  const { categorySlug } = useParams();
+  const { getProductLink } = useProductNavigation();
   return (
-    <li className="searchresults-item">
-      <Link to={`/${categorySlug || 'products'}/${item.id}`}>
-        <div className="searchresults-item__img-container">
+    <li className="search-results-item">
+      <Link to={getProductLink(item.id)}>
+        <div className="search-results-item__img-container">
           <ProductImage
             id={item.id}
             name={item.name}
             size="s"
-            className="searchresults-item__img"
+            className="search-results-item__img"
           />
         </div>
-        <div className="searchresults-item__txt-container">
-          <span className="searchresults-item__title">{item.name}</span>
-          <span className="searchresults-item__art">{`Арт.: ${item.id}`}</span>
-          <span className="searchresults-item__price">{`${item.price} грн`}</span>
+        <div className="search-results-item__txt-container">
+          <span className="search-results-item__title">{item.name}</span>
+          <span className="search-results-item__art">{`Арт.: ${item.id}`}</span>
+          <span className="search-results-item__price">{`${item.price} грн`}</span>
         </div>
       </Link>
     </li>

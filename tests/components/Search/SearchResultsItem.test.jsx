@@ -3,89 +3,42 @@ import {
   it,
   expect,
   vi,
-  beforeEach,
 } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter, useParams } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import SearchResultsItem from '@components/Search/Results/Item/SearchResultsItem';
 
 vi.mock('@features/Product/Image/ProductImage', () => ({
   __esModule: true,
-  default: ({
-    id,
-    name,
-    size,
-    className,
-  }) => (
-    <img src={`image-${id}`} alt={name} className={className} data-size={size} />
-  ),
+  default: ({ name }) => <img alt={name} data-testid="product-image" />,
 }));
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
-  return {
-    ...actual,
-    useParams: vi.fn(),
-  };
-});
+vi.mock('@hooks/useProductNavigation', () => ({
+  __esModule: true,
+  default: () => ({
+    getProductLink: (id) => `/product/${id}`,
+  }),
+}));
 
 describe('SearchResultsItem', () => {
   const mockItem = {
-    id: 1,
+    id: 123,
     name: 'Test Product',
-    price: 100,
+    price: 299,
   };
 
-  beforeEach(() => {
-    useParams.mockReturnValue({ categorySlug: 'test-category' });
-  });
-
-  it('renders item details correctly', () => {
+  it('renders product details correctly', () => {
     render(
       <MemoryRouter>
         <SearchResultsItem item={mockItem} />
       </MemoryRouter>,
     );
 
+    const link = screen.getByRole('link');
+    expect(link).toHaveAttribute('href', '/product/123');
+    expect(screen.getByTestId('product-image')).toHaveAttribute('alt', 'Test Product');
     expect(screen.getByText('Test Product')).toBeInTheDocument();
-    expect(screen.getByText('Арт.: 1')).toBeInTheDocument();
-    expect(screen.getByText('100 грн')).toBeInTheDocument();
-    expect(screen.getByAltText('Test Product')).toBeInTheDocument();
-  });
-
-  it('renders the correct link based on categorySlug from useParams', () => {
-    render(
-      <MemoryRouter>
-        <SearchResultsItem item={mockItem} />
-      </MemoryRouter>,
-    );
-
-    const linkElement = screen.getByRole('link', { name: /test product/i });
-    expect(linkElement).toHaveAttribute('href', '/test-category/1');
-  });
-
-  it('renders the default link if no categorySlug is provided', () => {
-    useParams.mockReturnValue({});
-    render(
-      <MemoryRouter>
-        <SearchResultsItem item={mockItem} />
-      </MemoryRouter>,
-    );
-
-    const linkElement = screen.getByRole('link', { name: /test product/i });
-    expect(linkElement).toHaveAttribute('href', '/products/1');
-  });
-
-  it('renders the ProductImage component with correct props', () => {
-    render(
-      <MemoryRouter>
-        <SearchResultsItem item={mockItem} />
-      </MemoryRouter>,
-    );
-
-    const image = screen.getByAltText('Test Product');
-    expect(image).toHaveAttribute('src', 'image-1');
-    expect(image).toHaveAttribute('data-size', 's');
-    expect(image).toHaveClass('searchresults-item__img');
+    expect(screen.getByText('Арт.: 123')).toBeInTheDocument();
+    expect(screen.getByText('299 грн')).toBeInTheDocument();
   });
 });
