@@ -1,20 +1,3 @@
-.search__placeholder {
-  top: 0;
-  position: fixed;
-  width: 100%;
-  max-width: 900px;
-  pointer-events: none;
-}
-
-.search__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--overlay-color);
-}
-
 .search {
   background-color: var(--light-background-color);
   pointer-events: auto;
@@ -28,18 +11,4 @@
 
 .search__close {
   margin: auto;
-}
-
-.search__not-found {
-  pointer-events: auto;
-  background-color: var(--light-background-color);
-  padding: 10px 10px 20px 10px;
-  color: var(--disabled-text-color);
-}
-
-.search__link {
-  pointer-events: auto;
-  background-color: var(--light-background-color);
-  padding: 10px;
-  font-weight: 500;
 }

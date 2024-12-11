@@ -6,19 +6,14 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import Search from '@components/Search/Search';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
+import animationDuration from '@helpers/constValues';
 
 vi.mock('@components/shared/TextInput/TextInput', () => ({
   __esModule: true,
   default: ({ onChange, value }) => (
-    <input
-      data-testid="search-input"
-      placeholder="пошук"
-      value={value}
-      onChange={onChange}
-    />
+    <input data-testid="search-input" placeholder="пошук" value={value} onChange={onChange} />
   ),
 }));
 
@@ -37,14 +32,13 @@ vi.mock('@components/shared/Button/Button', () => ({
   ),
 }));
 
-vi.mock('@hooks/useHiddenOverflow', () => ({
+vi.mock('@components/Search/Overlay/SearchOverlay', () => ({
   __esModule: true,
-  default: vi.fn(),
-}));
-
-vi.mock('@helpers/filterProductsByQuery', () => ({
-  __esModule: true,
-  default: vi.fn(() => []),
+  default: ({ children, visible }) => (
+    <div data-testid="search-overlay" style={{ display: visible ? 'block' : 'none' }}>
+      {children}
+    </div>
+  ),
 }));
 
 vi.mock('@components/Search/Results/SearchResults', () => ({
@@ -56,6 +50,11 @@ vi.mock('@components/Search/Results/SearchResults', () => ({
       ))}
     </ul>
   ),
+}));
+
+vi.mock('@helpers/filterProductsByQuery', () => ({
+  __esModule: true,
+  default: vi.fn(() => []),
 }));
 
 const mockSearchToggler = vi.fn();
@@ -75,66 +74,48 @@ describe('Search', () => {
   });
 
   it('renders input, close button, and overlays when visible', () => {
-    render(
-      <MemoryRouter>
-        <Search visible searchToggler={mockSearchToggler} />
-      </MemoryRouter>,
-    );
-
+    render(<Search visible searchToggler={mockSearchToggler} />);
     expect(screen.getByTestId('search-input')).toBeInTheDocument();
     expect(screen.getByTestId('close-button')).toBeInTheDocument();
     expect(screen.getByTestId('search-results')).toBeInTheDocument();
+    expect(screen.getByTestId('search-overlay')).toHaveStyle('display: block');
   });
 
-  it('calls searchToggler and resets search on close button click', () => {
-    render(
-      <MemoryRouter>
-        <Search visible searchToggler={mockSearchToggler} />
-      </MemoryRouter>,
-    );
+  it('clears search results when input is cleared', () => {
+    render(<Search visible searchToggler={mockSearchToggler} />);
+    const input = screen.getByTestId('search-input');
+    fireEvent.change(input, { target: { value: 'Product' } });
+    fireEvent.change(input, { target: { value: '' } });
+    expect(screen.queryByTestId('search-results').children.length).toBe(0);
+  });
 
+  it('calls searchToggler and resets search on close button click', async () => {
+    render(<Search visible searchToggler={mockSearchToggler} />);
     const closeButton = screen.getByTestId('close-button');
     fireEvent.click(closeButton);
-
     expect(mockSearchToggler).toHaveBeenCalledTimes(1);
-    setTimeout(() => {
-      expect(screen.getByTestId('search-input')).toHaveValue('');
-      expect(screen.queryByTestId('search-results').children.length).toBe(0);
-    }, 250);
+
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(null);
+      }, animationDuration);
+    });
+
+    expect(screen.getByTestId('search-input').value).toBe('');
+    expect(screen.queryByTestId('search-results').children.length).toBe(0);
   });
 
   it('updates search results based on input change', () => {
     filterProductsByQuery.mockReturnValue([mockProducts[0]]);
 
-    render(
-      <MemoryRouter>
-        <Search visible searchToggler={mockSearchToggler} />
-      </MemoryRouter>,
-    );
+    render(<Search visible searchToggler={mockSearchToggler} />);
 
     const input = screen.getByTestId('search-input');
     fireEvent.change(input, { target: { value: 'Product' } });
 
-    expect(input).toHaveValue('Product');
+    expect(input.value).toBe('Product');
     expect(filterProductsByQuery).toHaveBeenCalledWith(mockProducts, 'Product');
     expect(screen.getByTestId('search-results').children.length).toBe(1);
     expect(screen.getByText('Product 1')).toBeInTheDocument();
-  });
-
-  it('displays "нічого не знайдено" when no results match the search query', () => {
-    filterProductsByQuery.mockReturnValue([]);
-
-    render(
-      <MemoryRouter>
-        <Search visible searchToggler={mockSearchToggler} />
-      </MemoryRouter>,
-    );
-
-    const input = screen.getByTestId('search-input');
-    fireEvent.change(input, { target: { value: 'Nonexistent' } });
-
-    expect(input).toHaveValue('Nonexistent');
-    expect(screen.queryByTestId('search-results').children.length).toBe(0);
-    expect(screen.getByText('нічого не знайдено')).toBeInTheDocument();
   });
 });

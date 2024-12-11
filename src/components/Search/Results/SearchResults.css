@@ -5,3 +5,17 @@
   padding: 0px 10px 0px 10px;
   pointer-events: auto;
 }
+
+.search__not-found {
+  pointer-events: auto;
+  background-color: var(--light-background-color);
+  padding: 10px 10px 20px 10px;
+  color: var(--disabled-text-color);
+}
+
+.search__link {
+  pointer-events: auto;
+  background-color: var(--light-background-color);
+  padding: 10px;
+  font-weight: 500;
+}

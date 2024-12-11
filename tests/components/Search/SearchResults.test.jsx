@@ -4,40 +4,66 @@ import {
   expect,
   vi,
 } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import SearchResults from '@components/Search/Results/SearchResults';
 
 vi.mock('@components/Search/Results/Item/SearchResultsItem', () => ({
   __esModule: true,
-  default: ({ item }) => <li>{item.name}</li>,
+  default: ({ item }) => <div data-testid="search-result-item">{item.name}</div>,
 }));
 
 describe('SearchResults', () => {
   const mockItems = [
-    { id: 1, name: 'Product 1' },
-    { id: 2, name: 'Product 2' },
-    { id: 3, name: 'Product 3' },
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
   ];
+  const mockOnClose = vi.fn();
 
-  it('renders the correct number of SearchResultsItem components', () => {
-    render(<SearchResults items={mockItems} />);
+  it('renders SearchResultsItem components for each item', () => {
+    render(
+      <MemoryRouter>
+        <SearchResults items={mockItems} query="test" onClose={mockOnClose} />
+      </MemoryRouter>,
+    );
 
-    const listItems = screen.getAllByRole('listitem');
-    expect(listItems).toHaveLength(mockItems.length);
+    const resultItems = screen.getAllByTestId('search-result-item');
+    expect(resultItems.length).toBe(2);
+    expect(resultItems[0]).toHaveTextContent('Item 1');
+    expect(resultItems[1]).toHaveTextContent('Item 2');
   });
 
-  it('renders each item with the correct name', () => {
-    render(<SearchResults items={mockItems} />);
+  it('displays not found message when there are no items and query is not empty', () => {
+    render(
+      <MemoryRouter>
+        <SearchResults items={[]} query="test" onClose={mockOnClose} />
+      </MemoryRouter>,
+    );
 
-    mockItems.forEach((item) => {
-      expect(screen.getByText(item.name)).toBeInTheDocument();
-    });
+    expect(screen.getByText('нічого не знайдено')).toBeInTheDocument();
   });
 
-  it('renders an empty list when items prop is an empty array', () => {
-    render(<SearchResults items={[]} />);
+  it('displays a link to more search results when there are items', () => {
+    render(
+      <MemoryRouter>
+        <SearchResults items={mockItems} query="test" onClose={mockOnClose} />
+      </MemoryRouter>,
+    );
 
-    const list = screen.getByRole('list');
-    expect(list).toBeEmptyDOMElement();
+    const link = screen.getByText('ВСІ РЕЗУЛЬТАТИ ПОШУКУ');
+    expect(link).toBeInTheDocument();
+    expect(link.closest('a')).toHaveAttribute('href', '/search?q=test');
+  });
+
+  it('calls onClose when the search results link is clicked', () => {
+    render(
+      <MemoryRouter>
+        <SearchResults items={mockItems} query="test" onClose={mockOnClose} />
+      </MemoryRouter>,
+    );
+
+    const link = screen.getByText('ВСІ РЕЗУЛЬТАТИ ПОШУКУ');
+    fireEvent.click(link);
+    expect(mockOnClose).toHaveBeenCalled();
   });
 });

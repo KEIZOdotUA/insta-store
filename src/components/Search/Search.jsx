@@ -1,24 +1,20 @@
 import './Search.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useAppContext from '@contexts/App/useAppContext';
 import TextInput from '@components/shared/TextInput/TextInput';
 import Button from '@components/shared/Button/Button';
-import Transition from '@components/shared/Transition/Transition';
 import CloseSvg from '@assets/close.svg';
-import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
-import SearchResults from '@components/Search/Results/SearchResults';
+import Overlay from '@components/Search/Overlay/SearchOverlay';
+import Results from '@components/Search/Results/SearchResults';
+import animationDuration from '@helpers/constValues';
 
 function Search({ visible, searchToggler }) {
-  const animationDuration = 250;
   const { products } = useAppContext();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-
-  useHiddenOverflow({ forceUsage: visible });
 
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
@@ -39,53 +35,25 @@ function Search({ visible, searchToggler }) {
   };
 
   return (
-    <>
-      <Transition
-        key="Search_Overlay"
-        transitionType="opacity"
-        visible={visible}
-        duration={animationDuration}
-      >
-        {visible && <div className="search__overlay" />}
-      </Transition>
-      <div className="search__placeholder">
-        <Transition
-          key="Search"
-          transitionType="transform"
-          transitionDirection="bottom"
-          visible={visible}
-          duration={animationDuration}
-        >
-          <div className="search">
-            <TextInput
-              id="search-input"
-              className="search__input"
-              placeholder="пошук"
-              value={searchQuery}
-              onChange={handleInputChange}
-            />
-            <Button className="search__close" onClick={onClose}>
-              <CloseSvg />
-            </Button>
-          </div>
-          <SearchResults items={searchResults} />
-          {searchResults.length === 0 && searchQuery.length > 0 && (
-            <div className="search__not-found">
-              <center>нічого не знайдено</center>
-            </div>
-          )}
-          {searchResults.length > 0 && (
-            <div className="search__link">
-              <center>
-                <Link to={`/search?q=${encodeURIComponent(searchQuery)}`} onClick={onClose}>
-                  ВСІ РЕЗУЛЬТАТИ ПОШУКУ
-                </Link>
-              </center>
-            </div>
-          )}
-        </Transition>
+    <Overlay visible={visible}>
+      <div className="search">
+        <TextInput
+          id="search-input"
+          className="search__input"
+          placeholder="пошук"
+          value={searchQuery}
+          onChange={handleInputChange}
+        />
+        <Button className="search__close" onClick={onClose}>
+          <CloseSvg />
+        </Button>
       </div>
-    </>
+      <Results
+        items={searchResults}
+        query={searchQuery}
+        onClose={onClose}
+      />
+    </Overlay>
   );
 }
 
