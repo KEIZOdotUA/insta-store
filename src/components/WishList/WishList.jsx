@@ -2,7 +2,7 @@ import './WishList.css';
 import Modal from '@components/shared/Modal/Modal';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import WishListItem from './Item/WishListItem';
+import WishListItem from '@components/WishList/Item/WishListItem';
 
 function WishList({ visible, onClose }) {
   const { getWishList } = usePurchaseContext();
