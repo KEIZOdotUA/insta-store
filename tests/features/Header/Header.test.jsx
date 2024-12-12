@@ -32,7 +32,7 @@ vi.mock('@features/Menu/Icon/MenuIcon', () => ({
   ),
 }));
 
-vi.mock('@components/Search/Icon/SearchIcon', () => ({
+vi.mock('@features/Search/Icon/SearchIcon', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>

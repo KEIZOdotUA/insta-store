@@ -6,8 +6,8 @@ import TextInput from '@components/shared/TextInput/TextInput';
 import Button from '@components/shared/Button/Button';
 import CloseSvg from '@assets/close.svg';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
-import Overlay from '@components/Search/Overlay/SearchOverlay';
-import Results from '@components/Search/Results/SearchResults';
+import Overlay from '@features/Search/Overlay/SearchOverlay';
+import Results from '@features/Search/Results/SearchResults';
 import animationDuration from '@helpers/constValues';
 
 function Search({ visible, searchToggler }) {

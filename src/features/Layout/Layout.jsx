@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '@features/Header/Header';
-import Search from '@components/Search/Search';
+import Search from '@features/Search/Search';
 import Menu from '@features/Menu/Menu';
 import PurchasePanel from '@features/Purchase/Panel/PurchasePanel';
 import ProductModal from '@features/Product/Modal/ProductModal';

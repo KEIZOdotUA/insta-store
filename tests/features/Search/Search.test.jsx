@@ -6,7 +6,7 @@ import {
   beforeEach,
 } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Search from '@components/Search/Search';
+import Search from '@features/Search/Search';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import animationDuration from '@helpers/constValues';
 
@@ -32,7 +32,7 @@ vi.mock('@components/shared/Button/Button', () => ({
   ),
 }));
 
-vi.mock('@components/Search/Overlay/SearchOverlay', () => ({
+vi.mock('@features/Search/Overlay/SearchOverlay', () => ({
   __esModule: true,
   default: ({ children, visible }) => (
     <div data-testid="search-overlay" style={{ display: visible ? 'block' : 'none' }}>
@@ -41,7 +41,7 @@ vi.mock('@components/Search/Overlay/SearchOverlay', () => ({
   ),
 }));
 
-vi.mock('@components/Search/Results/SearchResults', () => ({
+vi.mock('@features/Search/Results/SearchResults', () => ({
   __esModule: true,
   default: ({ items }) => (
     <ul data-testid="search-results">

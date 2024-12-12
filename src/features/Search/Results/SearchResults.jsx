@@ -1,7 +1,7 @@
 import './SearchResults.css';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import SearchResultsItem from '@components/Search/Results/Item/SearchResultsItem';
+import SearchResultsItem from '@features/Search/Results/Item/SearchResultsItem';
 
 function SearchResults({ items, query, onClose }) {
   return (

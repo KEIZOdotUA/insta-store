@@ -6,7 +6,7 @@ import {
 } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import SearchResultsItem from '@components/Search/Results/Item/SearchResultsItem';
+import SearchResultsItem from '@features/Search/Results/Item/SearchResultsItem';
 
 vi.mock('@features/Product/Image/ProductImage', () => ({
   __esModule: true,

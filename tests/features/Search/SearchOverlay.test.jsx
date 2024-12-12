@@ -5,7 +5,7 @@ import {
   vi,
 } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import SearchOverlay from '@components/Search/Overlay/SearchOverlay';
+import SearchOverlay from '@features/Search/Overlay/SearchOverlay';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
 
 vi.mock('@components/shared/Transition/Transition', () => ({

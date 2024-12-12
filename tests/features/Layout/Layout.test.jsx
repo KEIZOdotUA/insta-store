@@ -61,7 +61,7 @@ vi.mock('@components/WishList/WishList', () => ({
   )),
 }));
 
-vi.mock('@components/Search/Search', () => ({
+vi.mock('@features/Search/Search', () => ({
   __esModule: true,
   default: vi.fn(({ visible, searchToggler }) => (
     <div role="button" onClick={searchToggler} onKeyDown={searchToggler} tabIndex={0}>

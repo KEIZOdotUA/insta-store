@@ -5,11 +5,20 @@ import {
   vi,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import SearchIcon from '@components/Search/Icon/SearchIcon';
+import SearchIcon from '@features/Search/Icon/SearchIcon';
 
 vi.mock('@assets/search.svg', () => ({
   __esModule: true,
   default: vi.fn(() => <span>search</span>),
+}));
+
+vi.mock('@components/shared/Button/Button', () => ({
+  __esModule: true,
+  default: vi.fn(({ children, onClick }) => (
+    <button type="button" onClick={onClick}>
+      {children}
+    </button>
+  )),
 }));
 
 describe('SearchIcon', () => {
@@ -27,16 +36,6 @@ describe('SearchIcon', () => {
 
     const button = getByRole('button');
     fireEvent.click(button);
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
-  });
-
-  it('onKeyDown', () => {
-    const mockOnClick = vi.fn();
-    const { getByRole } = render(<SearchIcon onClick={mockOnClick} />);
-
-    const button = getByRole('button');
-    fireEvent.keyDown(button, { key: 'Enter', code: 'Enter' });
 
     expect(mockOnClick).toHaveBeenCalledTimes(1);
   });

@@ -6,9 +6,9 @@ import {
 } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import SearchResults from '@components/Search/Results/SearchResults';
+import SearchResults from '@features/Search/Results/SearchResults';
 
-vi.mock('@components/Search/Results/Item/SearchResultsItem', () => ({
+vi.mock('@features/Search/Results/Item/SearchResultsItem', () => ({
   __esModule: true,
   default: ({ item }) => <div data-testid="search-result-item">{item.name}</div>,
 }));

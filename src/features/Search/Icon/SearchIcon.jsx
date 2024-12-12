@@ -1,12 +1,13 @@
 import './SearchIcon.css';
 import PropTypes from 'prop-types';
 import SearchSvg from '@assets/search.svg';
+import Button from '@components/shared/Button/Button';
 
 function SearchIcon({ onClick }) {
   return (
-    <div className="search-icon" onClick={onClick} role="button" tabIndex={0} onKeyDown={onClick}>
+    <Button className="search-icon" onClick={onClick}>
       <SearchSvg />
-    </div>
+    </Button>
   );
 }
 
