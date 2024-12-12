@@ -59,16 +59,4 @@ describe('WishListIcon', () => {
     fireEvent.click(button);
     expect(mockOnClick).toHaveBeenCalledTimes(1);
   });
-
-  it('onKeyDown', () => {
-    usePurchaseContext.mockReturnValue({
-      getWishList: () => [],
-    });
-
-    const { getByRole } = render(<WishListIcon onClick={mockOnClick} />);
-    const button = getByRole('button');
-
-    fireEvent.keyDown(button, { key: 'Enter', code: 'Enter', charCode: 13 });
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
-  });
 });

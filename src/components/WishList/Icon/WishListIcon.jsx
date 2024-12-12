@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import HeartSvg from '@assets/heart.svg';
 import HeartFillSvg from '@assets/heart-fill.svg';
+import Button from '@components/shared/Button/Button';
 
 function WishListIcon({ onClick }) {
   const { getWishList } = usePurchaseContext();
@@ -10,9 +11,9 @@ function WishListIcon({ onClick }) {
   const items = getWishList();
 
   return (
-    <div id="wishlist-icon" onClick={onClick} role="button" tabIndex={0} onKeyDown={onClick}>
+    <Button className="wishlist-icon" onClick={onClick}>
       {items.length ? <HeartFillSvg /> : <HeartSvg />}
-    </div>
+    </Button>
   );
 }
 
