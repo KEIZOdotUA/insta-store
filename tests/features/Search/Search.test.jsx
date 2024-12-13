@@ -10,14 +10,14 @@ import Search from '@features/Search/Search';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import animationDuration from '@helpers/constValues';
 
-vi.mock('@components/shared/TextInput/TextInput', () => ({
+vi.mock('@components//TextInput/TextInput', () => ({
   __esModule: true,
   default: ({ onChange, value }) => (
     <input data-testid="search-input" placeholder="пошук" value={value} onChange={onChange} />
   ),
 }));
 
-vi.mock('@components/shared/Button/Button', () => ({
+vi.mock('@components//Button/Button', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <button

@@ -1,6 +1,6 @@
 import './AdditionalPackaging.css';
 import { Link } from 'react-router-dom';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 import useAppContext from '@contexts/App/useAppContext';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';

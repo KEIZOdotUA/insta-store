@@ -2,8 +2,8 @@ import './InfoHeader.css';
 import PropTypes from 'prop-types';
 import useAppContext from '@contexts/App/useAppContext';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import LikeButton from '@components/shared/LikeButton/LikeButton';
-import ShareButton from '@components/shared/ShareButton/ShareButton';
+import LikeButton from '@components/LikeButton/LikeButton';
+import ShareButton from '@components/ShareButton/ShareButton';
 
 function InfoHeader({ product }) {
   const { whitelabel } = useAppContext();

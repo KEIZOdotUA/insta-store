@@ -12,7 +12,7 @@ vi.mock('@assets/search.svg', () => ({
   default: vi.fn(() => <span>search</span>),
 }));
 
-vi.mock('@components/shared/Button/Button', () => ({
+vi.mock('@components//Button/Button', () => ({
   __esModule: true,
   default: vi.fn(({ children, onClick }) => (
     <button type="button" onClick={onClick}>

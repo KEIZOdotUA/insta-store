@@ -1,7 +1,7 @@
 import './PurchasePanel.css';
 import { useState } from 'react';
-import Transition from '@components/shared/Transition/Transition';
-import Button from '@components/shared/Button/Button';
+import Transition from '@components/Transition/Transition';
+import Button from '@components/Button/Button';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';

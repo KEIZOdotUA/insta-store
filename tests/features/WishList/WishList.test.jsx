@@ -9,11 +9,11 @@ import {
 import { render } from '@testing-library/react';
 import WishList from '@features/WishList/WishList';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import Modal from '@components/shared/Modal/Modal';
+import Modal from '@components/Modal/Modal';
 import WishListItem from '@features/WishList/Item/WishListItem';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@components/shared/Modal/Modal');
+vi.mock('@components//Modal/Modal');
 vi.mock('@features/WishList/Item/WishListItem');
 
 describe('WishList', () => {

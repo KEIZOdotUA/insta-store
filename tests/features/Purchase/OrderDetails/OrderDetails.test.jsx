@@ -28,7 +28,7 @@ vi.mock('@features/Purchase/OrderDetails/orderValidation', () => ({
   validateAllFields: vi.fn(),
   hasErrors: vi.fn(),
 }));
-vi.mock('@components/shared/TextInput/TextInput', () => ({
+vi.mock('@components//TextInput/TextInput', () => ({
   __esModule: true,
   default: vi.fn(({
     label,
@@ -45,7 +45,7 @@ vi.mock('@components/shared/TextInput/TextInput', () => ({
     </div>
   )),
 }));
-vi.mock('@components/shared/PhoneInput/PhoneInput', () => ({
+vi.mock('@components//PhoneInput/PhoneInput', () => ({
   __esModule: true,
   default: vi.fn(({ label, value, onChange }) => (
     <div>
@@ -56,7 +56,7 @@ vi.mock('@components/shared/PhoneInput/PhoneInput', () => ({
     </div>
   )),
 }));
-vi.mock('@components/shared/TextArea/TextArea', () => ({
+vi.mock('@components//TextArea/TextArea', () => ({
   __esModule: true,
   default: vi.fn(({ label, value, onChange }) => (
     <div>
@@ -67,7 +67,7 @@ vi.mock('@components/shared/TextArea/TextArea', () => ({
     </div>
   )),
 }));
-vi.mock('@components/shared/Button/Button', () => ({
+vi.mock('@components//Button/Button', () => ({
   __esModule: true,
   default: vi.fn(({ children, onClick, submit }) => (
     <button type={submit ? 'submit' : 'button'} onClick={onClick}>
@@ -75,7 +75,7 @@ vi.mock('@components/shared/Button/Button', () => ({
     </button>
   )),
 }));
-vi.mock('@components/shared/Checkbox/Checkbox', () => ({
+vi.mock('@components//Checkbox/Checkbox', () => ({
   __esModule: true,
   default: vi.fn(({ label, value, onChange }) => (
     <div>

@@ -2,11 +2,11 @@ import './OrderDetails.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import TextInput from '@components/shared/TextInput/TextInput';
-import PhoneInput from '@components/shared/PhoneInput/PhoneInput';
-import TextArea from '@components/shared/TextArea/TextArea';
-import Button from '@components/shared/Button/Button';
-import Checkbox from '@components/shared/Checkbox/Checkbox';
+import TextInput from '@components/TextInput/TextInput';
+import PhoneInput from '@components/PhoneInput/PhoneInput';
+import TextArea from '@components/TextArea/TextArea';
+import Button from '@components/Button/Button';
+import Checkbox from '@components/Checkbox/Checkbox';
 import useApiCall from '@hooks/useApiCall';
 import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
 import {

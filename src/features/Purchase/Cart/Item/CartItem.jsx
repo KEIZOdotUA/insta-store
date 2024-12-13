@@ -2,10 +2,10 @@ import './CartItem.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import QuantityInput from '@components/shared/QuantityInput/QuantityInput';
+import QuantityInput from '@components/QuantityInput/QuantityInput';
 import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@hooks/useProductNavigation';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 
 function CartItem({ item }) {
   const {

@@ -12,7 +12,7 @@ vi.mock('@contexts/App/useAppContext', () => ({
   __esModule: true,
   default: vi.fn(),
 }));
-vi.mock('@components/shared/Heading/Heading', () => ({
+vi.mock('@components//Heading/Heading', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <h1>{children}</h1>),
 }));

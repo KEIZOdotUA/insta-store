@@ -8,7 +8,7 @@ import { render, screen } from '@testing-library/react';
 import SearchOverlay from '@features/Search/Overlay/SearchOverlay';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
 
-vi.mock('@components/shared/Transition/Transition', () => ({
+vi.mock('@components//Transition/Transition', () => ({
   __esModule: true,
   default: ({ children, visible }) => (
     <div data-testid="transition" style={{ opacity: visible ? 1 : 0 }}>

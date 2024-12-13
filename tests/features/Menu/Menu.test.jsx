@@ -10,7 +10,7 @@ import useAppContext from '@contexts/App/useAppContext';
 import Menu from '@features/Menu/Menu';
 
 vi.mock('@contexts/App/useAppContext');
-vi.mock('@components/shared/CloseButton/CloseButton', () => ({
+vi.mock('@components//CloseButton/CloseButton', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <button type="button" onClick={onClick}>
@@ -19,7 +19,7 @@ vi.mock('@components/shared/CloseButton/CloseButton', () => ({
   ),
 }));
 
-vi.mock('@components/shared/Transition/Transition', () => ({
+vi.mock('@components//Transition/Transition', () => ({
   __esModule: true,
   default: ({ children }) => <div>{children}</div>,
 }));

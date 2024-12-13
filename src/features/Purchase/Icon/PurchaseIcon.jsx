@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewCartEvent } from '@helpers/googleAnalyticsGA4';
 import CartSvgIcon from '@assets/cart.svg';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 
 function PurchaseIcon({ onClick }) {
   const { getCartItems, getCartTotal } = usePurchaseContext();

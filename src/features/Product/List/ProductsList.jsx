@@ -1,6 +1,6 @@
 import './ProductsList.css';
 import { useEffect } from 'react';
-import ScrollPaginator from '@components/shared/ScrollPaginator/ScrollPaginator';
+import ScrollPaginator from '@components/ScrollPaginator/ScrollPaginator';
 import ProductCard from '@features/Product/List/Item/ProductListItem';
 import useProductList from '@features/Product/List/useProductList';
 import useProductNavigation from '@hooks/useProductNavigation';

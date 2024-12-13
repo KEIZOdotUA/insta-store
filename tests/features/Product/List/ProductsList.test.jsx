@@ -13,7 +13,7 @@ import useProductList from '@features/Product/List/useProductList';
 import useProductNavigation from '@hooks/useProductNavigation';
 import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
 
-vi.mock('@components/shared/ScrollPaginator/ScrollPaginator', () => ({
+vi.mock('@components//ScrollPaginator/ScrollPaginator', () => ({
   default: vi.fn(({ items }) => <div data-testid="scroll-paginator">{items}</div>),
 }));
 vi.mock('@features/Product/List/Item/ProductListItem');

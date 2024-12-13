@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@hooks/useProductNavigation';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 
 function WishListItem({ item }) {
   const { removeWishListItem } = usePurchaseContext();

@@ -1,7 +1,7 @@
 import './SearchIcon.css';
 import PropTypes from 'prop-types';
 import SearchSvg from '@assets/search.svg';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 
 function SearchIcon({ onClick }) {
   return (

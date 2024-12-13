@@ -16,7 +16,7 @@ vi.mock('@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging', () =>
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
 }));
-vi.mock('@components/shared/Button/Button', () => ({
+vi.mock('@components//Button/Button', () => ({
   __esModule: true,
   default: vi.fn(({ children, onClick }) => (
     <button type="button" onClick={onClick}>

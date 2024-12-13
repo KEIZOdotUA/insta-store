@@ -1,7 +1,7 @@
 import './MenuIcon.css';
 import PropTypes from 'prop-types';
 import MenuSvg from '@assets/menu.svg';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 
 function MenuIcon({ onClick }) {
   return (

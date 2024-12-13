@@ -10,7 +10,7 @@ import PurchasePanel from '@features/Purchase/Panel/PurchasePanel';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
-vi.mock('@components/shared/Transition/Transition', () => ({
+vi.mock('@components//Transition/Transition', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <div>{children}</div>),
 }));

@@ -15,11 +15,11 @@ import {
   useSearchParams,
   useNavigate,
 } from 'react-router-dom';
-import Modal from '@components/shared/Modal/Modal';
+import Modal from '@components/Modal/Modal';
 import ProductImage from '@features/Product/Image/ProductImage';
 import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';
 import ActionButton from '@features/Product/Modal/ActionButton/ActionButton';
-import SizePicker from '@components/shared/SizePicker/SizePicker';
+import SizePicker from '@components/SizePicker/SizePicker';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
 import useProductNavigation from '@hooks/useProductNavigation';
 
@@ -33,11 +33,11 @@ vi.mock('react-router-dom', async () => {
     useNavigate: vi.fn(),
   };
 });
-vi.mock('@components/shared/Modal/Modal');
+vi.mock('@components//Modal/Modal');
 vi.mock('@features/Product/Image/ProductImage');
 vi.mock('@features/Product/Modal/InfoHeader/InfoHeader');
 vi.mock('@features/Product/Modal/ActionButton/ActionButton');
-vi.mock('@components/shared/SizePicker/SizePicker');
+vi.mock('@components//SizePicker/SizePicker');
 vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@hooks/useProductNavigation');
 

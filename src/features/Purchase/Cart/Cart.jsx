@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import CartItem from '@features/Purchase/Cart/Item/CartItem';
 import AdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 
 function Cart({ onOrder }) {

@@ -1,5 +1,5 @@
 import './WishList.css';
-import Modal from '@components/shared/Modal/Modal';
+import Modal from '@components/Modal/Modal';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import WishListItem from '@features/WishList/Item/WishListItem';

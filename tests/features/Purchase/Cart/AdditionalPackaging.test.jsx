@@ -18,7 +18,7 @@ vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@hooks/useProductNavigation');
 
-vi.mock('@components/shared/Button/Button', () => ({
+vi.mock('@components//Button/Button', () => ({
   __esModule: true,
   default: vi.fn(({ children, onClick, className }) => (
     <button type="button" className={className} onClick={onClick}>

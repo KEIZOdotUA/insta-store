@@ -1,6 +1,6 @@
 import './SearchOverlay.css';
 import PropTypes from 'prop-types';
-import Transition from '@components/shared/Transition/Transition';
+import Transition from '@components/Transition/Transition';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import animationDuration from '@helpers/constValues';
 

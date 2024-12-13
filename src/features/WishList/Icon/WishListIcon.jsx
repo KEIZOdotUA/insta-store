@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import HeartSvg from '@assets/heart.svg';
 import HeartFillSvg from '@assets/heart-fill.svg';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 
 function WishListIcon({ onClick }) {
   const { getWishList } = usePurchaseContext();

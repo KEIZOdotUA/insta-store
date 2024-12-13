@@ -1,7 +1,7 @@
 import './ActionButton.css';
 import PropTypes from 'prop-types';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
-import Button from '@components/shared/Button/Button';
+import Button from '@components/Button/Button';
 import { trackAddToCartEvent } from '@helpers/googleAnalyticsGA4';
 
 function ActionButton({ product, selectedSize }) {

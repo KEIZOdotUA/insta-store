@@ -13,7 +13,7 @@ import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 vi.mock('@contexts/App/useAppContext');
 vi.mock('@contexts/Purchase/usePurchaseContext');
 
-vi.mock('@components/shared/LikeButton/LikeButton', () => ({
+vi.mock('@components//LikeButton/LikeButton', () => ({
   __esModule: true,
   default: ({ liked, onLike }) => (
     <button type="button" onClick={onLike} aria-label={liked ? 'Unlike' : 'Like'}>
@@ -22,7 +22,7 @@ vi.mock('@components/shared/LikeButton/LikeButton', () => ({
   ),
 }));
 
-vi.mock('@components/shared/ShareButton/ShareButton', () => ({
+vi.mock('@components//ShareButton/ShareButton', () => ({
   __esModule: true,
   default: ({ title, text, url }) => (
     <button type="button" aria-label="Share">
