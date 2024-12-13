@@ -5,7 +5,7 @@ import Search from '@features/Search/Search';
 import Menu from '@features/Menu/Menu';
 import PurchasePanel from '@features/Purchase/Panel/PurchasePanel';
 import ProductModal from '@features/Product/Modal/ProductModal';
-import WishList from '@components/WishList/WishList';
+import WishList from '@features/WishList/WishList';
 
 function Layout() {
   const [visibleMenu, setVisibleMenu] = useState(false);

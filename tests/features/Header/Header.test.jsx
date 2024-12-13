@@ -41,7 +41,7 @@ vi.mock('@features/Search/Icon/SearchIcon', () => ({
   ),
 }));
 
-vi.mock('@components/WishList/Icon/WishListIcon', () => ({
+vi.mock('@features/WishList/Icon/WishListIcon', () => ({
   __esModule: true,
   default: ({ onClick }) => (
     <div role="button" tabIndex={0} onClick={onClick} onKeyDown={onClick}>

@@ -42,20 +42,8 @@
   margin-bottom: 20px;
 }
 
-.wishlist-item__action {
-  display: inline-block;
-  text-transform: uppercase;
+.wishlist-item__delete {
   font-size: 12px;
   font-weight: 500;
-  cursor: pointer;
-}
-
-.wishlist-item__added-to-cart {
-  color: var(--disabled-text-color);
-  cursor: default;
-}
-
-.wishlist-item__delete {
   color: var(--attention-color);
-  margin-left: 70px;
 }

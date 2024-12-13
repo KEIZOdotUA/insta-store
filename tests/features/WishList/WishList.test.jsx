@@ -7,14 +7,14 @@ import {
   vi,
 } from 'vitest';
 import { render } from '@testing-library/react';
-import WishList from '@components/WishList/WishList';
+import WishList from '@features/WishList/WishList';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import Modal from '@components/shared/Modal/Modal';
-import WishListItem from '@components/WishList/Item/WishListItem';
+import WishListItem from '@features/WishList/Item/WishListItem';
 
 vi.mock('@contexts/Purchase/usePurchaseContext');
 vi.mock('@components/shared/Modal/Modal');
-vi.mock('@components/WishList/Item/WishListItem');
+vi.mock('@features/WishList/Item/WishListItem');
 
 describe('WishList', () => {
   const mockOnClose = vi.fn();
@@ -39,7 +39,7 @@ describe('WishList', () => {
   it('with items', () => {
     const { getByText } = render(<WishList visible onClose={mockOnClose} />);
 
-    expect(getByText('Список бажань')).toBeInTheDocument();
+    expect(getByText('Вподобане')).toBeInTheDocument();
     expect(getByText('Item 1')).toBeInTheDocument();
     expect(getByText('Item 2')).toBeInTheDocument();
   });

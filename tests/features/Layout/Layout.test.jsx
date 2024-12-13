@@ -52,7 +52,7 @@ vi.mock('@features/Menu/Menu', () => ({
   )),
 }));
 
-vi.mock('@components/WishList/WishList', () => ({
+vi.mock('@features/WishList/WishList', () => ({
   __esModule: true,
   default: vi.fn(({ visible, onClose }) => (
     <div role="button" onClick={onClose} onKeyDown={onClose} tabIndex={0}>

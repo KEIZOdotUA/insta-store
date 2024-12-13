@@ -6,7 +6,7 @@ import {
   afterEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
-import WishListIcon from '@components/WishList/Icon/WishListIcon';
+import WishListIcon from '@features/WishList/Icon/WishListIcon';
 import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 
 vi.mock('@assets/heart.svg', () => ({
