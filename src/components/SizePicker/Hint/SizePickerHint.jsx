@@ -1,24 +1,22 @@
 import './SizePickerHint.css';
 import { useState } from 'react';
-import Modal from '@components/Modal/Modal';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
+import Button from '@components/Button/Button';
+import Hint from '@components/Hint/Hint';
 
 function SizePickerHint({ hint }) {
-  const [showModal, setShowModal] = useState(false);
+  const [showHint, setShowHint] = useState(false);
 
   return (
     <>
-      <div
+      <Button
         className="size-picker-hint"
-        onClick={() => setShowModal(true)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={() => setShowModal(true)}
+        onClick={() => setShowHint(true)}
       >
         Як визначити розмір
-      </div>
-      {showModal && (<Modal onClose={() => setShowModal(false)}>{parse(hint)}</Modal>)}
+      </Button>
+      {showHint && <Hint content={parse(hint)} onClose={() => setShowHint(false)} />}
     </>
   );
 }

@@ -90,6 +90,7 @@ function OrderDetails({ onOrder }) {
           required
         />
         <PhoneInput
+          id="phoneNumber"
           label="Номер телефону одержувача"
           value={orderDetails.phoneNumber}
           error={errors.phoneNumber}
@@ -123,6 +124,7 @@ function OrderDetails({ onOrder }) {
           })}
         />
         <TextArea
+          id="comment"
           label="Коментар"
           value={orderDetails.comment}
           onChange={onChange('comment')}

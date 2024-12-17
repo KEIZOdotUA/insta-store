@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
 import './Modal.css';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Transition from '@components/Transition/Transition';
 import Button from '@components/Button/Button';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
+import animationDuration from '@helpers/constValues';
 
 function Modal({ children, onClose, hiddenOverflow }) {
-  const animationDuration = 250;
-
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
   useHiddenOverflow({ forceUsage: hiddenOverflow });

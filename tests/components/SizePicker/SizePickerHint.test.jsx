@@ -7,59 +7,69 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import SizePickerHint from '@components/SizePicker/Hint/SizePickerHint';
-import Modal from '@components/Modal/Modal';
+import Button from '@components/Button/Button';
+import Hint from '@components/Hint/Hint';
 import parse from 'html-react-parser';
 
-vi.mock('@components//Modal/Modal');
-vi.mock('html-react-parser');
+vi.mock('@components/Button/Button');
+vi.mock('@components/Hint/Hint');
+vi.mock('html-react-parser', () => ({
+  __esModule: true,
+  default: vi.fn(),
+}));
 
 describe('SizePickerHint', () => {
-  const mockHint = 'Size guide content';
-  const mockParse = vi.fn((html) => html);
+  const mockHint = '<p>Size guide content</p>';
+  const mockParsedContent = 'Size guide content';
 
   beforeEach(() => {
-    Modal.mockImplementation(({ children, onClose }) => (
-      <div>
-        <button onClick={onClose} type="button">Close</button>
+    Button.mockImplementation(({ className, onClick, children }) => (
+      <button className={className} onClick={onClick} type="button">
         {children}
+      </button>
+    ));
+    Hint.mockImplementation(({ content, onClose }) => (
+      <div>
+        <div>{content}</div>
+        <button onClick={onClose} type="button">Close</button>
       </div>
     ));
-    parse.mockImplementation(mockParse);
+    parse.mockImplementation((html) => html === mockHint && mockParsedContent);
   });
 
-  it('default', () => {
-    const { getByText, queryByText } = render(<SizePickerHint hint={mockHint} />);
+  it('renders the button with the correct text', () => {
+    const { getByText } = render(<SizePickerHint hint={mockHint} />);
+    const button = getByText('Як визначити розмір');
+    expect(button).toBeInTheDocument();
+  });
 
-    const hintElement = getByText('Як визначити розмір');
-    expect(hintElement).toBeInTheDocument();
+  it('opens the Hint when the button is clicked', () => {
+    const { getByText } = render(<SizePickerHint hint={mockHint} />);
+    const button = getByText('Як визначити розмір');
 
-    expect(queryByText('Size guide content')).toBeNull();
-
-    fireEvent.click(hintElement);
+    fireEvent.click(button);
 
     expect(parse).toHaveBeenCalledWith(mockHint);
-    expect(getByText('Size guide content')).toBeInTheDocument();
+    expect(getByText(mockParsedContent)).toBeInTheDocument();
   });
 
-  it('onClose', () => {
-    const { getByText } = render(<SizePickerHint hint={mockHint} />);
+  it('closes the Hint when the close button is clicked', () => {
+    const { getByText, queryByText } = render(<SizePickerHint hint={mockHint} />);
+    const button = getByText('Як визначити розмір');
 
-    const hintElement = getByText('Як визначити розмір');
-    fireEvent.click(hintElement);
+    // Open the Hint
+    fireEvent.click(button);
+    expect(getByText(mockParsedContent)).toBeInTheDocument();
 
+    // Close the Hint
     const closeButton = getByText('Close');
     fireEvent.click(closeButton);
 
-    expect(closeButton).not.toBeInTheDocument();
+    expect(queryByText(mockParsedContent)).toBeNull();
   });
 
-  it('opens the modal when triggered by keyboard events', () => {
-    const { getByText } = render(<SizePickerHint hint={mockHint} />);
-
-    const hintElement = getByText('Як визначити розмір');
-    fireEvent.keyDown(hintElement, { key: 'Enter', code: 'Enter', charCode: 13 });
-
-    expect(parse).toHaveBeenCalledWith(mockHint);
-    expect(getByText('Size guide content')).toBeInTheDocument();
+  it('does not render the Hint initially', () => {
+    const { queryByText } = render(<SizePickerHint hint={mockHint} />);
+    expect(queryByText(mockParsedContent)).toBeNull();
   });
 });

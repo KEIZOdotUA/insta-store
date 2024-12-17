@@ -29,6 +29,10 @@
   margin: 15px;
 }
 
+.purchase-panel__close > svg > path {
+  stroke: var(--dark-background-color);
+}
+
 .purchase-panel__continue {
   display: block;
   width: 100%;

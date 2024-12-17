@@ -3,12 +3,7 @@
   cursor: pointer;
   font-size: 12px;
   display: flex;
-}
-
-.size-picker__title > span {
-  display: inline-block;
-}
-
-.size-picker__title > div {
+  position: relative;
   float: right;
+  text-transform: none;
 }

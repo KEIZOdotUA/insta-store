@@ -1,3 +1,4 @@
+import './ShareButton.css';
 import PropTypes from 'prop-types';
 import Button from '@components/Button/Button';
 import ShareSvg from '@assets/share.svg';
@@ -13,7 +14,7 @@ function ShareButton({ title, text, url }) {
 
   return (
     navigator.share && (
-      <Button onClick={share}>
+      <Button className="share-button" onClick={share}>
         <ShareSvg />
       </Button>
     )

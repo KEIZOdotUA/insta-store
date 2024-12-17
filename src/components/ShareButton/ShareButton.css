@@ -1,0 +1,3 @@
+.share-button > svg > path {
+  fill: var(--dark-background-color);
+}

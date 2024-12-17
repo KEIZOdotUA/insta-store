@@ -27,6 +27,10 @@ vi.mock('@features/Purchase/Panel/PurchaseStep/PurchaseStep', () => ({
     </div>
   )),
 }));
+vi.mock('@helpers/constValues', () => ({
+  __esModule: true,
+  default: 1,
+}));
 
 describe('PurchasePanel', () => {
   const mockHidePurchase = vi.fn();

@@ -5,7 +5,12 @@ import {
   vi,
   beforeEach,
 } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+} from '@testing-library/react';
 import Search from '@features/Search/Search';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import animationDuration from '@helpers/constValues';
@@ -57,6 +62,11 @@ vi.mock('@helpers/filterProductsByQuery', () => ({
   default: vi.fn(() => []),
 }));
 
+vi.mock('@helpers/constValues', () => ({
+  __esModule: true,
+  default: 1,
+}));
+
 const mockSearchToggler = vi.fn();
 const mockProducts = [
   { id: 1, name: 'Product 1', price: 100 },
@@ -92,13 +102,14 @@ describe('Search', () => {
   it('calls searchToggler and resets search on close button click', async () => {
     render(<Search visible searchToggler={mockSearchToggler} />);
     const closeButton = screen.getByTestId('close-button');
+
     fireEvent.click(closeButton);
     expect(mockSearchToggler).toHaveBeenCalledTimes(1);
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(null);
-      }, animationDuration);
+    await act(async () => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, animationDuration);
+      });
     });
 
     expect(screen.getByTestId('search-input').value).toBe('');

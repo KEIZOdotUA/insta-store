@@ -11,7 +11,7 @@ describe('PhoneInput', () => {
   it('default', () => {
     const number = '1234';
     const { getByDisplayValue } = render(
-      <PhoneInput label="Phone Number" value={number} onChange={() => {}} />,
+      <PhoneInput id="default" label="Phone Number" value={number} onChange={() => {}} />,
     );
     expect(getByDisplayValue('+380')).toBeTruthy();
     expect(getByDisplayValue(number)).toBeTruthy();
@@ -19,7 +19,7 @@ describe('PhoneInput', () => {
 
   it('required indicator', () => {
     const { getByText } = render(
-      <PhoneInput label="Phone Number" value="" onChange={() => {}} required />,
+      <PhoneInput id="required_indicator" label="Phone Number" value="" onChange={() => {}} required />,
     );
     expect(getByText('Phone Number*')).toBeTruthy();
   });
@@ -28,7 +28,7 @@ describe('PhoneInput', () => {
     const number = '1234';
     const handleChange = vi.fn();
     const { getByDisplayValue } = render(
-      <PhoneInput label="Phone Number" value={number} onChange={handleChange} />,
+      <PhoneInput id="calls_onChange" label="Phone Number" value={number} onChange={handleChange} />,
     );
     const input = getByDisplayValue(number);
 
@@ -40,7 +40,7 @@ describe('PhoneInput', () => {
     const number = '1234';
     const handleChange = vi.fn();
     const { getByDisplayValue } = render(
-      <PhoneInput label="Phone Number" value={number} onChange={handleChange} />,
+      <PhoneInput id="does_not_call_onChange" label="Phone Number" value={number} onChange={handleChange} />,
     );
     const input = getByDisplayValue(number);
 
@@ -50,14 +50,14 @@ describe('PhoneInput', () => {
 
   it('error message', () => {
     const { getByText } = render(
-      <PhoneInput label="Phone Number" value="" onChange={() => {}} error="Invalid number" />,
+      <PhoneInput id="error_message" label="Phone Number" value="" onChange={() => {}} error="Invalid number" />,
     );
     expect(getByText('Invalid number')).toBeTruthy();
   });
 
   it('error class', () => {
     const { getByDisplayValue } = render(
-      <PhoneInput label="Phone Number" value="" onChange={() => {}} error="Invalid number" />,
+      <PhoneInput id="error_class" label="Phone Number" value="" onChange={() => {}} error="Invalid number" />,
     );
     const input = getByDisplayValue('');
     expect(input).toHaveClass('error');

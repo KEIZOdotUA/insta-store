@@ -12,3 +12,7 @@
 .search__close {
   margin: auto;
 }
+
+.search__close > svg > path {
+  stroke: var(--dark-background-color);
+}

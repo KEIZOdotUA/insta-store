@@ -1,5 +1,5 @@
-import { useRef } from 'react';
 import './Transition.css';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Transition as TransitionGroup } from 'react-transition-group';
 

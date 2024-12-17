@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import './SizePicker.css';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import SizeButton from './SizeButton/SizeButton';
-import SizePickerHint from './Hint/SizePickerHint';
+import SizeButton from '@components/SizePicker/SizeButton/SizeButton';
+import Hint from '@components/SizePicker/Hint/SizePickerHint';
 
 function SizePicker({
   sizes,
@@ -28,18 +28,21 @@ function SizePicker({
     <>
       <div className="size-picker__title">
         <span>Pозмір</span>
-        {sizeHint.length > 0 && <SizePickerHint hint={sizeHint} />}
+        {sizeHint.length > 0 && <Hint hint={sizeHint} />}
       </div>
-      <div>
-        {sizes.map((size) => (
-          <SizeButton
-            key={size}
-            value={size}
-            onSetSize={() => onSetSize(size)}
-            selected={size === selectedSize}
-            disabled={disabled}
-          />
-        ))}
+      <div className="size-picker">
+        <ol>
+          {sizes.map((size) => (
+            <li key={size}>
+              <SizeButton
+                value={size}
+                onSetSize={() => onSetSize(size)}
+                selected={size === selectedSize}
+                disabled={disabled}
+              />
+            </li>
+          ))}
+        </ol>
       </div>
     </>
   );

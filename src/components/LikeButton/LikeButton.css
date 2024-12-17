@@ -1,0 +1,3 @@
+.like-button > svg > path {
+  fill: var(--dark-background-color);
+}

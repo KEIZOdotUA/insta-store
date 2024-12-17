@@ -2,6 +2,7 @@ import './TextArea.css';
 import PropTypes from 'prop-types';
 
 function TextArea({
+  id,
   label,
   value,
   onChange,
@@ -9,8 +10,8 @@ function TextArea({
 }) {
   return (
     <div className="text-area">
-      <div>{label}</div>
-      <textarea type="text" value={value} onChange={onChange} placeholder={placeholder} />
+      <label htmlFor={id}>{label}</label>
+      <textarea id={id} type="text" value={value} onChange={onChange} placeholder={placeholder} />
     </div>
   );
 }
@@ -21,6 +22,7 @@ TextArea.defaultProps = {
 };
 
 TextArea.propTypes = {
+  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,

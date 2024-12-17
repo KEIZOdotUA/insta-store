@@ -17,6 +17,10 @@ vi.mock('@assets/close.svg', () => ({
   __esModule: true,
   default: vi.fn(() => <p>close</p>),
 }));
+vi.mock('@helpers/constValues', () => ({
+  __esModule: true,
+  default: 1,
+}));
 
 describe('Modal', () => {
   const mockOnClose = vi.fn();
