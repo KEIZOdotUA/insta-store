@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import AppContext from './AppContext';
+import AppContext from '@contexts/App/AppContext';
 
 function AppContextProvider({ children }) {
   const [whitelabel, setWhitelabel] = useState(null);
@@ -57,13 +57,18 @@ function AppContextProvider({ children }) {
       const whitelabelData = await fetchWhitelabelData();
       setWhitelabel(whitelabelData);
 
-      const categoriesData = await fetchCategoriesData(whitelabelData.categoriesSrc);
+      if (whitelabelData == null) {
+        return;
+      }
+
+      const [categoriesData, packagingData, productsData] = await Promise.all([
+        fetchCategoriesData(whitelabelData.categoriesSrc),
+        fetchPackagingData(whitelabelData.packagingSrc),
+        fetchProductsData(whitelabelData.productsSrc),
+      ]);
+
       setCategories(categoriesData);
-
-      const packagingData = await fetchPackagingData(whitelabelData.packagingSrc);
       setPackaging(packagingData);
-
-      const productsData = await fetchProductsData(whitelabelData.productsSrc);
       setProducts(packagingData ? [...productsData, packagingData] : productsData);
     };
 

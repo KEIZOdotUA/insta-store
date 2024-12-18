@@ -3,7 +3,6 @@ import {
   describe,
   it,
   expect,
-  beforeEach,
 } from 'vitest';
 import {
   render,
@@ -22,7 +21,7 @@ const mockWhitelabelData = {
 const mockCategoriesData = [{ id: 1, name: 'Category 1' }];
 const mockProductsData = [
   { id: 1, name: 'Product 1', sizes: '1,2,3' },
-  { id: 2, name: 'Product 2', sizes: '4,5' },
+  { id: 2, name: 'Product 2', sizes: '' },
 ];
 const mockPackagingData = { id: 3, name: 'Packaging', sizes: '6,7' };
 
@@ -32,7 +31,7 @@ vi.mock('./AppContext', () => ({
 }));
 
 describe('AppContextProvider', () => {
-  beforeEach(() => {
+  it('provides the correct context values', async () => {
     global.fetch = vi.fn((url) => {
       switch (url) {
         case '/whitelabel.json':
@@ -55,9 +54,7 @@ describe('AppContextProvider', () => {
           return Promise.reject(new Error('Unknown URL'));
       }
     });
-  });
 
-  it('provides the correct context values', async () => {
     let receivedContext;
 
     await act(async () => {
@@ -79,7 +76,7 @@ describe('AppContextProvider', () => {
       expect(receivedContext.products).toEqual([
         ...mockProductsData.map((product) => ({
           ...product,
-          sizes: product.sizes.split(',').map((size) => parseInt(size, 10)),
+          sizes: product.sizes ? product.sizes.split(',').map((size) => parseInt(size, 10)) : [],
         })),
         {
           ...mockPackagingData,
@@ -87,5 +84,59 @@ describe('AppContextProvider', () => {
       ]);
       expect(receivedContext.packaging).toEqual(mockPackagingData);
     });
+  });
+
+  it('handles fetch whitelabel related data errors correctly', async () => {
+    global.fetch = vi.fn(() => Promise.reject(new Error('Fetch failed')));
+
+    let receivedContext;
+
+    const { findByText } = render(
+      <AppContextProvider>
+        <AppContext.Consumer>
+          {(context) => {
+            receivedContext = context;
+            return null;
+          }}
+        </AppContext.Consumer>
+      </AppContextProvider>,
+    );
+
+    await findByText('Loading...');
+
+    expect(receivedContext).not.toBeDefined();
+  });
+
+  it('handles fetch products related data errors correctly', async () => {
+    global.fetch = vi.fn((url) => {
+      switch (url) {
+        case '/whitelabel.json':
+          return Promise.resolve({
+            json: () => Promise.resolve(mockWhitelabelData),
+          });
+        default:
+          return Promise.reject(new Error('Fetch failed'));
+      }
+    });
+
+    let receivedContext;
+
+    const { findByText } = render(
+      <AppContextProvider>
+        <AppContext.Consumer>
+          {(context) => {
+            receivedContext = context;
+            return null;
+          }}
+        </AppContext.Consumer>
+      </AppContextProvider>,
+    );
+
+    await findByText('Loading...');
+
+    expect(receivedContext).toBeDefined();
+    expect(receivedContext.categories).toEqual([]);
+    expect(receivedContext.products).toEqual([]);
+    expect(receivedContext.packaging).toBeNull();
   });
 });
