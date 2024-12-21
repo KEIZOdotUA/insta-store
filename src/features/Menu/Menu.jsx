@@ -1,7 +1,7 @@
 import './Menu.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import CloseButton from '@components/CloseButton/CloseButton';
 import Transition from '@components/Transition/Transition';
 import ContactUs from '@features/ContactUs/ContactUs';

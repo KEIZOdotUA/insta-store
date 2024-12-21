@@ -4,18 +4,21 @@ import Transition from '@components/Transition/Transition';
 import Button from '@components/Button/Button';
 import CloseSvg from '@assets/close.svg';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import animationDuration from '@helpers/constValues';
 import PurchaseStep from '@features/Purchase/Panel/PurchaseStep/PurchaseStep';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
 function PurchasePanel() {
-  const { visiblePurchase, hidePurchase } = usePurchaseContext();
+  const {
+    visible: visiblePurchasePanel,
+    hide: hidePurchasePanel,
+  } = usePurchasePanelStateStore();
 
   const [orderStep, setOrderStep] = useState(0);
 
-  useHiddenOverflow({ active: visiblePurchase });
+  useHiddenOverflow({ active: visiblePurchasePanel });
   const onClose = () => {
-    hidePurchase();
+    hidePurchasePanel();
     setTimeout(() => setOrderStep(0), animationDuration);
   };
 
@@ -25,7 +28,7 @@ function PurchasePanel() {
         key="Purchase"
         transitionType="transform"
         transitionDirection="right"
-        visible={visiblePurchase}
+        visible={visiblePurchasePanel}
         duration={animationDuration}
       >
         <div className="purchase-panel">

@@ -6,10 +6,10 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import PurchaseIcon from '@features/Purchase/Icon/PurchaseIcon';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
 import { trackViewCartEvent } from '@helpers/googleAnalyticsGA4';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useCartStore');
 vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@assets/cart.svg', () => ({
   __esModule: true,
@@ -20,9 +20,9 @@ describe('PurchaseIcon', () => {
   const mockOnClick = vi.fn();
 
   it('renders with correct cart count', () => {
-    usePurchaseContext.mockReturnValue({
-      getCartItems: () => [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }],
-      getCartTotal: () => 100,
+    useCartStore.mockReturnValue({
+      items: [{ id: 1, name: 'Item 1' }, { id: 2, name: 'Item 2' }],
+      getTotalCost: () => 100,
     });
 
     const { getByText } = render(<PurchaseIcon onClick={mockOnClick} />);
@@ -47,9 +47,9 @@ describe('PurchaseIcon', () => {
     ];
     const mockTotal = 100;
 
-    usePurchaseContext.mockReturnValue({
-      getCartItems: () => mockItems,
-      getCartTotal: () => mockTotal,
+    useCartStore.mockReturnValue({
+      items: mockItems,
+      getTotalCost: () => mockTotal,
     });
 
     const { getByText } = render(<PurchaseIcon onClick={mockOnClick} />);

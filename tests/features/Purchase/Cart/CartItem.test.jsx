@@ -7,12 +7,14 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import CartItem from '@features/Purchase/Cart/Item/CartItem';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 import QuantityInput from '@components/QuantityInput/QuantityInput';
 import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@hooks/useProductNavigation';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useCartStore');
+vi.mock('@store/usePurchasePanelStateStore');
 vi.mock('@components//QuantityInput/QuantityInput', () => ({
   __esModule: true,
   default: vi.fn(() => <div>QuantityInput</div>),
@@ -50,11 +52,13 @@ describe('CartItem', () => {
   const mockGetProductLink = vi.fn();
 
   beforeEach(() => {
-    usePurchaseContext.mockReturnValue({
-      hidePurchase: mockHidePurchase,
-      removeCartItem: mockRemoveCartItem,
-      incrementCartItemQuantity: mockIncrementCartItemQuantity,
-      decrementCartItemQuantity: mockDecrementCartItemQuantity,
+    useCartStore.mockReturnValue({
+      removeItem: mockRemoveCartItem,
+      increaseQuantity: mockIncrementCartItemQuantity,
+      decreaseQuantity: mockDecrementCartItemQuantity,
+    });
+    usePurchasePanelStateStore.mockReturnValue({
+      hide: mockHidePurchase,
     });
     useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
     mockGetProductLink.mockReturnValue('/test-category/1');

@@ -7,11 +7,11 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';
-import useAppContext from '@contexts/App/useAppContext';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useAppContext from '@context/useAppContext';
+import useWishListStore from '@store/useWishListStore';
 
-vi.mock('@contexts/App/useAppContext');
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@context/useAppContext');
+vi.mock('@store/useWishListStore');
 
 vi.mock('@components//LikeButton/LikeButton', () => ({
   __esModule: true,
@@ -51,10 +51,10 @@ describe('InfoHeader', () => {
     useAppContext.mockReturnValue({
       whitelabel: { shop: { name: 'Test Shop' } },
     });
-    usePurchaseContext.mockReturnValue({
-      findWishListItem: mockFindWishListItem,
-      addWishListItem: mockAddWishListItem,
-      removeWishListItem: mockRemoveWishListItem,
+    useWishListStore.mockReturnValue({
+      findItem: mockFindWishListItem,
+      addItem: mockAddWishListItem,
+      removeItem: mockRemoveWishListItem,
     });
   });
 

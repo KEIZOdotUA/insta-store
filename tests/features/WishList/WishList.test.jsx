@@ -8,11 +8,11 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import WishList from '@features/WishList/WishList';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useWishListStore from '@store/useWishListStore';
 import Modal from '@components/Modal/Modal';
 import WishListItem from '@features/WishList/Item/WishListItem';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useWishListStore');
 vi.mock('@components//Modal/Modal');
 vi.mock('@features/WishList/Item/WishListItem');
 
@@ -24,8 +24,8 @@ describe('WishList', () => {
   ];
 
   beforeEach(() => {
-    usePurchaseContext.mockReturnValue({
-      getWishList: vi.fn().mockReturnValue(mockWishListItems),
+    useWishListStore.mockReturnValue({
+      items: mockWishListItems,
     });
 
     Modal.mockImplementation(({ children }) => <div>{children}</div>);
@@ -45,8 +45,8 @@ describe('WishList', () => {
   });
 
   it('without items', () => {
-    usePurchaseContext.mockReturnValue({
-      getWishList: vi.fn().mockReturnValue([]),
+    useWishListStore.mockReturnValue({
+      items: [],
     });
 
     const { getByText } = render(<WishList visible onClose={mockOnClose} />);

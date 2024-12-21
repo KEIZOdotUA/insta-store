@@ -6,7 +6,7 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import useProductList from '@features/Product/List/useProductList';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import {
   vi,
@@ -17,7 +17,7 @@ import {
   expect,
 } from 'vitest';
 
-vi.mock('@contexts/App/useAppContext');
+vi.mock('@context/useAppContext');
 vi.mock('@helpers/filterProductsByQuery');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');

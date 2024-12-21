@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import Cart from '@features/Purchase/Cart/Cart';
 import OrderDetails from '@features/Purchase/OrderDetails/OrderDetails';
 import OrderConfirmed from '@features/Purchase/OrderConfirmed/OrderConfirmed';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
 
 function PurchaseStep({ step, updateStep }) {
-  const { getCartId } = usePurchaseContext();
+  const { id: cartId } = useCartStore();
+
   const steps = [
     { name: 'Кошик', component: <Cart onOrder={() => updateStep(1)} /> },
     { name: 'Замовлення', component: <OrderDetails onOrder={() => updateStep(2)} /> },
-    { name: `Ми прийняли Ваше замовлення № ${getCartId()}`, component: <OrderConfirmed /> },
+    { name: `Ми прийняли Ваше замовлення № ${cartId}`, component: <OrderConfirmed /> },
   ];
 
   return (

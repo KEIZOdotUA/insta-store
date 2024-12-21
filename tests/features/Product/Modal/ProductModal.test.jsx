@@ -8,7 +8,7 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import ProductModal from '@features/Product/Modal/ProductModal';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import {
   MemoryRouter,
   useParams,
@@ -23,7 +23,7 @@ import SizePicker from '@components/SizePicker/SizePicker';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
 import useProductNavigation from '@hooks/useProductNavigation';
 
-vi.mock('@contexts/App/useAppContext');
+vi.mock('@context/useAppContext');
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {

@@ -1,26 +1,27 @@
 import './AdditionalPackaging.css';
 import { Link } from 'react-router-dom';
 import Button from '@components/Button/Button';
-import useAppContext from '@contexts/App/useAppContext';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useAppContext from '@context/useAppContext';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
 import useProductNavigation from '@hooks/useProductNavigation';
+import useCartStore from '@store/useCartStore';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
 function AdditionalPackaging() {
   const { packaging } = useAppContext();
+  const { hide: hidePurchasePanel } = usePurchasePanelStateStore();
   const {
-    hidePurchase,
-    findCartItem,
-    addCartItem: addPackagingToCart,
-    removeCartItem: removePackagingFromCart,
-  } = usePurchaseContext();
+    findItem: findCartItem,
+    addItem: addToCart,
+    removeItem: removeFromCart,
+  } = useCartStore();
   const { getProductLink } = useProductNavigation();
 
   const itemInCart = packaging && findCartItem(packaging.id, 0);
 
   const onLinkClick = () => {
     trackViewItemEvent(packaging);
-    hidePurchase();
+    hidePurchasePanel();
   };
 
   return (
@@ -35,13 +36,13 @@ function AdditionalPackaging() {
         <div className="additional-packaging__action">
           <Button
             className={itemInCart ? 'selected-action' : ''}
-            onClick={() => addPackagingToCart({ ...packaging, selectedSize: 0 })}
+            onClick={() => addToCart({ ...packaging, selectedSize: 0 })}
           >
             так
           </Button>
           <Button
             className={!itemInCart ? 'selected-action' : ''}
-            onClick={() => removePackagingFromCart(packaging.id, 0)}
+            onClick={() => removeFromCart(packaging.id, 0)}
           >
             ні
           </Button>

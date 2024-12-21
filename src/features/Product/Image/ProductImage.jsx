@@ -1,4 +1,4 @@
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import PropTypes from 'prop-types';
 
 function ProductImage({

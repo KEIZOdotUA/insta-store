@@ -15,6 +15,7 @@ This project was developed as a sample website for small stores that primarily o
 - Prop-Types
 - Vitest
 - ReactRouter
+- Zustand
 
 # Running the sample locally
 

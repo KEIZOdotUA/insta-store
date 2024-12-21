@@ -1,19 +1,18 @@
 import './Cart.css';
 import PropTypes from 'prop-types';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import CartItem from '@features/Purchase/Cart/Item/CartItem';
 import AdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
 import Button from '@components/Button/Button';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
+import useCartStore from '@store/useCartStore';
 
 function Cart({ onOrder }) {
-  const { getCartItems, getCartTotal } = usePurchaseContext();
+  const { items, getTotalCost } = useCartStore();
 
-  const items = getCartItems();
-  const total = getCartTotal();
+  const total = getTotalCost();
 
   const beginCheckout = () => {
-    trackBeginCheckoutEvent(getCartTotal(), getCartItems());
+    trackBeginCheckoutEvent(getTotalCost(), items);
 
     onOrder();
   };

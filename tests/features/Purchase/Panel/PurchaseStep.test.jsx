@@ -7,9 +7,9 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import PurchaseStep from '@features/Purchase/Panel/PurchaseStep/PurchaseStep';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useCartStore');
 vi.mock('@features/Purchase/Cart/Cart', () => ({
   __esModule: true,
   default: vi.fn(({ onOrder }) => (
@@ -42,13 +42,13 @@ vi.mock('@features/Purchase/OrderConfirmed/OrderConfirmed', () => ({
 }));
 
 describe('PurchaseStep', () => {
-  const mockGetCartId = vi.fn().mockReturnValue('12345');
+  const mockGetCartId = 12345;
   const mockUpdateStep = vi.fn();
 
   beforeEach(() => {
     mockUpdateStep.mockClear();
-    usePurchaseContext.mockReturnValue({
-      getCartId: mockGetCartId,
+    useCartStore.mockReturnValue({
+      id: mockGetCartId,
     });
   });
 
@@ -69,7 +69,7 @@ describe('PurchaseStep', () => {
   it('renders the OrderConfirmed step with the correct name', () => {
     const { getByText } = render(<PurchaseStep step={2} updateStep={mockUpdateStep} />);
 
-    expect(getByText(`Ми прийняли Ваше замовлення № ${mockGetCartId()}`)).toBeInTheDocument();
+    expect(getByText(`Ми прийняли Ваше замовлення № ${mockGetCartId}`)).toBeInTheDocument();
     expect(getByText('Mocked OrderConfirmed')).toBeInTheDocument();
   });
 

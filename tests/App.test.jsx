@@ -6,8 +6,7 @@ import {
 } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import AppContextProvider from '@contexts/App/AppContextProvider';
-import PurchaseContextProvider from '@contexts/Purchase/PurchaseContextProvider';
+import AppContextProvider from '@context/AppContextProvider';
 import App from '../src/App';
 
 vi.mock('@features/Router/Router', () => ({
@@ -15,19 +14,15 @@ vi.mock('@features/Router/Router', () => ({
   default: () => <div>Mocked Router</div>,
 }));
 
-vi.mock('@contexts/App/AppContextProvider', () => ({
+vi.mock('@context/AppContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-vi.mock('@contexts/Purchase/PurchaseContextProvider', () => ({
+vi.mock('@context/Purchase/PurchaseContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
-vi.mock('@contexts/App/AppContextProvider', () => ({
-  default: ({ children }) => <div>{children}</div>,
-}));
-
-vi.mock('@contexts/Purchase/PurchaseContextProvider', () => ({
+vi.mock('@context/AppContextProvider', () => ({
   default: ({ children }) => <div>{children}</div>,
 }));
 
@@ -39,11 +34,9 @@ describe('App', () => {
   it('default', async () => {
     const { getByText } = render(
       <AppContextProvider>
-        <PurchaseContextProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </PurchaseContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </AppContextProvider>,
     );
 

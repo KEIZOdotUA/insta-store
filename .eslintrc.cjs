@@ -19,9 +19,10 @@ module.exports = {
         map: [
           ['@assets', './src/assets'],
           ['@components', './src/components'],
-          ['@contexts', './src/contexts'],
+          ['@context', './src/context'],
           ['@features', './src/features'],
           ['@pages', './src/pages'],
+          ['@store', './src/store'],
           ['@services', './src/services'],
           ['@helpers', './src/helpers'],
           ['@hooks', './src/hooks'],

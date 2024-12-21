@@ -73,7 +73,7 @@ const mockProducts = [
   { id: 2, name: 'Product 2', price: 200 },
 ];
 
-vi.mock('@contexts/App/useAppContext', () => ({
+vi.mock('@context/useAppContext', () => ({
   __esModule: true,
   default: () => ({ products: mockProducts }),
 }));

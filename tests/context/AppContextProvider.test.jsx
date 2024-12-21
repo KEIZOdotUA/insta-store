@@ -9,8 +9,8 @@ import {
   waitFor,
   act,
 } from '@testing-library/react';
-import AppContextProvider from '@contexts/App/AppContextProvider';
-import AppContext from '@contexts/App/AppContext';
+import AppContextProvider from '@context/AppContextProvider';
+import AppContext from '@context/AppContext';
 
 const mockWhitelabelData = {
   categoriesSrc: '/categories.json',

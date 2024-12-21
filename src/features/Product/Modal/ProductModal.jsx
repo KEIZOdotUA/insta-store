@@ -1,7 +1,7 @@
 import './ProductModal.css';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import ProductImage from '@features/Product/Image/ProductImage';
 import Modal from '@components/Modal/Modal';
 import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';

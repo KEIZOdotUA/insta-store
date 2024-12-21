@@ -6,10 +6,10 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import Menu from '@features/Menu/Menu';
 
-vi.mock('@contexts/App/useAppContext');
+vi.mock('@context/useAppContext');
 vi.mock('@components//CloseButton/CloseButton', () => ({
   __esModule: true,
   default: ({ onClick }) => (

@@ -5,14 +5,19 @@ import MenuIcon from '@features/Menu/Icon/MenuIcon';
 import SearchIcon from '@features/Search/Icon/SearchIcon';
 import WishListIcon from '@features/WishList/Icon/WishListIcon';
 import PurchaseIcon from '@features/Purchase/Icon/PurchaseIcon';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
 function Header({
   menuToggler,
   searchToggler,
   wishListToggler,
 }) {
-  const { visiblePurchase, showPurchase, hidePurchase } = usePurchaseContext();
+  const {
+    visible: visiblePurchasePanel,
+    show: showPurchasePanel,
+    hide: hidePurchasePanel,
+  } = usePurchasePanelStateStore();
+
   return (
     <header>
       <div className="grouped-buttons">
@@ -22,7 +27,7 @@ function Header({
       <Logo />
       <div className="grouped-buttons">
         <WishListIcon onClick={wishListToggler} />
-        <PurchaseIcon onClick={visiblePurchase ? hidePurchase : showPurchase} />
+        <PurchaseIcon onClick={visiblePurchasePanel ? hidePurchasePanel : showPurchasePanel} />
       </div>
     </header>
   );

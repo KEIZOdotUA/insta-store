@@ -8,9 +8,9 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Logo from '@features/Logo/Logo';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 
-vi.mock('@contexts/App/useAppContext');
+vi.mock('@context/useAppContext');
 
 describe('Logo', () => {
   const mockWhitelabelWithLogo = {

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import AppContext from '@contexts/App/AppContext';
-import useAppContext from '@contexts/App/useAppContext';
+import AppContext from '@context/AppContext';
+import useAppContext from '@context/useAppContext';
 
 describe('useAppContext', () => {
   it('should use AppContext and return its value', () => {

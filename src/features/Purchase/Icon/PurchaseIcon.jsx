@@ -1,16 +1,15 @@
 import './PurchaseIcon.css';
 import PropTypes from 'prop-types';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import { trackViewCartEvent } from '@helpers/googleAnalyticsGA4';
 import CartSvgIcon from '@assets/cart.svg';
 import Button from '@components/Button/Button';
+import useCartStore from '@store/useCartStore';
 
 function PurchaseIcon({ onClick }) {
-  const { getCartItems, getCartTotal } = usePurchaseContext();
-  const cartItems = getCartItems();
+  const { items: cartItems, getTotalCost } = useCartStore();
 
   const onViewCart = () => {
-    trackViewCartEvent(getCartTotal(), cartItems);
+    trackViewCartEvent(getTotalCost(), cartItems);
     onClick();
   };
 

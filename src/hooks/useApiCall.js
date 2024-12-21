@@ -1,5 +1,5 @@
 import axios from 'axios';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 
 export default function useApiCall() {
   const { whitelabel } = useAppContext();

@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Header from '@features/Header/Header';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
 vi.mock('@features/Logo/Logo', () => ({
   __esModule: true,
@@ -50,13 +50,7 @@ vi.mock('@features/WishList/Icon/WishListIcon', () => ({
   ),
 }));
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
-
-const mockPurchaseContext = {
-  visiblePurchase: false,
-  showPurchase: vi.fn(),
-  hidePurchase: vi.fn(),
-};
+vi.mock('@store/usePurchasePanelStateStore');
 
 const mockMenuToggler = vi.fn();
 const mockSearchToggler = vi.fn();
@@ -64,8 +58,11 @@ const mockWishListToggler = vi.fn();
 
 describe('Header', () => {
   beforeEach(() => {
-    usePurchaseContext.mockReturnValue(mockPurchaseContext);
-    vi.clearAllMocks();
+    usePurchasePanelStateStore.mockReturnValue({
+      visible: false,
+      show: vi.fn(),
+      hide: vi.fn(),
+    });
   });
 
   it('renders default elements', () => {
@@ -124,7 +121,14 @@ describe('Header', () => {
   });
 
   it('calls showPurchase on PurchaseIcon click when visiblePurchase is false', () => {
-    mockPurchaseContext.visiblePurchase = false;
+    const mockShow = vi.fn();
+    const mockHide = vi.fn();
+    usePurchasePanelStateStore.mockReturnValue({
+      visible: false,
+      show: mockShow,
+      hide: mockHide,
+    });
+
     render(
       <Header
         menuToggler={mockMenuToggler}
@@ -134,12 +138,19 @@ describe('Header', () => {
     );
 
     fireEvent.click(screen.getByText('PurchaseIcon'));
-    expect(mockPurchaseContext.showPurchase).toHaveBeenCalledTimes(1);
-    expect(mockPurchaseContext.hidePurchase).not.toHaveBeenCalled();
+    expect(mockShow).toHaveBeenCalledTimes(1);
+    expect(mockHide).not.toHaveBeenCalled();
   });
 
   it('calls hidePurchase on PurchaseIcon click when visiblePurchase is true', () => {
-    mockPurchaseContext.visiblePurchase = true;
+    const mockShow = vi.fn();
+    const mockHide = vi.fn();
+    usePurchasePanelStateStore.mockReturnValue({
+      visible: true,
+      show: mockShow,
+      hide: mockHide,
+    });
+
     render(
       <Header
         menuToggler={mockMenuToggler}
@@ -149,7 +160,7 @@ describe('Header', () => {
     );
 
     fireEvent.click(screen.getByText('PurchaseIcon'));
-    expect(mockPurchaseContext.hidePurchase).toHaveBeenCalledTimes(1);
-    expect(mockPurchaseContext.showPurchase).not.toHaveBeenCalled();
+    expect(mockHide).toHaveBeenCalledTimes(1);
+    expect(mockShow).not.toHaveBeenCalled();
   });
 });

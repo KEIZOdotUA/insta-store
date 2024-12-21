@@ -7,9 +7,9 @@ import {
 } from 'vitest';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import PurchasePanel from '@features/Purchase/Panel/PurchasePanel';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/usePurchasePanelStateStore');
 vi.mock('@components//Transition/Transition', () => ({
   __esModule: true,
   default: vi.fn(({ children }) => <div>{children}</div>),
@@ -38,10 +38,9 @@ describe('PurchasePanel', () => {
   beforeEach(() => {
     mockHidePurchase.mockClear();
 
-    // Mock the purchase context
-    usePurchaseContext.mockReturnValue({
-      visiblePurchase: true,
-      hidePurchase: mockHidePurchase,
+    usePurchasePanelStateStore.mockReturnValue({
+      visible: true,
+      hide: mockHidePurchase,
     });
   });
 

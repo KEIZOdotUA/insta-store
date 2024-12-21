@@ -1,5 +1,5 @@
 import './AboutPage.css';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import Heading from '@components/Heading/Heading';
 import parse from 'html-react-parser';
 

@@ -6,9 +6,9 @@ import {
   expect,
 } from 'vitest';
 import AboutPage from '@pages/About/AboutPage';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 
-vi.mock('@contexts/App/useAppContext', () => ({
+vi.mock('@context/useAppContext', () => ({
   __esModule: true,
   default: vi.fn(),
 }));

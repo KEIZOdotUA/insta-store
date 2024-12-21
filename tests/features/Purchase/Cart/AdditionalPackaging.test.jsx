@@ -8,13 +8,15 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import CartAdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
-import useAppContext from '@contexts/App/useAppContext';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useAppContext from '@context/useAppContext';
+import useCartStore from '@store/useCartStore';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 import { trackViewItemEvent } from '@helpers/googleAnalyticsGA4';
 import useProductNavigation from '@hooks/useProductNavigation';
 
-vi.mock('@contexts/App/useAppContext');
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@context/useAppContext');
+vi.mock('@store/useCartStore');
+vi.mock('@store/usePurchasePanelStateStore');
 vi.mock('@helpers/googleAnalyticsGA4');
 vi.mock('@hooks/useProductNavigation');
 
@@ -46,11 +48,13 @@ describe('AdditionalPackaging', () => {
       packaging: mockPackaging,
     });
 
-    usePurchaseContext.mockReturnValue({
-      hidePurchase: mockHidePurchase,
-      findCartItem: mockFindCartItem,
-      addCartItem: mockAddCartItem,
-      removeCartItem: mockRemoveCartItem,
+    useCartStore.mockReturnValue({
+      findItem: mockFindCartItem,
+      addItem: mockAddCartItem,
+      removeItem: mockRemoveCartItem,
+    });
+    usePurchasePanelStateStore.mockReturnValue({
+      hide: mockHidePurchase,
     });
 
     useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });

@@ -1,13 +1,13 @@
 import './WishListItem.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@hooks/useProductNavigation';
 import Button from '@components/Button/Button';
+import useWishListStore from '@store/useWishListStore';
 
 function WishListItem({ item }) {
-  const { removeWishListItem } = usePurchaseContext();
+  const { removeItem: removeFromWishList } = useWishListStore();
 
   const { getProductLink } = useProductNavigation();
 
@@ -25,7 +25,7 @@ function WishListItem({ item }) {
           </Link>
         </div>
         <div className="wishlist-item__price">{`${item.price} грн`}</div>
-        <Button className="wishlist-item__delete" onClick={() => removeWishListItem(item.id)}>
+        <Button className="wishlist-item__delete" onClick={() => removeFromWishList(item.id)}>
           видалити
         </Button>
       </div>

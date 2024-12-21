@@ -7,11 +7,11 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import Cart from '@features/Purchase/Cart/Cart';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
 import CartItem from '@features/Purchase/Cart/Item/CartItem';
 import { trackBeginCheckoutEvent } from '@helpers/googleAnalyticsGA4';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useCartStore');
 vi.mock('@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging', () => ({
   __esModule: true,
   default: vi.fn(() => <div>AdditionalPackaging</div>),
@@ -34,29 +34,28 @@ vi.mock('@helpers/googleAnalyticsGA4', () => ({
 
 describe('Cart', () => {
   const mockOnOrder = vi.fn();
-  const mockGetCartItems = vi.fn();
+  const mockGetCartItems = [
+    {
+      id: 1,
+      name: 'Item 1',
+      price: 100,
+      quantity: 1,
+    },
+    {
+      id: 2,
+      name: 'Item 2',
+      price: 200,
+      quantity: 2,
+    },
+  ];
   const mockGetCartTotal = vi.fn();
 
   beforeEach(() => {
-    mockGetCartItems.mockReturnValue([
-      {
-        id: 1,
-        name: 'Item 1',
-        price: 100,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        name: 'Item 2',
-        price: 200,
-        quantity: 2,
-      },
-    ]);
     mockGetCartTotal.mockReturnValue(500);
 
-    usePurchaseContext.mockReturnValue({
-      getCartItems: mockGetCartItems,
-      getCartTotal: mockGetCartTotal,
+    useCartStore.mockReturnValue({
+      items: mockGetCartItems,
+      getTotalCost: mockGetCartTotal,
     });
   });
 

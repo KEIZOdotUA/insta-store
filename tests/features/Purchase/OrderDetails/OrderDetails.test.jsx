@@ -7,7 +7,7 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import OrderDetails from '@features/Purchase/OrderDetails/OrderDetails';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
 import useApiCall from '@hooks/useApiCall';
 import { trackPurchaseEvent } from '@helpers/googleAnalyticsGA4';
 import {
@@ -18,7 +18,7 @@ import {
 import useProductNavigation from '@hooks/useProductNavigation';
 import { useNavigate } from 'react-router-dom';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useCartStore');
 vi.mock('@hooks/useApiCall');
 vi.mock('@helpers/googleAnalyticsGA4', () => ({
   trackPurchaseEvent: vi.fn(),
@@ -96,36 +96,35 @@ vi.mock('react-router-dom', () => ({
 }));
 
 describe('OrderDetails', () => {
+  const mockGetCartItems = [
+    {
+      id: 1,
+      name: 'Item 1',
+      price: 100,
+      quantity: 1,
+    },
+    {
+      id: 2,
+      name: 'Item 2',
+      price: 200,
+      quantity: 2,
+    },
+  ];
   const mockOnOrder = vi.fn();
-  const mockGetCartItems = vi.fn();
   const mockClearCart = vi.fn();
   const mockGetCartTotal = vi.fn();
-  const mockGetCartId = vi.fn(() => 1);
+  const mockGetCartId = 1;
   const mockApiCall = vi.fn();
   const mockNavigate = vi.fn();
   const mockGetProductListLink = vi.fn(() => '/products');
 
   beforeEach(() => {
-    mockGetCartItems.mockReturnValue([
-      {
-        id: 1,
-        name: 'Item 1',
-        price: 100,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        name: 'Item 2',
-        price: 200,
-        quantity: 2,
-      },
-    ]);
     mockGetCartTotal.mockReturnValue(500);
-    usePurchaseContext.mockReturnValue({
-      getCartId: mockGetCartId,
-      getCartItems: mockGetCartItems,
-      clearCart: mockClearCart,
-      getCartTotal: mockGetCartTotal,
+    useCartStore.mockReturnValue({
+      id: mockGetCartId,
+      items: mockGetCartItems,
+      clearItems: mockClearCart,
+      getTotalCost: mockGetCartTotal,
     });
     useApiCall.mockReturnValue(mockApiCall);
     validateField.mockImplementation((value) => (value ? '' : 'Error'));
@@ -181,8 +180,8 @@ describe('OrderDetails', () => {
     fireEvent.click(orderButton);
 
     expect(mockApiCall).toHaveBeenCalledWith(
-      mockGetCartId(),
-      mockGetCartItems(),
+      mockGetCartId,
+      mockGetCartItems,
       {
         city: 'Kyiv',
         department: 'Department 1',
@@ -195,9 +194,9 @@ describe('OrderDetails', () => {
     );
 
     expect(trackPurchaseEvent).toHaveBeenCalledWith(
-      mockGetCartId(),
+      mockGetCartId,
       mockGetCartTotal(),
-      mockGetCartItems(),
+      mockGetCartItems,
     );
 
     expect(mockClearCart).toHaveBeenCalled();

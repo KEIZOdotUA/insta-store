@@ -1,5 +1,5 @@
 import './Bio.css';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import parse from 'html-react-parser';
 
 function Bio() {

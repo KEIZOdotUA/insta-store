@@ -1,6 +1,6 @@
 import './ContactUs.css';
 import PropTypes from 'prop-types';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import InstagramSvg from '@assets/instagram.svg';
 import MailSvg from '@assets/mail.svg';
 import FacebookSvg from '@assets/facebook.svg';

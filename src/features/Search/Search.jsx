@@ -1,7 +1,7 @@
 import './Search.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 import TextInput from '@components/TextInput/TextInput';
 import Button from '@components/Button/Button';
 import CloseSvg from '@assets/close.svg';

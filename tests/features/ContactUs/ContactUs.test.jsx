@@ -6,9 +6,9 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import ContactUs from '@features/ContactUs/ContactUs';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 
-vi.mock('@contexts/App/useAppContext');
+vi.mock('@context/useAppContext');
 
 vi.mock('@assets/instagram.svg', () => ({
   __esModule: true,

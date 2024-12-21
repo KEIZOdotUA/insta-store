@@ -1,28 +1,29 @@
 import './InfoHeader.css';
 import PropTypes from 'prop-types';
-import useAppContext from '@contexts/App/useAppContext';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useAppContext from '@context/useAppContext';
 import LikeButton from '@components/LikeButton/LikeButton';
 import ShareButton from '@components/ShareButton/ShareButton';
+import useWishListStore from '@store/useWishListStore';
 
 function InfoHeader({ product }) {
   const { whitelabel } = useAppContext();
+
   const {
-    findWishListItem,
-    addWishListItem,
-    removeWishListItem,
-  } = usePurchaseContext();
+    findItem: findWishListItem,
+    addItem: addToWishList,
+    removeItem: removeFromWishList,
+  } = useWishListStore();
 
   const itemInWIshList = product && findWishListItem(product.id);
 
   const toggleLike = (item) => {
     if (itemInWIshList) {
-      removeWishListItem(item.id);
+      removeFromWishList(item.id);
 
       return;
     }
 
-    addWishListItem(item);
+    addToWishList(item);
   };
 
   return (

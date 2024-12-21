@@ -7,9 +7,9 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import ProductImage from '@features/Product/Image/ProductImage';
-import useAppContext from '@contexts/App/useAppContext';
+import useAppContext from '@context/useAppContext';
 
-vi.mock('@contexts/App/useAppContext');
+vi.mock('@context/useAppContext');
 
 describe('ProductImage', () => {
   const mockAppContext = {

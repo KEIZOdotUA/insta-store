@@ -1,21 +1,19 @@
 import './ActionButton.css';
 import PropTypes from 'prop-types';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import Button from '@components/Button/Button';
 import { trackAddToCartEvent } from '@helpers/googleAnalyticsGA4';
+import useCartStore from '@store/useCartStore';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
 function ActionButton({ product, selectedSize }) {
-  const {
-    showPurchase,
-    findCartItem,
-    addCartItem,
-  } = usePurchaseContext();
+  const { findItem: findCartItem, addItem: addToCart } = useCartStore();
+  const { show: showPurchasePanel } = usePurchasePanelStateStore();
 
   const inCart = product && findCartItem(product.id, selectedSize);
 
   const onAddProductToCart = (item) => {
-    addCartItem(item);
-    showPurchase();
+    addToCart(item);
+    showPurchasePanel();
     trackAddToCartEvent(item);
   };
 

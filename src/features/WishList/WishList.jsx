@@ -1,13 +1,12 @@
 import './WishList.css';
 import Modal from '@components/Modal/Modal';
 import PropTypes from 'prop-types';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import WishListItem from '@features/WishList/Item/WishListItem';
+import useWishListStore from '@store/useWishListStore';
 
 function WishList({ visible, onClose }) {
-  const { getWishList } = usePurchaseContext();
+  const { items } = useWishListStore();
 
-  const items = getWishList();
   return (
     visible && (
       <Modal onClose={onClose} hiddenOverflow>

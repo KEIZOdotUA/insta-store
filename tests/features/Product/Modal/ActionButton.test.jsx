@@ -7,10 +7,12 @@ import {
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import ActionButton from '@features/Product/Modal/ActionButton/ActionButton';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
+import useCartStore from '@store/useCartStore';
+import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 import { trackAddToCartEvent } from '@helpers/googleAnalyticsGA4';
 
-vi.mock('@contexts/Purchase/usePurchaseContext');
+vi.mock('@store/useCartStore');
+vi.mock('@store/usePurchasePanelStateStore');
 vi.mock('@helpers/googleAnalyticsGA4');
 
 describe('ActionButton', () => {
@@ -30,10 +32,12 @@ describe('ActionButton', () => {
     mockShowPurchase = vi.fn();
     mockFindCartItem = vi.fn();
 
-    usePurchaseContext.mockReturnValue({
-      findCartItem: mockFindCartItem,
-      addCartItem: mockAddCartItem,
-      showPurchase: mockShowPurchase,
+    useCartStore.mockReturnValue({
+      findItem: mockFindCartItem,
+      addItem: mockAddCartItem,
+    });
+    usePurchasePanelStateStore.mockReturnValue({
+      show: mockShowPurchase,
     });
   });
 

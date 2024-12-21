@@ -26,10 +26,10 @@ vi.mock('@hooks/useProductNavigation', () => ({
 
 const mockRemoveWishListItem = vi.fn();
 
-vi.mock('@contexts/Purchase/usePurchaseContext', () => ({
+vi.mock('@store/useWishListStore', () => ({
   __esModule: true,
   default: vi.fn(() => ({
-    removeWishListItem: mockRemoveWishListItem,
+    removeItem: mockRemoveWishListItem,
   })),
 }));
 

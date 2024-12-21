@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import AppContext from '@contexts/App/AppContext';
+import AppContext from '@context/AppContext';
 
 function AppContextProvider({ children }) {
   const [whitelabel, setWhitelabel] = useState(null);

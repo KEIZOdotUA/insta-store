@@ -1,7 +1,6 @@
 import './OrderDetails.css';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import usePurchaseContext from '@contexts/Purchase/usePurchaseContext';
 import TextInput from '@components/TextInput/TextInput';
 import PhoneInput from '@components/PhoneInput/PhoneInput';
 import TextArea from '@components/TextArea/TextArea';
@@ -16,14 +15,15 @@ import {
 } from '@features/Purchase/OrderDetails/orderValidation';
 import useProductNavigation from '@hooks/useProductNavigation';
 import { useNavigate } from 'react-router-dom';
+import useCartStore from '@store/useCartStore';
 
 function OrderDetails({ onOrder }) {
   const {
-    getCartId,
-    getCartItems,
-    clearCart,
-    getCartTotal,
-  } = usePurchaseContext();
+    id: cartId,
+    items: cartItems,
+    clearItems: clearCart,
+    getTotalCost,
+  } = useCartStore();
 
   const [orderDetails, setOrderDetails] = useState({
     city: '',
@@ -61,8 +61,8 @@ function OrderDetails({ onOrder }) {
       setErrors(validationResult);
       return;
     }
-    sendOrder(getCartId(), getCartItems(), orderDetails);
-    trackPurchaseEvent(getCartId(), getCartTotal(), getCartItems());
+    sendOrder(cartId, cartItems, orderDetails);
+    trackPurchaseEvent(cartId, getTotalCost(), cartItems);
     clearCart();
     navigate(getProductListLink());
     onOrder();
