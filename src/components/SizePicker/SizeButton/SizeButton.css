@@ -1,7 +1,6 @@
 .size-button {
   font-size: 16px;
   border: 2px solid var(--button-color);
-  border-radius: 8px;
   color: var(--button-color);
   height: 48px;
   width: 55px;

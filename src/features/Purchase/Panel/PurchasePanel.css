@@ -10,8 +10,7 @@
 
 .purchase-panel {
   height: 100vh;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: hidden visible;
   background: var(--light-background-color);
   padding: 10px 20px;
   box-shadow: 0 0 10px var(--shadow);
@@ -37,5 +36,5 @@
   display: block;
   width: 100%;
   max-width: 390px;
-  margin: 15px 0 40px 0;
+  margin: 15px 0 40px;
 }

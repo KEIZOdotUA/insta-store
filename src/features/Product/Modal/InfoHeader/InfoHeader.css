@@ -22,7 +22,7 @@
 }
 
 .product-modal__featured > span {
-  padding: 0px 5px 0px 5px;
+  padding: 0 5px;
   background: var(--dark-background-color);
   color: var(--light-text-color);
 }

@@ -18,8 +18,7 @@
 
 .menu {
   height: 100vh;
-  overflow-x: hidden;
-  overflow-y: visible;
+  overflow: hidden visible;
   background: var(--light-background-color);
   padding: 40px 20px;
   box-shadow: 0 0 10px var(--shadow);
@@ -39,7 +38,7 @@ nav > ol {
 
 nav > ol > li {
   display: flex;
-  width: calc(100%-20px);
+  width: calc(100% - 20px);
   height: 48px;
   align-items: center;
   padding-left: 20px;

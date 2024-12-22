@@ -7,5 +7,5 @@
 
 input[type="checkbox"] {
   accent-color: var(--dark-background-color);
-  margin-left: 0px;
+  margin-left:0;
 }

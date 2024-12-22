@@ -1,5 +1,5 @@
 .bio {
-  padding: 0 20px 0 20px;
+  padding: 0 20px;
   display: block;
   text-align: justify;
   font-size: 14px;
@@ -7,7 +7,7 @@
 }
 
 .bio > p {
-  margin: 14px 0 0 0;
+  margin: 14px 0 0;
 }
 
 .bio > p > b {

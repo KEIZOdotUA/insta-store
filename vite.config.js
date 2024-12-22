@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
+import stylelint from "vite-plugin-stylelint";
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
 
@@ -9,7 +10,12 @@ export default defineConfig({
     minify: 'esbuild',
     target: 'esnext',
   },
-  plugins: [react(), eslint(), svgr({ include: '**/*.svg' })],
+  plugins: [
+    react(),
+    eslint(),
+    stylelint(),
+    svgr({ include: '**/*.svg' }),
+  ],
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(__dirname, './src') },

@@ -14,14 +14,14 @@
 
 .product-card__featured {
   margin-top: 5px;
-  padding: 0px 5px 0px 5px;
+  padding: 0 5px;
   background: var(--dark-background-color);
   color: var(--light-text-color);
 }
 
 .product-card__name {
   font-weight: 500;
-  padding: 8px 0px 8px 0px;
+  padding: 8px 0;
 }
 
 .product-card__price {

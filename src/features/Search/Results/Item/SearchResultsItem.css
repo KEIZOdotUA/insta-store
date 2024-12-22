@@ -1,6 +1,6 @@
 .search-results-item {
   width: 100%;
-  padding: 13px 0px;
+  padding: 13px 0;
   overflow: hidden;
   border-bottom: 1px solid var(--border-color);
   z-index: 100;
@@ -43,5 +43,5 @@
 }
 
 .search-results-item__txt-container > .search-results-item__price {
-  margin: 15px 0px 20px 0px;
+  margin: 15px 0 20px;
 }

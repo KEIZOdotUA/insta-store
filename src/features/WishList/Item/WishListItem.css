@@ -1,6 +1,6 @@
 .wishlist-item {
   width: 100%;
-  padding: 13px 0px;
+  padding: 13px 0;
   overflow: hidden;
   border-top: 1px solid var(--border-color);
 }
