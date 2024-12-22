@@ -9,7 +9,7 @@
 .product-card__img {
   cursor: pointer;
   width: 100%;
-  height: auto;
+  aspect-ratio: 1 / 1;
 }
 
 .product-card__featured {
