@@ -9,11 +9,16 @@ import { render, fireEvent } from '@testing-library/react';
 import InfoHeader from '@features/Product/Modal/InfoHeader/InfoHeader';
 import useAppContext from '@context/useAppContext';
 import useWishListStore from '@store/useWishListStore';
+import { trackAddToWishListEvent, trackShareEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@context/useAppContext');
 vi.mock('@store/useWishListStore');
+vi.mock('@helpers/googleAnalyticsGA4', () => ({
+  trackAddToWishListEvent: vi.fn(),
+  trackShareEvent: vi.fn(),
+}));
 
-vi.mock('@components//LikeButton/LikeButton', () => ({
+vi.mock('@components/LikeButton/LikeButton', () => ({
   __esModule: true,
   default: ({ liked, onLike }) => (
     <button type="button" onClick={onLike} aria-label={liked ? 'Unlike' : 'Like'}>
@@ -22,11 +27,16 @@ vi.mock('@components//LikeButton/LikeButton', () => ({
   ),
 }));
 
-vi.mock('@components//ShareButton/ShareButton', () => ({
+vi.mock('@components/ShareButton/ShareButton', () => ({
   __esModule: true,
-  default: ({ title, text, url }) => (
-    <button type="button" aria-label="Share">
-      {`Share ${title} - ${text} (${url})`}
+  default: ({
+    title,
+    text,
+    url,
+    onShare,
+  }) => (
+    <button type="button" aria-label="Share" onClick={onShare}>
+      {`share ${title} - ${text} (${url})`}
     </button>
   ),
 }));
@@ -74,6 +84,7 @@ describe('InfoHeader', () => {
     fireEvent.click(likeButton);
 
     expect(mockAddWishListItem).toHaveBeenCalledWith(mockProduct);
+    expect(trackAddToWishListEvent).toHaveBeenCalledWith(mockProduct);
     expect(mockRemoveWishListItem).not.toHaveBeenCalled();
   });
 
@@ -87,5 +98,14 @@ describe('InfoHeader', () => {
 
     expect(mockRemoveWishListItem).toHaveBeenCalledWith(mockProduct.id);
     expect(mockAddWishListItem).not.toHaveBeenCalled();
+  });
+
+  it('calls trackShareEvent when ShareButton is clicked', () => {
+    const { getByRole } = render(<InfoHeader product={mockProduct} />);
+    const shareButton = getByRole('button', { name: /share/i });
+
+    fireEvent.click(shareButton);
+
+    expect(trackShareEvent).toHaveBeenCalledWith(mockProduct.id);
   });
 });

@@ -7,6 +7,7 @@ import useProductNavigation from '@hooks/useProductNavigation';
 import Button from '@components/Button/Button';
 import useCartStore from '@store/useCartStore';
 import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
+import { trackRemoveFromCartEvent } from '@helpers/googleAnalyticsGA4';
 
 function CartItem({ item }) {
   const {
@@ -17,6 +18,11 @@ function CartItem({ item }) {
   const { hide: hidePurchasePanel } = usePurchasePanelStateStore();
 
   const { getProductLink } = useProductNavigation();
+
+  const onRemoveFromCart = () => {
+    removeFromCart(item.id, item.selectedSize);
+    trackRemoveFromCartEvent(item);
+  };
 
   return (
     <div className="cart-item">
@@ -32,7 +38,7 @@ function CartItem({ item }) {
           </Link>
         </div>
         <div className="cart-item__price">{`${item.price} грн`}</div>
-        <Button className="cart-item__delete" onClick={() => removeFromCart(item.id, item.selectedSize)}>
+        <Button className="cart-item__delete" onClick={() => onRemoveFromCart()}>
           видалити
         </Button>
         <div className="cart-item__quantity">

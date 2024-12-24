@@ -4,6 +4,7 @@ import useAppContext from '@context/useAppContext';
 import LikeButton from '@components/LikeButton/LikeButton';
 import ShareButton from '@components/ShareButton/ShareButton';
 import useWishListStore from '@store/useWishListStore';
+import { trackAddToWishListEvent, trackShareEvent } from '@helpers/googleAnalyticsGA4';
 
 function InfoHeader({ product }) {
   const { whitelabel } = useAppContext();
@@ -24,6 +25,7 @@ function InfoHeader({ product }) {
     }
 
     addToWishList(item);
+    trackAddToWishListEvent(item);
   };
 
   return (
@@ -39,7 +41,12 @@ function InfoHeader({ product }) {
       </div>
       <div className="product-modal__buttons">
         <LikeButton liked={Boolean(itemInWIshList)} onLike={() => toggleLike(product)} />
-        <ShareButton title={whitelabel.shop.name} text={product.name} url={window.location.href} />
+        <ShareButton
+          title={whitelabel.shop.name}
+          text={product.name}
+          url={window.location.href}
+          onShare={() => trackShareEvent(product.id)}
+        />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import {
 import Search from '@features/Search/Search';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import animationDuration from '@helpers/constValues';
+import { trackSearchEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@components//TextInput/TextInput', () => ({
   __esModule: true,
@@ -66,12 +67,14 @@ vi.mock('@helpers/constValues', () => ({
   __esModule: true,
   default: 1,
 }));
+vi.mock('@helpers/googleAnalyticsGA4');
 
 const mockSearchToggler = vi.fn();
 const mockProducts = [
   { id: 1, name: 'Product 1', price: 100 },
   { id: 2, name: 'Product 2', price: 200 },
 ];
+const mockTrackSearchEvent = vi.fn();
 
 vi.mock('@context/useAppContext', () => ({
   __esModule: true,
@@ -81,6 +84,7 @@ vi.mock('@context/useAppContext', () => ({
 describe('Search', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    trackSearchEvent.mockImplementation(mockTrackSearchEvent);
   });
 
   it('renders input, close button, and overlays when visible', () => {
@@ -128,5 +132,6 @@ describe('Search', () => {
     expect(filterProductsByQuery).toHaveBeenCalledWith(mockProducts, 'Product');
     expect(screen.getByTestId('search-results').children.length).toBe(1);
     expect(screen.getByText('Product 1')).toBeInTheDocument();
+    trackSearchEvent.mockImplementation(mockTrackSearchEvent);
   });
 });

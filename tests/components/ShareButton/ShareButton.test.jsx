@@ -26,6 +26,7 @@ vi.mock('@assets/share.svg', () => ({
 
 describe('ShareButton', () => {
   const mockShare = vi.fn();
+  const mockOnShare = vi.fn();
   const originalNavigator = global.navigator;
 
   beforeAll(() => {
@@ -47,6 +48,7 @@ describe('ShareButton', () => {
     title: 'Test Title',
     text: 'Test Text',
     url: 'https://test.com',
+    onShare: mockOnShare,
   };
 
   it('default', () => {
@@ -77,6 +79,21 @@ describe('ShareButton', () => {
       text: mockProps.text,
       url: mockProps.url,
     });
+  });
+
+  it('OnShare', () => {
+    const { getByRole } = render(
+      <ShareButton
+        title={mockProps.title}
+        text={mockProps.text}
+        url={mockProps.url}
+        onShare={mockProps.onShare}
+      />,
+    );
+
+    fireEvent.click(getByRole('button'));
+
+    expect(mockOnShare).toHaveBeenCalled();
   });
 
   it('navigator.share is unavailable', () => {

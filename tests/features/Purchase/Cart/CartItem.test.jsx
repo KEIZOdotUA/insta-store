@@ -12,6 +12,7 @@ import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 import QuantityInput from '@components/QuantityInput/QuantityInput';
 import ProductImage from '@features/Product/Image/ProductImage';
 import useProductNavigation from '@hooks/useProductNavigation';
+import { trackRemoveFromCartEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@store/useCartStore');
 vi.mock('@store/usePurchasePanelStateStore');
@@ -43,6 +44,7 @@ vi.mock('react-router-dom', () => ({
     </span>
   )),
 }));
+vi.mock('@helpers/googleAnalyticsGA4');
 
 describe('CartItem', () => {
   const mockHidePurchase = vi.fn();
@@ -50,6 +52,7 @@ describe('CartItem', () => {
   const mockIncrementCartItemQuantity = vi.fn();
   const mockDecrementCartItemQuantity = vi.fn();
   const mockGetProductLink = vi.fn();
+  const mockTrackRemoveFromCartEvent = vi.fn();
 
   beforeEach(() => {
     useCartStore.mockReturnValue({
@@ -62,6 +65,7 @@ describe('CartItem', () => {
     });
     useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
     mockGetProductLink.mockReturnValue('/test-category/1');
+    trackRemoveFromCartEvent.mockImplementation(mockTrackRemoveFromCartEvent);
   });
 
   const item = {
@@ -122,6 +126,7 @@ describe('CartItem', () => {
 
     fireEvent.click(deleteButton);
     expect(mockRemoveCartItem).toHaveBeenCalledWith(item.id, item.selectedSize);
+    expect(mockTrackRemoveFromCartEvent).toHaveBeenCalledWith(item);
   });
 
   it('calls increment and decrement functions from QuantityInput with selectedSize', () => {

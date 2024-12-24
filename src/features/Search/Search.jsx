@@ -9,6 +9,7 @@ import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import Overlay from '@features/Search/Overlay/SearchOverlay';
 import Results from '@features/Search/Results/SearchResults';
 import animationDuration from '@helpers/constValues';
+import { trackSearchEvent } from '@helpers/googleAnalyticsGA4';
 
 function Search({ visible, searchToggler }) {
   const { products } = useAppContext();
@@ -19,6 +20,7 @@ function Search({ visible, searchToggler }) {
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
     setSearchQuery(searchTerm);
+    trackSearchEvent(searchTerm);
 
     const filteredProducts = searchTerm
       ? filterProductsByQuery(products, searchTerm).slice(0, 5)

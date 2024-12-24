@@ -106,3 +106,59 @@ export const trackAddToCartEvent = (item) => {
     },
   });
 };
+
+export const trackRemoveFromCartEvent = (item) => {
+  dispatchTrackingEvent({
+    event: 'remove_from_cart',
+    ecommerce: {
+      currency: 'UAH',
+      value: item.price,
+      items: [
+        {
+          item_id: item.id,
+          item_name: item.name,
+          index: 0,
+          price: item.price,
+          quantity: 1,
+        },
+      ],
+    },
+  });
+};
+
+export const trackAddToWishListEvent = (item) => {
+  dispatchTrackingEvent({
+    event: 'add_to_wishlist',
+    ecommerce: {
+      currency: 'UAH',
+      value: item.price,
+      items: [
+        {
+          item_id: item.id,
+          item_name: item.name,
+          index: 0,
+          price: item.price,
+          quantity: 1,
+        },
+      ],
+    },
+  });
+};
+
+export const trackSearchEvent = (searchTerm) => {
+  dispatchTrackingEvent({
+    event: 'search',
+    ecommerce: {
+      search_term: searchTerm,
+    },
+  });
+};
+
+export const trackShareEvent = (itemId) => {
+  dispatchTrackingEvent({
+    event: 'share',
+    ecommerce: {
+      item_id: itemId,
+    },
+  });
+};

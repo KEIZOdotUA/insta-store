@@ -12,6 +12,10 @@ import {
   trackPurchaseEvent,
   trackViewItemListEvent,
   trackAddToCartEvent,
+  trackRemoveFromCartEvent,
+  trackAddToWishListEvent,
+  trackSearchEvent,
+  trackShareEvent,
 } from '@helpers/googleAnalyticsGA4';
 import dispatchTrackingEvent from '@helpers/dispatchTrackingEvent';
 
@@ -290,6 +294,94 @@ describe('Tracking Events', () => {
               quantity: 1,
             },
           ],
+        },
+      });
+    });
+  });
+
+  describe('trackRemoveFromCartEvent', () => {
+    it('dispatches the correct event for removing an item from the cart', () => {
+      const item = {
+        id: '789',
+        name: 'Removed Item',
+        price: 120,
+      };
+
+      trackRemoveFromCartEvent(item);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'remove_from_cart',
+        ecommerce: {
+          currency: 'UAH',
+          value: item.price,
+          items: [
+            {
+              item_id: item.id,
+              item_name: item.name,
+              index: 0,
+              price: item.price,
+              quantity: 1,
+            },
+          ],
+        },
+      });
+    });
+  });
+
+  describe('trackAddToWishListEvent', () => {
+    it('dispatches the correct event for adding an item to the wishlist', () => {
+      const item = {
+        id: '101',
+        name: 'Wishlist Item',
+        price: 200,
+      };
+
+      trackAddToWishListEvent(item);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'add_to_wishlist',
+        ecommerce: {
+          currency: 'UAH',
+          value: item.price,
+          items: [
+            {
+              item_id: item.id,
+              item_name: item.name,
+              index: 0,
+              price: item.price,
+              quantity: 1,
+            },
+          ],
+        },
+      });
+    });
+  });
+
+  describe('trackSearchEvent', () => {
+    it('dispatches the correct event for a search', () => {
+      const searchTerm = 'Test Search';
+
+      trackSearchEvent(searchTerm);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'search',
+        ecommerce: {
+          search_term: searchTerm,
+        },
+      });
+    });
+  });
+
+  describe('trackShareEvent', () => {
+    it('dispatches the correct event for sharing an item', () => {
+      const itemId = '123';
+
+      trackShareEvent(itemId);
+
+      expect(dispatchTrackingEvent).toHaveBeenCalledWith({
+        event: 'share',
+        ecommerce: {
+          item_id: itemId,
         },
       });
     });
