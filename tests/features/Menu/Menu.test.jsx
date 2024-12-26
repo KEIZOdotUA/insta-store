@@ -30,9 +30,16 @@ vi.mock('@features/ContactUs/ContactUs', () => ({
 }));
 
 const mockAppContext = {
+  whitelabel: {
+    shop: { name: 'whitelabel' },
+  },
   categories: [
     { id: 1, name: 'Category 1', slug: 'Category1' },
     { id: 2, name: 'Category 2', slug: 'Category2' },
+  ],
+  features: [
+    { id: 1, name: 'Feature 1', slug: 'Feature1' },
+    { id: 2, name: 'Feature 2', slug: 'Feature2' },
   ],
 };
 
@@ -54,10 +61,12 @@ describe('Menu', () => {
     fireEvent.click(closeButton);
     expect(mockMenuToggler).toHaveBeenCalled();
 
-    expect(getByText('головна')).toBeInTheDocument();
+    expect(getByText('whitelabel')).toBeInTheDocument();
     expect(getByText('Category 1')).toBeInTheDocument();
     expect(getByText('Category 2')).toBeInTheDocument();
-    expect(getByText('про нас')).toBeInTheDocument();
+    expect(getByText('Feature 1')).toBeInTheDocument();
+    expect(getByText('Feature 2')).toBeInTheDocument();
+    expect(getByText('Про нас')).toBeInTheDocument();
     expect(getByText('Contact Us')).toBeInTheDocument();
   });
 });

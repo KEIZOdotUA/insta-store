@@ -25,6 +25,7 @@
   padding: 0 5px;
   background: var(--dark-background-color);
   color: var(--light-text-color);
+  text-transform: uppercase;
 }
 
 .product-modal__buttons {

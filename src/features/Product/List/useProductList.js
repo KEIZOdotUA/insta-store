@@ -11,7 +11,11 @@ export default function useProductList() {
   const [name, setName] = useState('');
   const [items, setItems] = useState([]);
 
-  const { categories, products } = useAppContext();
+  const {
+    categories,
+    features,
+    products,
+  } = useAppContext();
   useEffect(() => {
     const fetchData = async () => {
       setItems(products.filter((product) => product.available));
@@ -31,6 +35,12 @@ export default function useProductList() {
       );
     };
 
+    const filterProductsByFeature = (featureId) => {
+      setItems(
+        products.filter((product) => product.available && product.feature === featureId),
+      );
+    };
+
     const filterProductsBySearch = (searchQuery) => {
       const searchResults = filterProductsByQuery(products, searchQuery);
       setItems(searchResults);
@@ -44,7 +54,7 @@ export default function useProductList() {
       return;
     }
 
-    if (categorySlug && categories.length > 0) {
+    if (categorySlug && (categories.length > 0 || features.length > 0)) {
       const category = categories.find((cat) => cat.slug === categorySlug);
       if (category) {
         setName(category.name.toUpperCase());
@@ -53,9 +63,17 @@ export default function useProductList() {
         return;
       }
 
+      const feature = features.find((feat) => feat.slug === categorySlug);
+      if (feature) {
+        setName(feature.name.toUpperCase());
+        filterProductsByFeature(feature.id);
+
+        return;
+      }
+
       navigate('/');
     }
-  }, [categorySlug, products, categories, navigate, searchParam]);
+  }, [categorySlug, products, categories, features, navigate, searchParam]);
 
   return { name, items };
 }

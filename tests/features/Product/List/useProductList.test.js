@@ -36,18 +36,21 @@ describe('useProductList', () => {
       name: 'Product 1',
       available: true,
       category: 1,
+      feature: 1,
     },
     {
       id: 2,
       name: 'Product 2',
       available: true,
       category: 2,
+      feature: 3,
     },
     {
       id: 3,
       name: 'Product 3',
       available: false,
       category: 1,
+      feature: 3,
     },
   ];
 
@@ -56,10 +59,17 @@ describe('useProductList', () => {
     { id: 2, name: 'Category 2', slug: 'category-2' },
   ];
 
+  const mockFeatures = [];
+
   const mockNavigate = vi.fn();
 
   beforeEach(() => {
-    useAppContext.mockReturnValue({ products: mockProducts, categories: mockCategories });
+    useAppContext.mockReturnValue({
+      products: mockProducts,
+      categories: mockCategories,
+      features: mockFeatures,
+    });
+
     useParams.mockReturnValue({ categorySlug: 'category-1' });
     useNavigate.mockReturnValue(mockNavigate);
     useSearchParams.mockReturnValue([{ get: vi.fn() }]);
@@ -119,5 +129,28 @@ describe('useProductList', () => {
     renderHook(() => useProductList(), { wrapper: MemoryRouter });
 
     expect(mockNavigate).toHaveBeenCalledWith('/');
+  });
+
+  it('filters products by feature', async () => {
+    useAppContext.mockReturnValue({
+      products: mockProducts,
+      categories: [],
+      features: [
+        { id: 1, name: 'Feature 1', slug: 'feature-1' },
+        { id: 2, name: 'Feature 2', slug: 'feature-2' },
+      ],
+    });
+    useParams.mockReturnValue({ categorySlug: 'feature-1' });
+
+    const { result } = renderHook(() => useProductList(), {
+      wrapper: MemoryRouter,
+    });
+
+    await waitFor(() => result.current.items.length > 0);
+
+    expect(result.current.name).toBe('FEATURE 1');
+    expect(result.current.items).toEqual(
+      mockProducts.filter((product) => product.available && product.feature === 1),
+    );
   });
 });

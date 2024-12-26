@@ -14,11 +14,13 @@ import AppContext from '@context/AppContext';
 
 const mockWhitelabelData = {
   categoriesSrc: '/categories.json',
+  featuresSrc: '/features.json',
   productsSrc: '/products.json',
   packagingSrc: '/packaging.json',
 };
 
 const mockCategoriesData = [{ id: 1, name: 'Category 1' }];
+const mockFeaturesData = [{ id: 1, name: 'Feature 1' }];
 const mockProductsData = [
   { id: 1, name: 'Product 1', sizes: '1,2,3' },
   { id: 2, name: 'Product 2', sizes: '' },
@@ -41,6 +43,10 @@ describe('AppContextProvider', () => {
         case '/categories.json':
           return Promise.resolve({
             json: () => Promise.resolve(mockCategoriesData),
+          });
+        case '/features.json':
+          return Promise.resolve({
+            json: () => Promise.resolve(mockFeaturesData),
           });
         case '/products.json':
           return Promise.resolve({
@@ -73,6 +79,7 @@ describe('AppContextProvider', () => {
     await waitFor(() => {
       expect(receivedContext.whitelabel).toEqual(mockWhitelabelData);
       expect(receivedContext.categories).toEqual(mockCategoriesData);
+      expect(receivedContext.features).toEqual(mockFeaturesData);
       expect(receivedContext.products).toEqual([
         ...mockProductsData.map((product) => ({
           ...product,
@@ -102,8 +109,9 @@ describe('AppContextProvider', () => {
       </AppContextProvider>,
     );
 
-    await findByText('Loading...');
+    const loading = await findByText('Loading...');
 
+    expect(loading).toBeInTheDocument();
     expect(receivedContext).not.toBeDefined();
   });
 
@@ -132,10 +140,12 @@ describe('AppContextProvider', () => {
       </AppContextProvider>,
     );
 
-    await findByText('Loading...');
+    const loading = await findByText('Loading...');
 
+    expect(loading).not.toBeInTheDocument();
     expect(receivedContext).toBeDefined();
     expect(receivedContext.categories).toEqual([]);
+    expect(receivedContext.features).toEqual([]);
     expect(receivedContext.products).toEqual([]);
     expect(receivedContext.packaging).toBeNull();
   });

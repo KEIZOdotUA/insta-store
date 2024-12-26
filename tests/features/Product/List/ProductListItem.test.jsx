@@ -3,14 +3,16 @@ import {
   it,
   expect,
   vi,
-  afterEach,
+  beforeEach,
 } from 'vitest';
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ProductCard from '@features/Product/List/Item/ProductListItem';
 import ProductImage from '@features/Product/Image/ProductImage';
+import useAppContext from '@context/useAppContext';
 
 vi.mock('@features/Product/Image/ProductImage');
+vi.mock('@context/useAppContext');
 
 describe('ProductCard', () => {
   const product = {
@@ -18,12 +20,17 @@ describe('ProductCard', () => {
     name: 'Test Product',
     oldPrice: 150,
     price: 100,
-    feature: 'Featured Item',
+    feature: 1,
   };
   const link = '/product/1';
 
-  afterEach(() => {
+  beforeEach(() => {
     vi.restoreAllMocks();
+    useAppContext.mockReturnValue({
+      features: [
+        { id: 1, name: 'Feature' },
+      ],
+    });
   });
 
   it('renders product details correctly', () => {
@@ -50,7 +57,7 @@ describe('ProductCard', () => {
       </Router>,
     );
 
-    const featureElement = getByText('Featured Item');
+    const featureElement = getByText('Feature');
     expect(featureElement).toBeInTheDocument();
     expect(featureElement).toHaveClass('product-card__featured');
   });

@@ -7,7 +7,7 @@ import useWishListStore from '@store/useWishListStore';
 import { trackAddToWishListEvent, trackShareEvent } from '@helpers/googleAnalyticsGA4';
 
 function InfoHeader({ product }) {
-  const { whitelabel } = useAppContext();
+  const { whitelabel, features } = useAppContext();
 
   const {
     findItem: findWishListItem,
@@ -15,6 +15,7 @@ function InfoHeader({ product }) {
     removeItem: removeFromWishList,
   } = useWishListStore();
 
+  const feature = features.find((item) => item.id === product.feature);
   const itemInWIshList = product && findWishListItem(product.id);
 
   const toggleLike = (item) => {
@@ -31,9 +32,9 @@ function InfoHeader({ product }) {
   return (
     <div className="product-modal__header">
       <div className="product-modal__info">
-        {product.feature && (
+        {feature && (
           <div className="product-modal__featured">
-            <span>{product.feature}</span>
+            <span>{feature.name}</span>
           </div>
         )}
         {product.name}

@@ -46,7 +46,7 @@ describe('InfoHeader', () => {
     id: 1,
     name: 'Test Product',
     price: 100,
-    feature: 'Sale',
+    feature: 1,
   };
 
   let mockFindWishListItem;
@@ -60,6 +60,9 @@ describe('InfoHeader', () => {
 
     useAppContext.mockReturnValue({
       whitelabel: { shop: { name: 'Test Shop' } },
+      features: [
+        { id: 1, name: 'Sale' },
+      ],
     });
     useWishListStore.mockReturnValue({
       findItem: mockFindWishListItem,

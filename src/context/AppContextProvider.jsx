@@ -5,6 +5,7 @@ import AppContext from '@context/AppContext';
 function AppContextProvider({ children }) {
   const [whitelabel, setWhitelabel] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [products, setProducts] = useState([]);
   const [packaging, setPackaging] = useState(null);
 
@@ -25,6 +26,16 @@ function AppContextProvider({ children }) {
         const categoriesResponse = await fetch(categoriesSrc);
         const categoriesData = await categoriesResponse.json();
         return categoriesData;
+      } catch (error) {
+        return [];
+      }
+    };
+
+    const fetchFeaturesData = async (featuresSrc) => {
+      try {
+        const featuresResponse = await fetch(featuresSrc);
+        const featuresData = await featuresResponse.json();
+        return featuresData;
       } catch (error) {
         return [];
       }
@@ -61,13 +72,20 @@ function AppContextProvider({ children }) {
         return;
       }
 
-      const [categoriesData, packagingData, productsData] = await Promise.all([
+      const [
+        categoriesData,
+        featuresData,
+        packagingData,
+        productsData,
+      ] = await Promise.all([
         fetchCategoriesData(whitelabelData.categoriesSrc),
+        fetchFeaturesData(whitelabelData.featuresSrc),
         fetchPackagingData(whitelabelData.packagingSrc),
         fetchProductsData(whitelabelData.productsSrc),
       ]);
 
       setCategories(categoriesData);
+      setFeatures(featuresData);
       setPackaging(packagingData);
       setProducts(packagingData ? [...productsData, packagingData] : productsData);
     };
@@ -79,10 +97,17 @@ function AppContextProvider({ children }) {
     () => ({
       whitelabel,
       categories,
+      features,
       products,
       packaging,
     }),
-    [whitelabel, categories, products, packaging],
+    [
+      whitelabel,
+      categories,
+      features,
+      products,
+      packaging,
+    ],
   );
 
   if (!whitelabel) {

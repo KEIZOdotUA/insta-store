@@ -9,7 +9,11 @@ import useHiddenOverflow from '@hooks/useHiddenOverflow';
 import animationDuration from '@helpers/constValues';
 
 function Menu({ visible, menuToggler }) {
-  const { categories } = useAppContext();
+  const {
+    categories,
+    features,
+    whitelabel,
+  } = useAppContext();
 
   useHiddenOverflow({ active: visible });
 
@@ -32,7 +36,7 @@ function Menu({ visible, menuToggler }) {
             <ol>
               <li>
                 <Link to="/" onClick={onClose}>
-                  головна
+                  {whitelabel.shop.name}
                 </Link>
               </li>
               {categories.map((category) => (
@@ -42,9 +46,16 @@ function Menu({ visible, menuToggler }) {
                   </Link>
                 </li>
               ))}
-              <li>
+              {features.map((feature, index) => (
+                <li key={feature.id} className={index === 0 ? 'with-border-top' : ''}>
+                  <Link to={`/${feature.slug}`} onClick={onClose}>
+                    {feature.name}
+                  </Link>
+                </li>
+              ))}
+              <li className="with-border-top">
                 <Link to="/about" onClick={onClose}>
-                  про нас
+                  Про нас
                 </Link>
               </li>
             </ol>

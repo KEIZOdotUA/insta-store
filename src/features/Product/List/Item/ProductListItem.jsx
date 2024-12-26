@@ -1,9 +1,14 @@
 import './ProductListItem.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useAppContext from '@context/useAppContext';
 import ProductImage from '@features/Product/Image/ProductImage';
 
 function ProductListItem({ product, link }) {
+  const { features } = useAppContext();
+
+  const feature = features.find((item) => item.id === product.feature);
+
   const discounted = product.oldPrice > 0 && product.oldPrice !== product.price;
 
   return (
@@ -15,9 +20,9 @@ function ProductListItem({ product, link }) {
           size="m"
           className="product-card__img"
         />
-        {product.feature && (
+        {feature && (
           <span className="product-card__featured">
-            {product.feature}
+            {feature.name}
           </span>
         )}
         <div className="product-card__name">
