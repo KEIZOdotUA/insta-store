@@ -1,16 +1,16 @@
-.products-list__name {
+.full-list__name {
   margin-top: 14px;
   margin-left: 20px;
   font-size: 30px;
   font-weight: 500;
 }
 
-.products-list__count {
+.full-list__count {
   font-size: 18px;
   line-height: 14px;
 }
 
-.products-list {
+.full-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

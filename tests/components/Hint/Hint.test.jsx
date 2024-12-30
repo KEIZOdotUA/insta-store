@@ -16,9 +16,10 @@ vi.mock('@assets/close.svg', () => ({
   __esModule: true,
   default: () => <svg data-testid="close-svg" />,
 }));
+
 vi.mock('@helpers/constValues', () => ({
   __esModule: true,
-  default: 1,
+  animationDuration: 1,
 }));
 
 describe('Hint', () => {

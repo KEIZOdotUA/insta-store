@@ -1,11 +1,14 @@
-import Bio from '@features/Bio/Bio';
+import HeroSection from '@features/HeroSection/HeroSection';
 import ProductsList from '@features/Product/List/ProductsList';
+import Bio from '@features/Bio/Bio';
 
 function HomePage() {
   return (
     <>
+      <HeroSection />
+      <ProductsList short filtered />
       <Bio />
-      <ProductsList />
+      <ProductsList short />
     </>
   );
 }

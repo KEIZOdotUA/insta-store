@@ -7,6 +7,7 @@ function Bio() {
 
   return (
     <div className="bio">
+      <span>{whitelabel.shop.weAre}</span>
       <p>{parse(whitelabel.shop.bio)}</p>
     </div>
   );

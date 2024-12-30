@@ -8,7 +8,7 @@ import useAppContext from '@context/useAppContext';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 
 export default function useProductList() {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('ВСІ ПРИКРАСИ');
   const [items, setItems] = useState([]);
 
   const {

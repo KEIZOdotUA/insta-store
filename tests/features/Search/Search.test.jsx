@@ -13,7 +13,6 @@ import {
 } from '@testing-library/react';
 import Search from '@features/Search/Search';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
-import animationDuration from '@helpers/constValues';
 import { trackSearchEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@components//TextInput/TextInput', () => ({
@@ -65,7 +64,7 @@ vi.mock('@helpers/filterProductsByQuery', () => ({
 
 vi.mock('@helpers/constValues', () => ({
   __esModule: true,
-  default: 1,
+  animationDuration: 1,
 }));
 vi.mock('@helpers/googleAnalyticsGA4');
 
@@ -112,7 +111,7 @@ describe('Search', () => {
 
     await act(async () => {
       await new Promise((resolve) => {
-        setTimeout(resolve, animationDuration);
+        setTimeout(resolve, 1);
       });
     });
 

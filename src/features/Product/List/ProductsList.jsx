@@ -1,39 +1,50 @@
-import './ProductsList.css';
-import { useEffect } from 'react';
-import ScrollPaginator from '@components/ScrollPaginator/ScrollPaginator';
-import ProductCard from '@features/Product/List/Item/ProductListItem';
-import useProductList from '@features/Product/List/useProductList';
-import useProductNavigation from '@hooks/useProductNavigation';
-import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
+import PropTypes from 'prop-types';
+import FullList from '@features/Product/List/Full/FullList';
+import ShortList from '@features/Product/List/Short/ShortList';
+import useFilteredShortList from '@features/Product/List/Short/useFilteredShortList';
+import useNonFilteredShortList from '@features/Product/List/Short/useNonFilteredShortList';
 
-function ProductsList() {
-  const { name, items } = useProductList();
+function ProductsList({ short, filtered }) {
+  const {
+    active: activeFilteredList,
+    title: filteredListTitle,
+    items: filteredListItems,
+    linkToAllItems: linkToAllFilteredItems,
+  } = useFilteredShortList();
 
-  useEffect(() => {
-    if (name) {
-      trackViewItemListEvent(name, items);
-    }
-  }, [name, items]);
+  const { items: nonFilteredListItems } = useNonFilteredShortList();
 
-  const { getProductLink } = useProductNavigation();
+  if (!short) {
+    return <FullList />;
+  }
+
+  if (filtered && activeFilteredList) {
+    return (
+      <ShortList
+        title={filteredListTitle}
+        items={filteredListItems}
+        linkToAllItems={linkToAllFilteredItems}
+      />
+    );
+  }
 
   return (
-    <>
-      {name && (
-        <div className="products-list__name">
-          {` ${name} `}
-          <sup className="products-list__count">{items.length}</sup>
-        </div>
-      )}
-      <div className="products-list">
-        <ScrollPaginator
-          items={items.map((p) => (
-            <ProductCard product={p} link={getProductLink(p.id)} key={p.id} />
-          ))}
-        />
-      </div>
-    </>
+    <ShortList
+      title="Всі прикраси"
+      items={nonFilteredListItems}
+      linkToAllItems="/products"
+    />
   );
 }
+
+ProductsList.defaultProps = {
+  short: false,
+  filtered: false,
+};
+
+ProductsList.propTypes = {
+  short: PropTypes.bool,
+  filtered: PropTypes.bool,
+};
 
 export default ProductsList;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Transition from '@components/Transition/Transition';
 import Button from '@components/Button/Button';
 import CloseSvg from '@assets/close.svg';
-import animationDuration from '@helpers/constValues';
+import { animationDuration } from '@helpers/constValues';
 
 function Hint({ content, onClose }) {
   const [visibleHint, setVisibleHint] = useState(false);

@@ -2,7 +2,7 @@ import './SearchOverlay.css';
 import PropTypes from 'prop-types';
 import Transition from '@components/Transition/Transition';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
-import animationDuration from '@helpers/constValues';
+import { animationDuration } from '@helpers/constValues';
 
 function SearchOverlay({ visible, children }) {
   useHiddenOverflow({ forceUsage: visible });

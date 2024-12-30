@@ -8,7 +8,7 @@ import CloseSvg from '@assets/close.svg';
 import filterProductsByQuery from '@helpers/filterProductsByQuery';
 import Overlay from '@features/Search/Overlay/SearchOverlay';
 import Results from '@features/Search/Results/SearchResults';
-import animationDuration from '@helpers/constValues';
+import { animationDuration } from '@helpers/constValues';
 import { trackSearchEvent } from '@helpers/googleAnalyticsGA4';
 
 function Search({ visible, searchToggler }) {

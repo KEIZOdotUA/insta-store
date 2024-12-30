@@ -50,10 +50,10 @@ describe('ProductCard', () => {
     expect(imgElement).toBeInTheDocument();
   });
 
-  it('renders the feature text when provided', () => {
+  it('renders the feature text when showFeature is true', () => {
     const { getByText } = render(
       <Router>
-        <ProductCard product={product} link={link} />
+        <ProductCard product={product} link={link} showFeature />
       </Router>,
     );
 

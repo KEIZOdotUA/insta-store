@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import useAppContext from '@context/useAppContext';
 import ProductImage from '@features/Product/Image/ProductImage';
 
-function ProductListItem({ product, link }) {
+function ProductListItem({ product, link, showFeature }) {
   const { features } = useAppContext();
 
   const feature = features.find((item) => item.id === product.feature);
@@ -20,7 +20,7 @@ function ProductListItem({ product, link }) {
           size="m"
           className="product-card__img"
         />
-        {feature && (
+        {showFeature && feature && (
           <span className="product-card__featured">
             {feature.name}
           </span>
@@ -41,15 +41,20 @@ function ProductListItem({ product, link }) {
   );
 }
 
+ProductListItem.defaultProps = {
+  showFeature: false,
+};
+
 ProductListItem.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     oldPrice: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
-    feature: PropTypes.string,
+    feature: PropTypes.number,
   }).isRequired,
   link: PropTypes.string.isRequired,
+  showFeature: PropTypes.bool,
 };
 
 export default ProductListItem;

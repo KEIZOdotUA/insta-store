@@ -6,7 +6,7 @@ import CloseButton from '@components/CloseButton/CloseButton';
 import Transition from '@components/Transition/Transition';
 import ContactUs from '@features/ContactUs/ContactUs';
 import useHiddenOverflow from '@hooks/useHiddenOverflow';
-import animationDuration from '@helpers/constValues';
+import { animationDuration } from '@helpers/constValues';
 
 function Menu({ visible, menuToggler }) {
   const {

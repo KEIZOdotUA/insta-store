@@ -17,6 +17,7 @@ describe('Bio', () => {
       whitelabel: {
         shop: {
           bio: mockBio,
+          weAre: 'Test We Are',
         },
       },
     });
@@ -25,5 +26,6 @@ describe('Bio', () => {
 
     expect(getByText('Test Bio')).toBeTruthy();
     expect(getByText('Test Bio').tagName).toBe('STRONG');
+    expect(getByText('Test We Are')).toBeTruthy();
   });
 });

@@ -19,7 +19,7 @@ vi.mock('@assets/close.svg', () => ({
 }));
 vi.mock('@helpers/constValues', () => ({
   __esModule: true,
-  default: 1,
+  animationDuration: 1,
 }));
 
 describe('Modal', () => {

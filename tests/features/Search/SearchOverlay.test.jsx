@@ -24,7 +24,7 @@ vi.mock('@hooks/useHiddenOverflow', () => ({
 
 vi.mock('@helpers/constValues', () => ({
   __esModule: true,
-  default: 300,
+  animationDuration: 1,
 }));
 
 describe('SearchOverlay', () => {

@@ -34,9 +34,31 @@ vi.mock('@features/Layout/Layout', () => ({
 }));
 
 describe('Router', () => {
-  it('default', () => {
+  it('root', () => {
     const { getByText } = render(
       <MemoryRouter initialEntries={['/']}>
+        <Router />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Home Page')).toBeInTheDocument();
+  });
+
+  it('/home', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/home']}>
+        <Router />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Home Page')).toBeInTheDocument();
+  });
+
+  it('/home/:productId', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/home/123']}>
         <Router />
       </MemoryRouter>,
     );
@@ -86,7 +108,7 @@ describe('Router', () => {
     );
 
     expect(getByText('Layout')).toBeInTheDocument();
-    expect(getByText('Home Page')).toBeInTheDocument();
+    expect(getByText('Products Page')).toBeInTheDocument();
   });
 
   it('/:products/:productId', () => {
@@ -97,6 +119,6 @@ describe('Router', () => {
     );
 
     expect(getByText('Layout')).toBeInTheDocument();
-    expect(getByText('Home Page')).toBeInTheDocument();
+    expect(getByText('Products Page')).toBeInTheDocument();
   });
 });

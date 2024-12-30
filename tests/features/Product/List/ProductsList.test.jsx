@@ -1,91 +1,73 @@
+import { render } from '@testing-library/react';
 import {
   describe,
   it,
   expect,
   vi,
   beforeEach,
-  afterEach,
 } from 'vitest';
-import { render } from '@testing-library/react';
 import ProductsList from '@features/Product/List/ProductsList';
-import ProductCard from '@features/Product/List/Item/ProductListItem';
-import useProductList from '@features/Product/List/useProductList';
-import useProductNavigation from '@hooks/useProductNavigation';
-import { trackViewItemListEvent } from '@helpers/googleAnalyticsGA4';
+import useFilteredShortList from '@features/Product/List/Short/useFilteredShortList';
+import useNonFilteredShortList from '@features/Product/List/Short/useNonFilteredShortList';
 
-vi.mock('@components//ScrollPaginator/ScrollPaginator', () => ({
-  default: vi.fn(({ items }) => <div data-testid="scroll-paginator">{items}</div>),
+vi.mock('@features/Product/List/Short/useFilteredShortList');
+vi.mock('@features/Product/List/Short/useNonFilteredShortList');
+
+vi.mock('@features/Product/List/Full/FullList', () => ({
+  __esModule: true,
+  default: () => (
+    <div>Full list</div>
+  ),
 }));
-vi.mock('@features/Product/List/Item/ProductListItem');
-vi.mock('@features/Product/List/useProductList');
-vi.mock('@hooks/useProductNavigation');
-vi.mock('@helpers/googleAnalyticsGA4');
+
+vi.mock('@features/Product/List/Short/ShortList', () => ({
+  __esModule: true,
+  default: ({ title }) => (
+    <div>{title}</div>
+  ),
+}));
 
 describe('ProductsList', () => {
-  const mockProductList = {
-    name: 'Category 1',
-    items: [
-      { id: 1, name: 'Product 1', price: 100 },
-      { id: 2, name: 'Product 2', price: 150 },
-    ],
-  };
-
-  const mockGetProductLink = (id) => `/products/${id}`;
-  const mockTrackViewItemListEvent = vi.fn();
-
   beforeEach(() => {
-    useProductList.mockReturnValue(mockProductList);
-    useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
-    trackViewItemListEvent.mockImplementation(mockTrackViewItemListEvent);
-
-    ProductCard.mockImplementation(({ product, link }) => (
-      <div data-testid="product-card" data-link={link}>
-        {product.name}
-      </div>
-    ));
+    useFilteredShortList.mockReturnValue({
+      active: true,
+      title: 'Filtered List',
+      items: ['item1', 'item2'],
+      linkToAllItems: '/filtered-products',
+    });
+    useNonFilteredShortList.mockReturnValue({
+      items: ['item3', 'item4'],
+    });
   });
 
-  afterEach(() => {
-    vi.clearAllMocks();
+  it('renders FullList when short is false', () => {
+    const { getByText } = render(<ProductsList short={false} />);
+
+    expect(getByText('Full list')).toBeInTheDocument();
   });
 
-  it('renders the product list name and count', () => {
-    const { getByText } = render(<ProductsList />);
-    expect(getByText('Category 1')).toBeInTheDocument();
-    expect(getByText('2')).toBeInTheDocument();
+  it('renders filtered ShortList when short, filtered and activeFilteredList are true', () => {
+    const { getByText } = render(<ProductsList short filtered />);
+
+    expect(getByText('Filtered List')).toBeInTheDocument();
   });
 
-  it('renders product cards inside the ScrollPaginator', () => {
-    const { getByTestId } = render(<ProductsList />);
+  it('renders non-filtered ShortList short is true and filtered is false', () => {
+    const { getByText } = render(<ProductsList short />);
 
-    const paginator = getByTestId('scroll-paginator');
-    expect(paginator).toBeInTheDocument();
-
-    expect(ProductCard).toHaveBeenCalledTimes(2);
-    expect(ProductCard).toHaveBeenCalledWith(
-      expect.objectContaining({
-        product: { id: 1, name: 'Product 1', price: 100 },
-        link: '/products/1',
-      }),
-      expect.anything(),
-    );
-    expect(ProductCard).toHaveBeenCalledWith(
-      expect.objectContaining({
-        product: { id: 2, name: 'Product 2', price: 150 },
-        link: '/products/2',
-      }),
-      expect.anything(),
-    );
+    expect(getByText('Всі прикраси')).toBeInTheDocument();
   });
 
-  it('calls trackViewItemListEvent with the correct data on mount', () => {
-    render(<ProductsList />);
-    expect(trackViewItemListEvent).toHaveBeenCalledWith('Category 1', mockProductList.items);
-  });
+  it('renders non-filtered ShortList when short and filtered are true but activeFilteredList is false', () => {
+    useFilteredShortList.mockReturnValue({
+      active: false,
+      title: 'Filtered List',
+      items: ['item1', 'item2'],
+      linkToAllItems: '/filtered-products',
+    });
 
-  it('does not call trackViewItemListEvent if name is missing', () => {
-    useProductList.mockReturnValue({ name: '', items: mockProductList.items });
-    render(<ProductsList />);
-    expect(trackViewItemListEvent).not.toHaveBeenCalled();
+    const { getByText } = render(<ProductsList short />);
+
+    expect(getByText('Всі прикраси')).toBeInTheDocument();
   });
 });

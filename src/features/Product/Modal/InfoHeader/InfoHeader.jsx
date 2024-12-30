@@ -58,7 +58,7 @@ InfoHeader.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    feature: PropTypes.string,
+    feature: PropTypes.number,
   }).isRequired,
 };
 
