@@ -8,6 +8,7 @@ function AppContextProvider({ children }) {
   const [features, setFeatures] = useState([]);
   const [products, setProducts] = useState([]);
   const [packaging, setPackaging] = useState(null);
+  const [appReady, setAppReady] = useState(false);
 
   useEffect(() => {
     const fetchWhitelabelData = async () => {
@@ -88,6 +89,7 @@ function AppContextProvider({ children }) {
       setFeatures(featuresData);
       setPackaging(packagingData);
       setProducts(packagingData ? [...productsData, packagingData] : productsData);
+      setAppReady(true);
     };
 
     fetchData();
@@ -110,7 +112,7 @@ function AppContextProvider({ children }) {
     ],
   );
 
-  if (!whitelabel) {
+  if (!appReady) {
     return <div>Loading...</div>;
   }
 
