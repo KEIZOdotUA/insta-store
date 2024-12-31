@@ -9,7 +9,7 @@ function HeroSection() {
       <img
         src={whitelabel.shop.heroSection.imgSrc}
         className="hero-section-img"
-        alt={whitelabel.weAre}
+        alt={whitelabel.shop.weAre}
       />
     )
   );

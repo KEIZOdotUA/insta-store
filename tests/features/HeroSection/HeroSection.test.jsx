@@ -18,8 +18,8 @@ describe('HeroSection', () => {
           heroSection: {
             imgSrc: 'https://mockstorage.com/hero.jpg',
           },
+          weAre: 'Test We Are',
         },
-        weAre: 'Test We Are',
       },
     });
 

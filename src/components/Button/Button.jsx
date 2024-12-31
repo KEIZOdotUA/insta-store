@@ -9,12 +9,14 @@ function Button({
   disabled,
   className,
   submit,
+  ariaLabel,
 }) {
   return (
     <button
-      className={`${className} ${dark ? 'dark-button' : ''} ${light ? 'light-button' : ''} ${disabled ? 'disabled-button' : ''}`}
+      className={`${className}${dark ? ' dark-button' : ''}${light ? ' light-button' : ''}${disabled ? ' disabled-button' : ''}`}
       onClick={onClick}
       type={submit ? 'submit' : 'button'}
+      aria-label={ariaLabel}
     >
       {children}
     </button>
@@ -28,6 +30,7 @@ Button.defaultProps = {
   dark: false,
   light: false,
   disabled: false,
+  ariaLabel: '',
 };
 
 Button.propTypes = {
@@ -38,6 +41,7 @@ Button.propTypes = {
   dark: PropTypes.bool,
   light: PropTypes.bool,
   disabled: PropTypes.bool,
+  ariaLabel: PropTypes.string,
 };
 
 export default Button;

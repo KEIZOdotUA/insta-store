@@ -9,7 +9,7 @@ function WishListIcon({ onClick }) {
   const { items } = useWishListStore();
 
   return (
-    <Button className="wishlist-icon" onClick={onClick}>
+    <Button className="wishlist-icon" onClick={onClick} ariaLabel="Wishlist">
       {items.length ? <HeartFillSvg /> : <HeartSvg />}
     </Button>
   );

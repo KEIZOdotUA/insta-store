@@ -5,7 +5,7 @@ import Button from '@components/Button/Button';
 
 function SearchIcon({ onClick }) {
   return (
-    <Button className="search-icon" onClick={onClick}>
+    <Button className="search-icon" onClick={onClick} ariaLabel="Search">
       <SearchSvg />
     </Button>
   );

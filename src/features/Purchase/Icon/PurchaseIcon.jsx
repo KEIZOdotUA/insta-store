@@ -14,7 +14,7 @@ function PurchaseIcon({ onClick }) {
   };
 
   return (
-    <Button className="purchase__icon" onClick={onViewCart}>
+    <Button className="purchase__icon" onClick={onViewCart} ariaLabel="Cart">
       <CartSvgIcon />
       <div className="purchase__count">{cartItems.length}</div>
     </Button>

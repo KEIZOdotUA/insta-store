@@ -5,7 +5,7 @@ import Button from '@components/Button/Button';
 
 function MenuIcon({ onClick }) {
   return (
-    <Button className="menu-icon" onClick={onClick}>
+    <Button className="menu-icon" onClick={onClick} ariaLabel="Menu">
       <MenuSvg />
     </Button>
   );
