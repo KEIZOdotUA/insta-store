@@ -8,19 +8,23 @@ function ShortList({ title, items, linkToAllItems }) {
   const { getProductLink } = useProductNavigation();
 
   return (
-    <>
-      <span className="short-list__title">{title}</span>
-      <div className="short-list">
-        {items.map((p) => (
-          <ProductCard product={p} link={getProductLink(p.id)} key={p.id} />
-        ))}
-        <div className="show-more">
-          <Link to={linkToAllItems}>
-            <div>показати більше &gt;</div>
-          </Link>
-        </div>
-      </div>
-    </>
+    <div className="short-list">
+      {title.length > 0 && items.length > 0 && (
+        <>
+          <span className="short-list__title">{title}</span>
+          <div className="short-list__items">
+            {items.map((p) => (
+              <ProductCard product={p} link={getProductLink(p.id)} key={p.id} />
+            ))}
+            <div className="show-more">
+              <Link to={linkToAllItems}>
+                <div>показати більше &gt;</div>
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 

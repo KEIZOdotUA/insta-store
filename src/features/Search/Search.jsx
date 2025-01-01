@@ -46,7 +46,7 @@ function Search({ visible, searchToggler }) {
           value={searchQuery}
           onChange={handleInputChange}
         />
-        <Button className="search__close" onClick={onClose}>
+        <Button className="search__close" onClick={onClose} aria-label="Close search">
           <CloseSvg />
         </Button>
       </div>

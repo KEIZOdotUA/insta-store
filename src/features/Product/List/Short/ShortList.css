@@ -1,3 +1,7 @@
+.short-list {
+  min-height: 645px;
+}
+
 .short-list__title {
   display: block;
   font-size: 18px;
@@ -6,7 +10,7 @@
   text-transform: uppercase;
 }
 
-.short-list {
+.short-list__items {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

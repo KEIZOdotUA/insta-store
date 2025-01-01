@@ -32,7 +32,7 @@ function PurchasePanel() {
         duration={animationDuration}
       >
         <div className="purchase-panel">
-          <Button className="purchase-panel__close" onClick={onClose}>
+          <Button className="purchase-panel__close" onClick={onClose} ariaLabel="Close cart">
             <CloseSvg />
           </Button>
           <PurchaseStep step={orderStep} updateStep={setOrderStep} />

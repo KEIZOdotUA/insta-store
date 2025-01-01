@@ -31,7 +31,7 @@ function Menu({ visible, menuToggler }) {
         duration={animationDuration}
       >
         <div className="menu">
-          <CloseButton className="menu__close" onClick={onClose} />
+          <CloseButton className="menu__close" onClick={onClose} ariaLabel="Close menu" />
           <nav>
             <ol>
               <li>

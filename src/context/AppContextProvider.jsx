@@ -8,10 +8,9 @@ function AppContextProvider({ children }) {
   const [features, setFeatures] = useState([]);
   const [products, setProducts] = useState([]);
   const [packaging, setPackaging] = useState(null);
-  const [appReady, setAppReady] = useState(false);
 
   useEffect(() => {
-    const fetchWhitelabelData = async () => {
+    const fetchWhitelabel = async () => {
       try {
         const response = await fetch('/whitelabel.json');
         const whitelabelData = await response.json();
@@ -22,6 +21,15 @@ function AppContextProvider({ children }) {
       }
     };
 
+    const fetchWhitelabelData = async () => {
+      const whitelabelData = await fetchWhitelabel();
+      setWhitelabel(whitelabelData);
+    };
+
+    fetchWhitelabelData();
+  }, []);
+
+  useEffect(() => {
     const fetchCategoriesData = async (categoriesSrc) => {
       try {
         const categoriesResponse = await fetch(categoriesSrc);
@@ -66,10 +74,7 @@ function AppContextProvider({ children }) {
     };
 
     const fetchData = async () => {
-      const whitelabelData = await fetchWhitelabelData();
-      setWhitelabel(whitelabelData);
-
-      if (whitelabelData == null) {
+      if (!whitelabel) {
         return;
       }
 
@@ -79,21 +84,20 @@ function AppContextProvider({ children }) {
         packagingData,
         productsData,
       ] = await Promise.all([
-        fetchCategoriesData(whitelabelData.categoriesSrc),
-        fetchFeaturesData(whitelabelData.featuresSrc),
-        fetchPackagingData(whitelabelData.packagingSrc),
-        fetchProductsData(whitelabelData.productsSrc),
+        fetchCategoriesData(whitelabel.categoriesSrc),
+        fetchFeaturesData(whitelabel.featuresSrc),
+        fetchPackagingData(whitelabel.packagingSrc),
+        fetchProductsData(whitelabel.productsSrc),
       ]);
 
       setCategories(categoriesData);
       setFeatures(featuresData);
       setPackaging(packagingData);
       setProducts(packagingData ? [...productsData, packagingData] : productsData);
-      setAppReady(true);
     };
 
     fetchData();
-  }, []);
+  }, [whitelabel]);
 
   const appData = useMemo(
     () => ({
@@ -112,7 +116,7 @@ function AppContextProvider({ children }) {
     ],
   );
 
-  if (!appReady) {
+  if (!whitelabel) {
     return <div>Loading...</div>;
   }
 
