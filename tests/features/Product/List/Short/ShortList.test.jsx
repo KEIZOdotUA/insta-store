@@ -5,7 +5,7 @@ import {
   vi,
   beforeEach,
 } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import ShortList from '@features/Product/List/Short/ShortList';
 import useProductNavigation from '@hooks/useProductNavigation';
@@ -33,6 +33,8 @@ describe('ShortList', () => {
         {product.name}
       </div>
     ));
+
+    window.scrollTo = vi.fn();
   });
 
   it('renders the title', () => {
@@ -69,5 +71,15 @@ describe('ShortList', () => {
       </MemoryRouter>,
     );
     expect(getByText('показати більше >').closest('a')).toHaveAttribute('href', '/all-items');
+  });
+
+  it('calls scrollTo on link click', () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <ShortList title="Test Title" items={mockItems} linkToAllItems="/all-items" />
+      </MemoryRouter>,
+    );
+    fireEvent.click(getByText('показати більше >'));
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 });

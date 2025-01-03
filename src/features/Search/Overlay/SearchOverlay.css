@@ -11,6 +11,5 @@
   top: 0;
   position: fixed;
   width: 100%;
-  max-width: 900px;
   pointer-events: none;
 }

@@ -1,0 +1,32 @@
+footer {
+  padding: 0 20px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 14px;
+  font-weight: 500;
+  border-top: 1px solid var(--border-color);
+}
+
+footer > div {
+  height: fit-content;
+  padding-top: 40px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.footer__nav > ul {
+  list-style-type: none;
+  text-transform: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__nav > ul > li {
+  margin-bottom: 17px;
+}
+
+.footer__contact-us > div > ul {
+  font-size: 14px;
+  font-weight: 500;
+}

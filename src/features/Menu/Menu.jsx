@@ -31,7 +31,7 @@ function Menu({ visible, menuToggler }) {
         duration={animationDuration}
       >
         <div className="menu">
-          <CloseButton className="menu__close" onClick={onClose} ariaLabel="Close menu" />
+          <CloseButton className="menu__close" onClick={onClose} ariaLabel="Close" />
           <nav>
             <ol>
               <li>
@@ -53,11 +53,6 @@ function Menu({ visible, menuToggler }) {
                   </Link>
                 </li>
               ))}
-              <li className="with-border-top">
-                <Link to="/about" onClick={onClose}>
-                  Про нас
-                </Link>
-              </li>
             </ol>
           </nav>
           <ContactUs title="Зв'язок з нами" />

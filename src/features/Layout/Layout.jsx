@@ -6,6 +6,7 @@ import Menu from '@features/Menu/Menu';
 import PurchasePanel from '@features/Purchase/Panel/PurchasePanel';
 import ProductModal from '@features/Product/Modal/ProductModal';
 import WishList from '@features/WishList/WishList';
+import Footer from '@features/Footer/Footer';
 
 function Layout() {
   const [visibleMenu, setVisibleMenu] = useState(false);
@@ -19,22 +20,14 @@ function Layout() {
         searchToggler={() => setVisibleSearch(!visibleSearch)}
         wishListToggler={() => setVisibleWishList(!visibleWishList)}
       />
-      <Search
-        visible={visibleSearch}
-        searchToggler={() => setVisibleSearch(!visibleSearch)}
-      />
+      <Search visible={visibleSearch} searchToggler={() => setVisibleSearch(!visibleSearch)} />
       <main>
         <Outlet />
-        <WishList
-          visible={visibleWishList}
-          onClose={() => setVisibleWishList(!visibleWishList)}
-        />
-        <ProductModal />
       </main>
-      <Menu
-        visible={visibleMenu}
-        menuToggler={() => setVisibleMenu(!visibleMenu)}
-      />
+      <Footer />
+      <WishList visible={visibleWishList} onClose={() => setVisibleWishList(!visibleWishList)} />
+      <ProductModal />
+      <Menu visible={visibleMenu} menuToggler={() => setVisibleMenu(!visibleMenu)} />
       <PurchasePanel />
     </>
   );

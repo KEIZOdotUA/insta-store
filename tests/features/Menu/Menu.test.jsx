@@ -66,7 +66,6 @@ describe('Menu', () => {
     expect(getByText('Category 2')).toBeInTheDocument();
     expect(getByText('Feature 1')).toBeInTheDocument();
     expect(getByText('Feature 2')).toBeInTheDocument();
-    expect(getByText('Про нас')).toBeInTheDocument();
     expect(getByText('Contact Us')).toBeInTheDocument();
   });
 });

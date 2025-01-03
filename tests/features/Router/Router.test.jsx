@@ -33,6 +33,16 @@ vi.mock('@features/Layout/Layout', () => ({
   ),
 }));
 
+vi.mock('@pages/DeliveryAndPayment/DeliveryAndPaymentPage', () => ({
+  __esModule: true,
+  default: () => <div>Delivery And Payment Page</div>,
+}));
+
+vi.mock('@pages/Returns/ReturnsPage', () => ({
+  __esModule: true,
+  default: () => <div>Returns Page</div>,
+}));
+
 describe('Router', () => {
   it('root', () => {
     const { getByText } = render(
@@ -120,5 +130,27 @@ describe('Router', () => {
 
     expect(getByText('Layout')).toBeInTheDocument();
     expect(getByText('Products Page')).toBeInTheDocument();
+  });
+
+  it('/delivery-and-payment', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/delivery-and-payment']}>
+        <Router />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Delivery And Payment Page')).toBeInTheDocument();
+  });
+
+  it('/returns', () => {
+    const { getByText } = render(
+      <MemoryRouter initialEntries={['/returns']}>
+        <Router />
+      </MemoryRouter>,
+    );
+
+    expect(getByText('Layout')).toBeInTheDocument();
+    expect(getByText('Returns Page')).toBeInTheDocument();
   });
 });

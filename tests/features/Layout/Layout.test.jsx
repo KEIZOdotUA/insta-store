@@ -80,6 +80,11 @@ vi.mock('@features/Product/Modal/ProductModal', () => ({
   default: vi.fn(() => <div>Mock Product Modal</div>),
 }));
 
+vi.mock('@features/Footer/Footer', () => ({
+  __esModule: true,
+  default: vi.fn(() => <div>Mock Footer</div>),
+}));
+
 vi.mock('react-router-dom', () => ({
   __esModule: true,
   Outlet: vi.fn(() => <div>Mock Outlet</div>),
@@ -125,5 +130,11 @@ describe('Layout', () => {
 
     fireEvent.click(getByText('Mock Search Visible'));
     expect(getByText('Mock Search Hidden')).toBeInTheDocument();
+  });
+
+  it('renders footer', () => {
+    const { getByText } = render(<Layout />);
+
+    expect(getByText('Mock Footer')).toBeInTheDocument();
   });
 });

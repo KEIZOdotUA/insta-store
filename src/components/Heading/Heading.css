@@ -1,6 +1,6 @@
 h1 {
-  padding-left: 15px;
-  margin-top: 5px;
-  color: var(--main-accent-color);
+  margin: 14px 0 ;
+  color: var(--high-contrast-color);
+  font-size: 30px;
   font-weight: 500;
 }

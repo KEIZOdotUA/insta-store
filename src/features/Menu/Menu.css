@@ -27,7 +27,7 @@
   text-align: left;
 }
 
-nav > ol {
+.menu > nav > ol {
   font-size: 16px;
   list-style: none;
   min-height: calc(100vh - 280px);
@@ -35,7 +35,7 @@ nav > ol {
   margin-block-start: 0;
 }
 
-nav > ol > li {
+.menu > nav > ol > li {
   display: flex;
   width: calc(100% - 20px);
   height: 48px;
@@ -43,7 +43,7 @@ nav > ol > li {
   padding-left: 20px;
 }
 
-nav > ol > li:first-child {
+.menu > nav > ol > li:first-child {
   font-weight: 600;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border-color);

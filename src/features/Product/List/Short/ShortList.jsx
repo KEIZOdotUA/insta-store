@@ -17,7 +17,7 @@ function ShortList({ title, items, linkToAllItems }) {
               <ProductCard product={p} link={getProductLink(p.id)} key={p.id} />
             ))}
             <div className="show-more">
-              <Link to={linkToAllItems}>
+              <Link to={linkToAllItems} onClick={() => window.scrollTo(0, 0)}>
                 <div>показати більше &gt;</div>
               </Link>
             </div>

@@ -3,6 +3,8 @@ import Layout from '@features/Layout/Layout';
 import AboutPage from '@pages/About/AboutPage';
 import HomePage from '@pages/Home/HomePage';
 import ProductsPage from '@pages/Products/ProductsPage';
+import DeliveryAndPayment from '@pages/DeliveryAndPayment/DeliveryAndPaymentPage';
+import Returns from '@pages/Returns/ReturnsPage';
 
 function Router() {
   return (
@@ -16,6 +18,8 @@ function Router() {
         <Route path="/:categorySlug" element={<ProductsPage />} />
         <Route path="/:categorySlug/:productId" element={<ProductsPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/delivery-and-payment" element={<DeliveryAndPayment />} />
+        <Route path="/returns" element={<Returns />} />
       </Route>
     </Routes>
   );
