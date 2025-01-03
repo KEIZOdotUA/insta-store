@@ -3,8 +3,9 @@ import {
   it,
   expect,
   vi,
+  beforeEach,
 } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Footer from '@features/Footer/Footer';
 
@@ -19,6 +20,10 @@ vi.mock('@features/ContactUs/ContactUs', () => ({
 }));
 
 describe('Footer', () => {
+  beforeEach(() => {
+    window.scrollTo = vi.fn();
+  });
+
   it('renders the logo', () => {
     const { getByText } = render(
       <MemoryRouter>
@@ -47,5 +52,17 @@ describe('Footer', () => {
       </MemoryRouter>,
     );
     expect(getByText('Contact Us')).toBeInTheDocument();
+  });
+
+  it('calls scrollTo on link click', () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <Footer />
+      </MemoryRouter>,
+    );
+
+    fireEvent.click(getByText('Доставка та оплата'));
+
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 });

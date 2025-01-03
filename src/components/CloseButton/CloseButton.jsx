@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 function CloseButton({ className, onClick }) {
   return (
-    <Button className={`close-button ${className}`} onClick={onClick}>
+    <Button className={`close-button ${className}`} onClick={onClick} ariaLabel="Close">
       <CloseSvg />
     </Button>
   );
