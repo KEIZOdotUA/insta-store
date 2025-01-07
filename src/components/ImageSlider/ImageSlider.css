@@ -1,0 +1,26 @@
+.image-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 900 / 514;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity ease-in-out;
+  opacity: 0;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.image-slider__paginator {
+  position: absolute;
+  bottom: 0;
+  right: 22px
+}

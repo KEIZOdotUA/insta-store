@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "image": {
+      "src": "/blob-stub/new-collection.webp",
+      "alt": "new collection"
+    },
+    "link": "/new"
+  },
+  {
+    "id": 2,
+    "image": {
+      "src": "/blob-stub/sale.webp",
+      "alt": "sale"
+    },
+    "link": "/sale"
+  }
+ ]

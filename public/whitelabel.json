@@ -2,9 +2,6 @@
   "shop": {
     "name": "blue-river-09b0c6103.5",
     "logo": "blob-stub/logo.png",
-    "heroSection": {
-      "imgSrc": "/blob-stub/hero-section-img.webp"
-    },
     "shortList": {
       "listType": "features",
       "title": "Топ продажів",
@@ -26,5 +23,6 @@
   "featuresSrc": "/blob-stub/features.json",
   "productsSrc": "/blob-stub/products.json",
   "packagingSrc": "/blob-stub/packaging.json",
-  "createOrderUrl": "https://example.com"
+  "createOrderUrl": "https://example.com",
+  "specialOffersUrl": "/blob-stub/special-offers.json"
 }

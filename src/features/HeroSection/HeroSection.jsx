@@ -1,17 +1,11 @@
-import './HeroSection.css';
-import useAppContext from '@context/useAppContext';
+import ImageSlider from '@components/ImageSlider/ImageSlider';
+import useSpecialOffers from '@features/HeroSection/useSpecialOffers';
 
 function HeroSection() {
-  const { whitelabel } = useAppContext();
+  const items = useSpecialOffers();
 
   return (
-    whitelabel.shop.heroSection.imgSrc.length > 0 && (
-      <img
-        src={whitelabel.shop.heroSection.imgSrc}
-        className="hero-section-img"
-        alt={whitelabel.shop.weAre}
-      />
-    )
+    <ImageSlider items={items} />
   );
 }
 

@@ -30,7 +30,7 @@ function ProductsList({ short, filtered }) {
 
   return (
     <ShortList
-      title="Всі прикраси"
+      title="Усі пропозиції"
       items={nonFilteredListItems}
       linkToAllItems="/products"
     />

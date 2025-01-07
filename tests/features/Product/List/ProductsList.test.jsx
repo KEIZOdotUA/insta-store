@@ -55,7 +55,7 @@ describe('ProductsList', () => {
   it('renders non-filtered ShortList short is true and filtered is false', () => {
     const { getByText } = render(<ProductsList short />);
 
-    expect(getByText('Всі прикраси')).toBeInTheDocument();
+    expect(getByText('Усі пропозиції')).toBeInTheDocument();
   });
 
   it('renders non-filtered ShortList when short and filtered are true but activeFilteredList is false', () => {
@@ -68,6 +68,6 @@ describe('ProductsList', () => {
 
     const { getByText } = render(<ProductsList short />);
 
-    expect(getByText('Всі прикраси')).toBeInTheDocument();
+    expect(getByText('Усі пропозиції')).toBeInTheDocument();
   });
 });

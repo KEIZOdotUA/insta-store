@@ -6,44 +6,20 @@ import {
 } from 'vitest';
 import { render } from '@testing-library/react';
 import HeroSection from '@features/HeroSection/HeroSection';
-import useAppContext from '@context/useAppContext';
+import useSpecialOffers from '@features/HeroSection/useSpecialOffers';
 
-vi.mock('@context/useAppContext');
+vi.mock('@features/HeroSection/useSpecialOffers');
+vi.mock('@components/ImageSlider/ImageSlider', () => ({
+  __esModule: true,
+  default: vi.fn(() => <div>Image Slider</div>),
+}));
 
 describe('HeroSection', () => {
-  it('renders the hero image', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: {
-        shop: {
-          heroSection: {
-            imgSrc: 'https://mockstorage.com/hero.jpg',
-          },
-          weAre: 'Test We Are',
-        },
-      },
-    });
+  useSpecialOffers.mockReturnValue([]);
 
-    const { getByAltText } = render(<HeroSection />);
-    const imgElement = getByAltText('Test We Are');
+  it('renders image slider', () => {
+    const { getByText } = render(<HeroSection />);
 
-    expect(imgElement).toBeInTheDocument();
-  });
-
-  it('does not renders the hero image', () => {
-    useAppContext.mockReturnValue({
-      whitelabel: {
-        shop: {
-          heroSection: {
-            imgSrc: '',
-          },
-        },
-        weAre: 'Test We Are',
-      },
-    });
-
-    const { queryByAltText } = render(<HeroSection />);
-    const imgElement = queryByAltText('Test We Are');
-
-    expect(imgElement).not.toBeInTheDocument();
+    expect(getByText('Image Slider')).toBeInTheDocument();
   });
 });
