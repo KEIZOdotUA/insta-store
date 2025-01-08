@@ -8,7 +8,12 @@ function ImageSliderButton({
   animationDelay,
 }) {
   return (
-    <button className="image-slider__button" onClick={onClick} type="button">
+    <button
+      className="image-slider__button"
+      onClick={onClick}
+      type="button"
+      aria-label="next slide"
+    >
       <div className="progress-bar__background">
         <div
           className={`progress-bar ${active ? 'filling' : ''}`}

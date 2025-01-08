@@ -50,7 +50,7 @@ function ImageSlider({
 }
 
 ImageSlider.defaultProps = {
-  duration: 5000,
+  duration: 4000,
   transitionDuration: 1000,
 };
 
