@@ -25,7 +25,7 @@ function ImageSlider({
         {items.map((item, index) => (
           <img
             key={item.id}
-            className={`slide ${index === currentIndex ? 'active' : ''}`}
+            className={`slide${index === currentIndex ? ' active' : ''}`}
             src={item.image.src}
             alt={item.image.alt}
             style={{ transitionDuration: `${transitionDuration}ms` }}

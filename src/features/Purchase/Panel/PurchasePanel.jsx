@@ -23,7 +23,7 @@ function PurchasePanel() {
   };
 
   return (
-    <div className="purchase-panel__placeholder">
+    <aside className="purchase-panel__placeholder">
       <Transition
         key="Purchase"
         transitionType="transform"
@@ -41,7 +41,7 @@ function PurchasePanel() {
           </Button>
         </div>
       </Transition>
-    </div>
+    </aside>
   );
 }
 

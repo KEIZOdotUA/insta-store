@@ -15,15 +15,15 @@ function Layout() {
 
   return (
     <>
+      <main>
+        <Outlet />
+      </main>
       <Header
         menuToggler={() => setVisibleMenu(!visibleMenu)}
         searchToggler={() => setVisibleSearch(!visibleSearch)}
         wishListToggler={() => setVisibleWishList(!visibleWishList)}
       />
       <Search visible={visibleSearch} searchToggler={() => setVisibleSearch(!visibleSearch)} />
-      <main>
-        <Outlet />
-      </main>
       <Footer />
       <WishList visible={visibleWishList} onClose={() => setVisibleWishList(!visibleWishList)} />
       <ProductModal />
