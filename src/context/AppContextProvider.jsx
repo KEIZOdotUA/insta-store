@@ -7,7 +7,7 @@ function AppContextProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [products, setProducts] = useState([]);
-  const [packaging, setPackaging] = useState(null);
+  const [packaging, setPackaging] = useState([]);
 
   useEffect(() => {
     const fetchWhitelabel = async () => {
@@ -56,7 +56,7 @@ function AppContextProvider({ children }) {
         const packagingData = await packagingResponse.json();
         return packagingData;
       } catch (error) {
-        return null;
+        return [];
       }
     };
 
@@ -93,7 +93,7 @@ function AppContextProvider({ children }) {
       setCategories(categoriesData);
       setFeatures(featuresData);
       setPackaging(packagingData);
-      setProducts(packagingData ? [...productsData, packagingData] : productsData);
+      setProducts([...productsData, ...packagingData]);
     };
 
     fetchData();

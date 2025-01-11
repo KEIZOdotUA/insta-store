@@ -34,12 +34,44 @@ const mockAppContext = {
     shop: { name: 'whitelabel' },
   },
   categories: [
-    { id: 1, name: 'Category 1', slug: 'Category1' },
-    { id: 2, name: 'Category 2', slug: 'Category2' },
+    {
+      id: 1,
+      name: 'Category 1',
+      slug: 'Category1',
+      show: true,
+    },
+    {
+      id: 2,
+      name: 'Category 2',
+      slug: 'Category2',
+      show: true,
+    },
+    {
+      id: 3,
+      name: 'Category 3',
+      slug: 'Category3',
+      show: false,
+    },
   ],
   features: [
-    { id: 1, name: 'Feature 1', slug: 'Feature1' },
-    { id: 2, name: 'Feature 2', slug: 'Feature2' },
+    {
+      id: 1,
+      name: 'Feature 1',
+      slug: 'Feature1',
+      show: true,
+    },
+    {
+      id: 2,
+      name: 'Feature 2',
+      slug: 'Feature2',
+      show: true,
+    },
+    {
+      id: 3,
+      name: 'Feature 3',
+      slug: 'Feature3',
+      show: false,
+    },
   ],
 };
 
@@ -49,23 +81,25 @@ describe('Menu', () => {
   it('default', () => {
     const mockMenuToggler = vi.fn();
 
-    const { getByText } = render(
+    const { queryByText } = render(
       <MemoryRouter>
         <Menu visible menuToggler={mockMenuToggler} />
       </MemoryRouter>,
     );
 
-    const closeButton = getByText('close');
+    const closeButton = queryByText('close');
     expect(closeButton).toBeInTheDocument();
 
     fireEvent.click(closeButton);
     expect(mockMenuToggler).toHaveBeenCalled();
 
-    expect(getByText('whitelabel')).toBeInTheDocument();
-    expect(getByText('Category 1')).toBeInTheDocument();
-    expect(getByText('Category 2')).toBeInTheDocument();
-    expect(getByText('Feature 1')).toBeInTheDocument();
-    expect(getByText('Feature 2')).toBeInTheDocument();
-    expect(getByText('Contact Us')).toBeInTheDocument();
+    expect(queryByText('whitelabel')).toBeInTheDocument();
+    expect(queryByText('Category 1')).toBeInTheDocument();
+    expect(queryByText('Category 2')).toBeInTheDocument();
+    expect(queryByText('Category 3')).not.toBeInTheDocument();
+    expect(queryByText('Feature 1')).toBeInTheDocument();
+    expect(queryByText('Feature 2')).toBeInTheDocument();
+    expect(queryByText('Feature 3')).not.toBeInTheDocument();
+    expect(queryByText('Contact Us')).toBeInTheDocument();
   });
 });

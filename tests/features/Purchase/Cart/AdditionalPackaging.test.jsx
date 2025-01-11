@@ -4,23 +4,22 @@ import {
   expect,
   vi,
   beforeEach,
+  afterEach,
 } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import CartAdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
+import AdditionalPackaging from '@features/Purchase/Cart/AdditionalPackaging/AdditionalPackaging';
 import useAppContext from '@context/useAppContext';
 import useCartStore from '@store/useCartStore';
 import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
-import { trackAddToCartEvent, trackRemoveFromCartEvent } from '@helpers/googleAnalyticsGA4';
-import useProductNavigation from '@hooks/useProductNavigation';
+import { trackRemoveFromCartEvent } from '@helpers/googleAnalyticsGA4';
 
 vi.mock('@context/useAppContext');
 vi.mock('@store/useCartStore');
 vi.mock('@store/usePurchasePanelStateStore');
 vi.mock('@helpers/googleAnalyticsGA4');
-vi.mock('@hooks/useProductNavigation');
 
-vi.mock('@components//Button/Button', () => ({
+vi.mock('@components/Button/Button', () => ({
   __esModule: true,
   default: vi.fn(({ children, onClick, className }) => (
     <button type="button" className={className} onClick={onClick}>
@@ -30,19 +29,27 @@ vi.mock('@components//Button/Button', () => ({
 }));
 
 describe('AdditionalPackaging', () => {
-  const mockPackaging = {
-    id: '1',
-    name: 'Gift Box',
-    price: 100,
-  };
+  const mockPackaging = [
+    {
+      id: '1',
+      name: 'Gift Box',
+      category: 'packaging',
+      available: true,
+    },
+  ];
 
-  const mockFindCartItem = vi.fn();
-  const mockAddCartItem = vi.fn();
+  const mockCartItems = [
+    {
+      id: '1',
+      category: 'packaging',
+      name: 'Gift Box',
+      price: 100,
+    },
+  ];
+
   const mockRemoveCartItem = vi.fn();
-  const mockGetProductLink = vi.fn();
-  const mockTrackAddToCartEvent = vi.fn();
-  const mockTrackRemoveFromCartEvent = vi.fn();
   const mockHidePurchase = vi.fn();
+  const mockTrackRemoveFromCartEvent = vi.fn();
 
   beforeEach(() => {
     useAppContext.mockReturnValue({
@@ -50,108 +57,101 @@ describe('AdditionalPackaging', () => {
     });
 
     useCartStore.mockReturnValue({
-      findItem: mockFindCartItem,
-      addItem: mockAddCartItem,
+      items: mockCartItems,
       removeItem: mockRemoveCartItem,
     });
+
     usePurchasePanelStateStore.mockReturnValue({
       hide: mockHidePurchase,
     });
 
-    useProductNavigation.mockReturnValue({ getProductLink: mockGetProductLink });
-    trackAddToCartEvent.mockImplementation(mockTrackAddToCartEvent);
     trackRemoveFromCartEvent.mockImplementation(mockTrackRemoveFromCartEvent);
-    mockGetProductLink.mockReturnValue(`/products/${mockPackaging.id}`);
   });
 
-  it('renders packaging name and price', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('renders the prompt for additional packaging if available', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <CartAdditionalPackaging />
+        <AdditionalPackaging />
       </MemoryRouter>,
     );
 
-    expect(getByText('Gift Box (100 грн)')).toBeInTheDocument();
+    expect(getByText('Потрібне додаткове подарункове упакування?')).toBeInTheDocument();
   });
 
-  it('tracks view item event and hides purchase on link click', () => {
+  it('hides the purchase panel when "так" link is clicked', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <CartAdditionalPackaging />
+        <AdditionalPackaging />
       </MemoryRouter>,
     );
 
-    const packagingLink = getByText('Gift Box (100 грн)');
-    fireEvent.click(packagingLink);
+    const yesLink = getByText('так');
+    fireEvent.click(yesLink);
 
     expect(mockHidePurchase).toHaveBeenCalled();
   });
 
-  it('adds packaging to the cart with selectedSize', () => {
+  it('removes packaging from the cart when "ні" button is clicked', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <CartAdditionalPackaging />
+        <AdditionalPackaging />
       </MemoryRouter>,
     );
 
-    const addButton = getByText('так');
-    fireEvent.click(addButton);
+    const noButton = getByText('ні');
+    fireEvent.click(noButton);
 
-    expect(mockAddCartItem).toHaveBeenCalledWith({ ...mockPackaging, selectedSize: 0 });
-    expect(mockTrackAddToCartEvent).toHaveBeenCalledWith({ ...mockPackaging, selectedSize: 0 });
+    expect(mockRemoveCartItem).toHaveBeenCalledWith('1', 0);
+    expect(mockTrackRemoveFromCartEvent).toHaveBeenCalledWith(mockCartItems[0]);
   });
 
-  it('not calls remove functions whe item is not in cart', () => {
+  it('does not call remove functions if packaging is not in the cart', () => {
+    useCartStore.mockReturnValue({
+      items: [],
+      removeItem: mockRemoveCartItem,
+    });
+
     const { getByText } = render(
       <MemoryRouter>
-        <CartAdditionalPackaging />
+        <AdditionalPackaging />
       </MemoryRouter>,
     );
 
-    const removeButton = getByText('ні');
-    fireEvent.click(removeButton);
+    const noButton = getByText('ні');
+    fireEvent.click(noButton);
 
     expect(mockRemoveCartItem).not.toHaveBeenCalled();
     expect(mockTrackRemoveFromCartEvent).not.toHaveBeenCalled();
   });
 
-  it('removes packaging from the cart with selectedSize', () => {
-    mockFindCartItem.mockReturnValue(mockPackaging);
-
+  it('marks the "так" link as selected if packaging is in the cart', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <CartAdditionalPackaging />
+        <AdditionalPackaging />
       </MemoryRouter>,
     );
 
-    const removeButton = getByText('ні');
-    fireEvent.click(removeButton);
-
-    expect(mockRemoveCartItem).toHaveBeenCalledWith(mockPackaging.id, 0);
-    expect(mockTrackRemoveFromCartEvent).toHaveBeenCalledWith(mockPackaging);
+    const yesLink = getByText('так');
+    expect(yesLink).toHaveClass('selected-action');
   });
 
-  it('displays "так" button as selected when item is in the cart', () => {
-    mockFindCartItem.mockReturnValue(true);
+  it('marks the "ні" button as selected if packaging is not in the cart', () => {
+    useCartStore.mockReturnValue({
+      items: [],
+      removeItem: mockRemoveCartItem,
+    });
 
     const { getByText } = render(
       <MemoryRouter>
-        <CartAdditionalPackaging />
+        <AdditionalPackaging />
       </MemoryRouter>,
     );
 
-    expect(getByText('так')).toHaveClass('selected-action');
-  });
-
-  it('displays "ні" button as selected when item is not in the cart', () => {
-    mockFindCartItem.mockReturnValue(false);
-
-    const { getByText } = render(
-      <MemoryRouter>
-        <CartAdditionalPackaging />
-      </MemoryRouter>,
-    );
-
-    expect(getByText('ні')).toHaveClass('selected-action');
+    const noButton = getByText('ні');
+    expect(noButton).toHaveClass('selected-action');
   });
 });

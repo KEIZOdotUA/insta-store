@@ -39,14 +39,14 @@ function Menu({ visible, menuToggler }) {
                   {whitelabel.shop.name}
                 </Link>
               </li>
-              {categories.map((category) => (
+              {categories.filter((category) => category.show).map((category) => (
                 <li key={category.id}>
                   <Link to={`/${category.slug}`} onClick={onClose}>
                     {category.name}
                   </Link>
                 </li>
               ))}
-              {features.map((feature, index) => (
+              {features.filter((feature) => feature.show).map((feature, index) => (
                 <li key={feature.id} className={index === 0 ? 'with-border-top' : ''}>
                   <Link to={`/${feature.slug}`} onClick={onClose}>
                     {feature.name}

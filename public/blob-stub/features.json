@@ -2,19 +2,19 @@
   {
     "id": 1,
     "name": "New",
-    "available": true,
+    "show": true,
     "slug": "new"
   },
   {
     "id": 2,
     "name": "Bestseller",
-    "available": true,
+    "show": true,
     "slug": "bestseller"
   },
   {
     "id": 3,
     "name": "Sale",
-    "available": true,
+    "show": true,
     "slug": "sale"
   }
  ]

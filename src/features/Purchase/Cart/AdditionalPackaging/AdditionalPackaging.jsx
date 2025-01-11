@@ -2,8 +2,7 @@ import './AdditionalPackaging.css';
 import { Link } from 'react-router-dom';
 import Button from '@components/Button/Button';
 import useAppContext from '@context/useAppContext';
-import { trackAddToCartEvent, trackRemoveFromCartEvent } from '@helpers/googleAnalyticsGA4';
-import useProductNavigation from '@hooks/useProductNavigation';
+import { trackRemoveFromCartEvent } from '@helpers/googleAnalyticsGA4';
 import useCartStore from '@store/useCartStore';
 import usePurchasePanelStateStore from '@store/usePurchasePanelStateStore';
 
@@ -11,46 +10,43 @@ function AdditionalPackaging() {
   const { packaging } = useAppContext();
   const { hide: hidePurchasePanel } = usePurchasePanelStateStore();
   const {
-    findItem: findCartItem,
-    addItem: addToCart,
+    items,
     removeItem: removeFromCart,
   } = useCartStore();
-  const { getProductLink } = useProductNavigation();
 
-  const itemInCart = packaging && findCartItem(packaging.id, 0);
+  const isPackagingInCart = packaging.length > 0
+    && items.some((cartItem) => cartItem.category === packaging[0].category);
 
-  const onAddProductToCart = (item) => {
-    addToCart(item);
-    trackAddToCartEvent(item);
-  };
-
-  const onRemoveFromCart = (item) => {
-    if (!itemInCart) {
+  const onRemoveFromCart = () => {
+    if (!isPackagingInCart) {
       return;
     }
 
-    removeFromCart(item.id, 0);
-    trackRemoveFromCartEvent(item);
+    const packagingInCart = items.filter((cartItem) => cartItem.category === packaging[0].category);
+    packagingInCart.forEach((item) => {
+      removeFromCart(item.id, 0);
+      trackRemoveFromCartEvent(item);
+    });
   };
 
   return (
-    packaging && (
+    packaging.some((p) => p.available) && (
       <div className="additional-packaging">
         <div className="additional-packaging__option">
-          {'+ '}
-          <Link to={getProductLink(packaging.id)} onClick={hidePurchasePanel}>
-            {`${packaging.name} (${packaging.price} грн)`}
+          <Link to="/packaging" onClick={hidePurchasePanel}>
+            Потрібне додаткове подарункове упакування?
           </Link>
         </div>
         <div className="additional-packaging__action">
-          <Button
-            className={itemInCart ? 'selected-action' : ''}
-            onClick={() => onAddProductToCart({ ...packaging, selectedSize: 0 })}
+          <Link
+            to="/packaging"
+            className={isPackagingInCart ? 'selected-action' : ''}
+            onClick={hidePurchasePanel}
           >
             так
-          </Button>
+          </Link>
           <Button
-            className={!itemInCart ? 'selected-action' : ''}
+            className={!isPackagingInCart ? 'selected-action' : ''}
             onClick={() => onRemoveFromCart(packaging)}
           >
             ні

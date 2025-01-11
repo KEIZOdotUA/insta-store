@@ -25,7 +25,7 @@ const mockProductsData = [
   { id: 1, name: 'Product 1', sizes: '1,2,3' },
   { id: 2, name: 'Product 2', sizes: '' },
 ];
-const mockPackagingData = { id: 3, name: 'Packaging', sizes: '6,7' };
+const mockPackagingData = [{ id: 3, name: 'Packaging', sizes: '6,7' }];
 
 vi.mock('./AppContext', () => ({
   __esModule: true,
@@ -85,9 +85,7 @@ describe('AppContextProvider', () => {
           ...product,
           sizes: product.sizes ? product.sizes.split(',').map((size) => parseInt(size, 10)) : [],
         })),
-        {
-          ...mockPackagingData,
-        },
+        ...mockPackagingData,
       ]);
       expect(receivedContext.packaging).toEqual(mockPackagingData);
     });
@@ -147,6 +145,6 @@ describe('AppContextProvider', () => {
     expect(receivedContext.categories).toEqual([]);
     expect(receivedContext.features).toEqual([]);
     expect(receivedContext.products).toEqual([]);
-    expect(receivedContext.packaging).toBeNull();
+    expect(receivedContext.packaging).toEqual([]);
   });
 });

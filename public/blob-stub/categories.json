@@ -2,25 +2,31 @@
   {
     "id": 106,
     "name": "Браслети",
-    "available": true,
-    "slug": "bracelets"
+    "slug": "bracelets",
+    "show": true
   },
   {
     "id": 101,
     "name": "Намистини",
-    "available": true,
-    "slug": "charms"
+    "slug": "charms",
+    "show": true
   },
   {
     "id": 102,
     "name": "Підвіски",
-    "available": true,
-    "slug": "necklaces"
+    "slug": "necklaces",
+    "show": true
   },
   {
     "id": 107,
     "name": "Сережки",
-    "available": true,
-    "slug": "earrings"
+    "slug": "earrings",
+    "show": true
+  },
+  {
+    "id": 108,
+    "name": "Подарункове упакування",
+    "slug": "packaging",
+    "show": false
   }
  ]
