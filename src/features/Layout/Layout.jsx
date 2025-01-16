@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Banner from '@features/Banner/Banner';
 import Header from '@features/Header/Header';
 import Search from '@features/Search/Search';
 import Menu from '@features/Menu/Menu';
@@ -15,6 +16,7 @@ function Layout() {
 
   return (
     <>
+      <Banner />
       <main>
         <Outlet />
       </main>

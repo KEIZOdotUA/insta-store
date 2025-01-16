@@ -24,5 +24,6 @@
   "productsSrc": "/blob-stub/products.json",
   "packagingSrc": "/blob-stub/packaging.json",
   "createOrderUrl": "https://example.com",
-  "specialOffersUrl": "/blob-stub/special-offers.json"
+  "specialOffersUrl": "/blob-stub/special-offers.json",
+  "bannerUrl": "/blob-stub/banner.json"
 }

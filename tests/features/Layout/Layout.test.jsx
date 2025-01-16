@@ -90,6 +90,11 @@ vi.mock('react-router-dom', () => ({
   Outlet: vi.fn(() => <div>Mock Outlet</div>),
 }));
 
+vi.mock('@features/Banner/Banner', () => ({
+  __esModule: true,
+  default: vi.fn(() => <div>Mock Banner</div>),
+}));
+
 describe('Layout', () => {
   it('renders the default layout with all components hidden', () => {
     const { getByText } = render(<Layout />);
@@ -136,5 +141,11 @@ describe('Layout', () => {
     const { getByText } = render(<Layout />);
 
     expect(getByText('Mock Footer')).toBeInTheDocument();
+  });
+
+  it('renders banner', () => {
+    const { getByText } = render(<Layout />);
+
+    expect(getByText('Mock Banner')).toBeInTheDocument();
   });
 });
